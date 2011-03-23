@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Created-By: Wes Bailey
-Main-Class: feynman.framework.controller.Controller
-Class-Path: ./ lib/ classes/ lib/jakarta-regexp-1.2.jar

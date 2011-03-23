@@ -1,9 +1,0 @@
-	<div id="docMenu">
-		<p class="title">Menu</p>
-		<p><a href="index.html">Getting Started</a></p>
-		<p><a href="running.html">Running the Sample Application</a></p>
-		<p><a href="controller.html">Controller Overview</a></p>
-		<p><a href="framework.html">Framework Design</a></p>
-		<p><a href="sample.html">Sample Application Development</a></p>
-		<p class="last"><a href="properties.html">Properties File Configuration</a></p>
-	</div>

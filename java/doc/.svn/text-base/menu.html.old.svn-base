@@ -1,8 +1,0 @@
-	<div id="docMenu">
-		<!-- <span style="font-size:12px;text-align:center;padding-left:10px">Menu</span> -->
-		<ul>Index
-			<li class="marker"><a href="index.html">Getting Started</a></li>
-			<li><a href="running.html">Running the Sample Application</a></li>
-			<li class="marker"><a href="sample.html">Understanding the Sample
-		</ul>
-	</div>
