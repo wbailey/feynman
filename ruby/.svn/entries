@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="163"
+   name=""
+   committed-date="2008-04-29T05:44:54.106142Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/ruby"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   name="auth"
+   kind="dir"/>
+<entry
+   name="samples"
+   kind="dir"/>
+<entry
+   name="server"
+   kind="dir"/>
+<entry
+   name="framework"
+   kind="dir"/>
+<entry
+   name="web"
+   kind="dir"/>
+</wc-entries>

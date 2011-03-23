@@ -1,0 +1,106 @@
+#include<header.html>
+	<div id="docContent">
+		<p>
+		<h1>Getting Started</h1>
+		The easiest way to get started is by downloading the sample application file
+		<a href="http://sourceforge.net/project/showfiles.php&group_id=66502">feynman-x.x-sample-app.tar.gz</a>
+		from the SourceForge <a href="http://feynman.sourceforge.net">project page</a>.  Files with the <b>.tar.gz</b>
+		file extension are commonly referred to as tarballs.  How you unpack the file
+		depends on your operating system.  If you are experienced with working with <b>.tar.gz</b> files,
+		then you can move on and read how to run the <a href="running.html">sample application</a>. 
+		<br/>
+		<br/>
+		To make sure you did install it correctly, verify all of the files and directories are present
+		against the	following:
+<pre>
+sample_app/
+sample_app/classes/
+sample_app/config/
+sample_app/lib/
+sample_app/src/
+sample_app/build.xml
+sample_app/classes/Ball.class
+sample_app/classes/Measurement.class
+sample_app/classes/Report.class
+sample_app/classes/Setup.class
+sample_app/classes/SimpleGravity.class
+sample_app/config/Simulation.properties
+sample_app/feynman.jar
+sample_app/lib/jakarta-regexp-1.2.jar
+sample_app/src/Ball.java
+sample_app/src/Measurement.java
+sample_app/src/Report.java
+sample_app/src/Setup.java
+sample_app/src/SimpleGravity.java
+</pre>
+		If this is new to you, then read the following information for the operating system that you
+		will be installing the sample application download on.
+		<br/>
+		<br/>
+		<h3>Windows platforms</h3>
+		If you do not already have it then you should download <a href="http://www.winzip.com">winzip</a>.
+		This is a great tool that recognizes a number of different compression formats including GNU
+		<b>tar</b> and <b>gzip</b>.  Once you have downloaded the file, then open the tarball with
+		winzip.  Winzip will list all of the files and directories in the tarball in the main window.
+		Click on the <b>Extract</b> button and select the destination directory.  Once this
+		is done the <em>sample_app</em> directory structure listed above should be visible under the
+		destination	directory that you selected as shown below:
+<pre>
+C:\temp> cd sample_app
+C:\temp\sample_app> dir
+build.xml    classes/     config/      feynman.jar  lib/         src/
+</pre>
+		From this point you are now ready to run the <a href="running.html">sample application</a>.
+		<br/>
+		<br/>
+		<h3>Unix/Linux</h3>
+		It is assumed that you have GNU compatible versions of <strong>tar</strong> (on some systems
+		its installed as <strong>gnutar</strong>) and <strong>gunzip</strong> installed on your system.
+		This installation also assumes you have an <b>xterm</b> open and are at the <em>shell prompt</em>.
+		Once you moved the tarball to the top level directory that you want to install install the
+		package, then do the following:
+<pre>
+wbailey:/tmp> gunzip feynman-0.9-sample-app.tar.gz
+wbailey:/tmp> gnutar -xf feynman-0.9-sample-app.tar
+wbailey:/tmp> cd sample_app/
+wbailey:/tmp/sample_app> dir
+build.xml    classes/     config/      feynman.jar  lib/         src/
+</pre>
+		If the above is what you see, then you are ready to learn how to run the<a href="running.html">
+		sample application</a>.
+		<br/>
+		<br/>
+		<h3>Mac OS X</h3> 
+		<span style="float:left; width=90; padding-bottom:10px; padding-right:10px">
+		<img src="images/desktop.jpg" height="100" width="90" align="top"/>
+		</span>
+		On most Mac OS X systems, <a href="http://www.aladdinsys.com/">Stuffit Expander</a> is configured to
+		automatically unpack files after they are downloaded.  If you have not changed this default
+		setting in Internet Explorer, then you will have a couple of files appear on your desktop after
+		the file has downloaded as seen in the picture on the left.  The simplest thing to do is move the 
+		<em>sample_app</em>	folder to a directory that is not the <em>Desktop</em>.  To do this open
+		a terminal window using	<em>Finder</em> under <em>Applications/Utilities</em> and double-click on
+		<em>Terminal</em>.
+		<br/>
+		<br/>
+		If you are not familiar or have not used the Terminal application, do not be intimidated.  It is
+		a great way to accomplish a lot of things more quickly than you can in a GUI environment.  The text
+		that appears on the top left corner is call the <em>shell prompt</em>.  From the shell prompt
+		you can issue the following commands to move the <em>sample_app</em> directory to a different
+		location:
+<pre>
+wbailey:> cd /tmp
+wbailey:/tmp> mv $HOME/Desktop/sample_app/ .
+wbailey:/tmp> cd sample_app/
+wbailey:/tmp/sample_app> dir
+build.xml    classes/     config/      feynman.jar  lib/         src/
+</pre>
+		At this point if you click on your <em>Desktop</em> with the mouse, the <em>sample_app</em> folder
+		will no longer be visible.  Last you can click on the tarball file that you originally
+		downloaded and put it in the <em>Trash</em> like you would any other file.  Now you are ready to
+		move on to the <a href="running.html">sample application</a>.
+		</p>
+#include<copyright.html>
+	</div>
+#include<footer.html>
+

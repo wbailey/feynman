@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Feynman Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Script-Type" content="type"/>
+<meta name="description" content="Feynman Java Simulation Framework, a framework for developing simulation in Java"/>
+<meta name="keywords" content="Feynman, Java, Physics, Simulation, software, framework, GNU, Mac OS X, Windows, Unix, Linux"/>
+<link rel="stylesheet" href="doc.css"/>
+<link rel="start" href="index.html"/>
+<script type="text/javascript"> 
+function DynaWin(url, h, w, l, t) {
+	poph = + h + 70
+	popw = + w + 30
+	disp = window.open(url,"pop","height=" + poph + ",width=" + popw + ",left=" + l + ",top=" + t + "");
+}
+</script> 
+</head>
+<body>
+
+
+<body>
+<div id="docContent">
+<pre>
+<span class="code_comment_block">/*
+ * Feynman Java Simulation Framework Sample Application
+ *
+ * $author: Wes Bailey$
+ */</span>
+<span class="code_package">import </span>java.util.Iterator;
+<span class="code_package">import </span>feynman.framework.system.PhysicalConfiguration;
+<span class="code_package">import </span>feynman.framework.system.PhysicalSystem;
+
+<span class="code_comment_block">/**
+ * This class implements the &lt;b&gt;PhysicalConfiguration&lt;/b&gt; to setup
+ * the initial conditions of the simulation.
+ */</span>
+<span class="code">public</span> class Setup implements PhysicalConfiguration {
+    
+    <span class="code_comment">// ------------------------------------- instance variables.</span>
+    private Iterator i;
+    private Ball b;
+    
+    <span class="code_comment_block">/**
+     * Set the &lt;b&gt;Ball&lt;/b&gt;'s initial height and velocity.  In a real
+     * application these properties could be set from a properties
+     * file so you would not need to recompile the application
+     * every time the initial conditions changed.
+     *
+     * @param ps The &lt;b&gt;PhysicalSystem&lt;b&gt; containing the &lt;b&gt;Ball&lt;/b&gt;.
+     */</span>
+    <span class="code">public</span> void <span class="code_method">configure</span>(PhysicalSystem ps) {
+        
+        <span class="code_comment">// Retrieve the reference to the particle from the physical system.</span>
+        i = ps.<span class="code_method">iterator</span>();
+        b = (Ball) i.<span class="code_method">next</span>();
+        
+        <span class="code_comment">// Setup its intial height and velocity.</span>
+        b.<span class="code_method">setY</span>(0.0);
+        b.<span class="code_method">setVy</span>(10.0);
+        
+    }
+    
+}
+</pre>
+</div>
+</body>
+</html>
+

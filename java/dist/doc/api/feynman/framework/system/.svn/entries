@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/dist/doc/api/feynman/framework/system"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystem.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="2af141d0b8664fb1bddba4792ef75d0e"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalMeasurement.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="4d58c9be9b7093bc06ac70c16d3b1721"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-frame.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="7111b734c13d8f1b820b984936151530"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalAlgorithm.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="337738c13e92b2a019dd93e60e3ea7f7"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="FinalReport.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="c6e38e033e3091826e52fa47a3fd695f"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-use.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="01f3bcc4ed044c530339c2fb14c711be"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-summary.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="fa8037b027bd11f741607121b3057577"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-tree.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="0dfdba2f52b2447990feb7d921e9dac5"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystemFactoryException.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="16875d9e8741d23e47642800c3fe3af3"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="CartesianObjectFactory.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="e15d8e288501215778480f72c9bd5c8d"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObjectFactory.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="3e7a75ff648253e81c2bb02997e04cda"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   name="class-use"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="CartesianObject.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="26ef0dd3dd904b6526166eb005022b14"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObject.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="182c34e8329bcff1d157141a75ac8fc8"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalConfiguration.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="94f25f50499e95979df277cb84d86425"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystemFactory.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="7866084df1e1c43b3dc30b987ccbadb9"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObjectFactoryException.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="26d20207f2c7c4f4fb6e252bba4e032d"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+</wc-entries>

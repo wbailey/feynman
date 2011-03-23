@@ -1,0 +1,75 @@
+#include<header.html>
+	<div id="docContent">
+		<p>
+		<h1>Controller Overview</h1>
+		One major part of the framework is the Controller class.  This is the class that performs
+		setup and actually runs the simulation.  It has a lot of
+		responsibility but for this discussion we will focus on the parts that are important to
+		the sample application.  A more detailed discussion of the Controller can be found in the
+		<a href="framework.html">Framework Overview</a>.
+		<br/>
+		<br/>
+		The first responsibility of the Controller is to load the <em>Simulation.properties</em> 
+		file as you see from the command line when you ran the sample application.  This
+		file tells the Controller what you want it to do for the simulation.  Details of this file
+		will be discussed later when you have a more thorough understanding of what needs to be
+		done in order to build an application that uses the Framework.
+		<br/><br/>
+		For now it is enough to understand this file tells the Controller the following pieces of
+		information:
+		<ul>
+			<li>The type of Physical System that is being used.</li>
+			<li>What coordinate system the simulation is being performed in.</li>
+			<li>What type of Physical Object is being studied and how many of them will be
+			    used in the simulation</li>
+			<li>What classes should be used to execute the simulation that you have developed.</li>
+			<li>Should the simulation perform measurements?  If so how often should a measurement
+				be taken?  Where will the data for a measurement be stored?</li>
+			<li>Should the Controller produce a final report that you have developed?</li>
+		</ul>
+		This may seem like a lot information and it is, but the Framework is extremely 
+		flexible and highly configurable, and this file is the messenger to the Controller all the
+		information that is needed to run your simulation.
+		<br/><br/>
+		After the Controller loads this information, it starts to process it and see if it can do
+		what you instructed it to do.  It tries to create, in order, the following for you:
+		<ol>
+			<li>The actual Simulation.</li>
+			<li>A Physical System that is a collection of Physical Objects</li>
+			<li>The Physical Objects needed by the Physical System.</li>
+			<li>The Physical Algorithm needed to perform the Simulation.</li>
+			<li>The Physical Measurement to be performed.</li>
+			<li>A Data Source to store Physical Measurement information.</li>
+			<li>If specified, a Final Report</li>
+		</ol>
+		This again may seem like a lot to create and be responsible for, but the 
+		Framework has been developed so that you do not have to develop these mechanisms yourself to
+		perform these tasks.
+		<br/><br/>
+		If the Controller can create all of the items listed above, it then begins executing
+		the Simulation.  At any point if it can create any of the items it will produce a
+		detailed error message alerting the user what caused the error.  If possible it will
+		try and provide a hint as to how the error can be avoided, but this may not be a feature
+		of early releases of the Framework.
+		<br/><br/>
+		The Controller executes the Simulation by performing the following steps:
+		<ol>
+			<li>Perform an iteration using the Physical Algorithm.</li>
+			<li>If necessary, perform a Physical Measurement</li>
+			<li>If necessary, store the Physical Measure to the Data Source</li>
+			<li>Check if the Simulation should still be executing</li>
+			<li>If the Simulation is running, then repeat from Step 1.</li>
+			<li>If the Simulation has completed, then produce a Final Report if 
+				necessary and write any remaining data to the Data Source.</li>
+		</ol>
+		The whole process of the Controller can be understood be understood in the
+		<a href="framework.html">next</a> section. A thorough understanding can be obtained by examining the
+		<a href="#" onClick="DynaWin('Controller.java.html', '400', '550', '0', '0')";>source code</a>.
+		Study the code and when you believe you have a general understanding of it, then you will definitely
+		be ready to go to the <a href="framework.html">Framework Overview</a> section which will explain
+		in detail the guts of the Framework and how it is put together.
+		</p>
+#include<copyright.html>
+	</div>
+#include<footer.html>
+

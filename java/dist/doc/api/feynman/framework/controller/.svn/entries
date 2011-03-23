@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/dist/doc/api/feynman/framework/controller"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   name="class-use"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="ControllerException.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="80dbcb90b6f7529a35112666e60da81b"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="Controller.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="ce863b72448cfb0a7367d4fa26b30193"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-frame.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="39e801d34f270232e5dfc2811cd02ca4"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-use.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="7f5993ae6e87379c71840a59fe0b732b"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-summary.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="dfe40f3cd0e22780615a0dace47ff74f"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="package-tree.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="e12ef42a29e607f18f584f4fe524aa0d"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+</wc-entries>

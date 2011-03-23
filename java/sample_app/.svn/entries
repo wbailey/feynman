@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/sample_app"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="1"
+   name="data.csv"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="e224ce067b5bc66211c7cb4ce40c9473"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:17.000000Z"/>
+<entry
+   name="config"
+   kind="dir"/>
+<entry
+   name="lib"
+   kind="dir"/>
+<entry
+   name="src"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="feynman.jar"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="525e8ec722491096dbc88bffb9f0e358"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   name="classes"
+   kind="dir"/>
+<entry
+   committed-rev="1"
+   name="using.gnu"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="9b4151b2bd52fc05942cfda9441cdcae"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="build.xml"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="44a3457a88bcfb98391aed79a3dbd3c0"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+</wc-entries>

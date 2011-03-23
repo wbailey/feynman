@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="117"
+   name=""
+   committed-date="2008-03-27T23:30:31.706760Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/ruby/framework"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   name="pkg"
+   kind="dir"/>
+<entry
+   name="tests"
+   kind="dir"/>
+<entry
+   committed-rev="113"
+   name="Rakefile"
+   text-time="2008-03-25T22:38:02.000000Z"
+   committed-date="2008-03-25T23:29:47.683119Z"
+   checksum="dedb5a743b42012007f5a3dc39feba62"
+   last-author="wesley_bailey"
+   kind="file"/>
+<entry
+   name="doc"
+   kind="dir"/>
+<entry
+   name="lib"
+   kind="dir"/>
+<entry
+   name="src"
+   kind="dir"/>
+</wc-entries>

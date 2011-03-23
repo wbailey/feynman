@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="157"
+   name=""
+   committed-date="2008-04-26T06:26:02.384962Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/ruby/web/script/performance"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="157"
+   name="benchmarker"
+   text-time="2008-04-28T16:37:43.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="91086af38733556c5aabc91eb4b20bed"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:37:43.000000Z"/>
+<entry
+   committed-rev="157"
+   name="profiler"
+   text-time="2008-04-28T16:37:43.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="4dd7faa9b0b5f678082e19c97852b005"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:37:43.000000Z"/>
+<entry
+   committed-rev="157"
+   name="request"
+   text-time="2008-04-28T16:37:43.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="9316140f20aace6cf628d17b5bfd1119"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:37:43.000000Z"/>
+</wc-entries>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="157"
+   name=""
+   committed-date="2008-04-26T06:26:02.384962Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/ruby/server/doc/classes/Mongrel"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="157"
+   name="Configurator.html"
+   text-time="2008-04-28T16:02:23.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="2b998ab3ca24e6d9c116e1ecbfc98762"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:02:23.000000Z"/>
+<entry
+   name="Configurator.src"
+   kind="dir"/>
+<entry
+   committed-rev="157"
+   name="Const.html"
+   text-time="2008-04-28T16:02:23.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="ad38af688b807735168b62c315117579"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:02:23.000000Z"/>
+</wc-entries>

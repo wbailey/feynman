@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/src/feynman/framework/datastore"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="1"
+   name="DataStore.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="17cd9469577e8c524039c3fc153ada72"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="FileDataStore.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="d5a3aee5e79f54c62f17ccc3e2e77867"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="DbmsDataStore.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="5b77840cffd32d844f7fbecdc8e2998a"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="InvalidDataStoreException.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="1a12c717ab46ae4ca6d7f3547af90c76"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="ConnectionException.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="2b46ba88ea737162ccf29807e7409601"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="DataStoreFactory.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="5f78885c41b36a4cc3b7b226c603ef3d"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+</wc-entries>

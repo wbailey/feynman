@@ -1,0 +1,266 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Feynman Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Script-Type" content="type"/>
+<meta name="description" content="Feynman Java Simulation Framework, a framework for developing simulation in Java"/>
+<meta name="keywords" content="Feynman, Java, Physics, Simulation, software, framework, GNU, Mac OS X, Windows, Unix, Linux"/>
+<link rel="stylesheet" href="doc.css"/>
+<link rel="start" href="index.html"/>
+<script type="text/javascript"> 
+function DynaWin(url, h, w, l, t) {
+	poph = + h + 70
+	popw = + w + 30
+	disp = window.open(url,"pop","height=" + poph + ",width=" + popw + ",left=" + l + ",top=" + t + "");
+}
+</script> 
+</head>
+<body>
+
+
+<body>
+	<div id="docContent">
+		<h1>The Framework Design</h1>
+		<h3>Recommended Reading</h3>
+		<p align="left">
+		Before reading this section make sure that you have a good understanding of the Java programming
+		language, the Unified Modelling Language (UML) and what are known as Design Patterns.  If you are
+		just getting started with Java or if you are not familiar with UML and Design Patterns the 
+		suggested reading listed below will help bring you up to speed:
+		<ul>
+			<li>
+				<a href="http://www.oreilly.com/catalog/learnjava2/">Learning Java</a>
+				, Niemeyer &amp; Knudsen, O'Reilly, 2002.
+			</li>
+			<li>
+				<a href="http://www.aw.com/catalog/academic/product/1,4096,020165783X,00.html">UML Distilled</a>
+				, Fowler &amp; Martin, Addison Wesley, 2001
+			</li>
+			<li>
+				<a href="http://www.aw.com/catalog/academic/product/1,4096,0201633612,00.html">Design Patterns</a>
+				, Gamma, Helm, Johnson, Vlissides, Addison Wesley, 1995
+			</li>
+			<li>
+				<a href="http://www.aw.com/catalog/academic/product/1,4096,0201715945,00.html">Design Patterns
+				Explained</a>, Shalloway, Trott, Addison Wesley, 2002
+			</li>
+		</ul>
+		<p align="left">
+		That is a lot of reading but in reality if you make it through the first 7 or 8 chapters of
+		<em>Learning Java</em> as well as the chapters on UML and Factory patterns in <em>Design
+		Patterns Explained</em>, you will be more than ready for this overview.  In fact, developing
+		the sample application will help you understand the concepts covered in those chapters.
+		</p>
+		<h3>The Framework</h3>
+		<p align="left">
+		To really understand the Framework we first try to break down the problem that it is intended
+		to solve and assist developers with.
+		<br/>
+		<br/>
+		<b>Problem Statement</b> - To solve a physical problem that can be numerically simulated.
+		<br/>
+		<br/>
+		Lets examine how physicists typically breakdown this problem.  We first start with a physical
+		system that is being studied.  In the sample application the physical system consists
+		of a ball under the influence of gravity.  Every problem has some type of physical object
+		that is in the system of study and for our example it is a ball.  To provide a point of reference
+		in the physical system a coordinate system is chosen so that physical objects can be
+		tracked in some manner.  The diagram below shows how the Framework relates these entities in terms
+		of <em>abstract classes</em>.
+		</p>
+		<p align="center">
+			<img src="images/framework1.png" alt="Figure 1." />
+		</p>
+		<p align="left">
+		As you can see, the PhysicalSystem and PhysicalObject are the top level classes in our design.
+		The relationship between a PhysicalSystem and a PhysicalObject is a <em>has a</em> aggregation 
+		relationship as indicated by the diamond.  In laymans terms this means that PhysicalSystem is
+		made up of or <em>composed of</em> PhysicalObjects.
+		</p>
+		<p align="left">
+		The selected coordinate system is realized in the sub-classes of the two parent classes.  The
+		idea being that other systems and objects specified by other coordinate systems can be created
+		as sub-classes as well. Note that an aspect of the CartesianSystem subclass is to ensure that
+		all objects that are added to this system are of the type CartesianObject.  This makes it easy
+		for developers of applications to build a consistent system without having to check this manually
+		in their application code.
+		</p>
+		<p align="left">
+		How does the Framework use these two classes and expand on them as the basis?  Notice in the
+		UML diagram that these are <em>abstract classes</em> meaning they cannot be instantiated.  They 
+		were designed that way to make use of the <em>Factory</em> and <em>Abstract Factory</em> patterns.
+		For now just take the idea of a factory as an standard way of creating objects that are similar 
+		but not necessarily related.  An abstract factory creates similar objects in a standard way where
+		the objects are related.  Since there can be several types of PhysicalSystems depending on
+		the selected coordinate system (or lack of one in some instances), a factory is designed to 
+		assist in the creation of those objects.  Likewise, for PhysicalObjects, an abstract factory is
+		is used to create them.  A more detailed UML class diagram is shown below:
+		</p>
+		<p align="center">
+			<img src="images/framework2.png" alt="Figure 2." width="450" />
+		</p>
+		<p align="left">
+		These are some of the classes that make up the <em>feynman.framework.system</em> package. 
+		The top level to the diagram is the PhysicalSystemFactory.  This class is a <em>concrete</em>
+		class and is responsible for creating the user specified PhysicalSystem.  It does so by creating
+		an instance of the user specified PhysicalSystem and adds to it the specified number of 
+		PhysicalObjects using the appropriate PhysicalObjectFactory.
+		</p>
+		<p align="left">
+		The next part to understand is the relationship between the remaining classes in the
+		<em>system</em> package and their relationship to the Controller in the 
+		<em>feynman.framework.controller</em> package.  The UML diagram below shows them:
+		</p>
+		<p align="center">
+			<img src="images/framework3.png" alt="Figure 3." />
+		</p>
+		<p align="left">
+		The classes on the right side of the arrows are <em>Interfaces</em>.  An interface specifies
+		a public contract that the classes that implements the interface must agree to.  For example,
+		the FinalReport interface specifies there must be a public class named report that takes a
+		Simulation and PhysicalSystem instances as arguments. 
+		</p>
+		<p align="left">
+		As was pointed out in the 
+		<a href="controller.html">Controller</a> section, the Controller class has two responsibilities.
+		First it creates instances of the user specified classes that implement the interfaces shown in
+		the figure above. It also is responsible for invoking methods to perform the actions of each 
+		class that implements the interface at the appropriate time. Following the report example, the 
+		Controller will create an instance of FinalReport class and the report method will be invoked
+		after the simulation is complete.
+		</p>
+		<p align="left"/>
+		The four interfaces shown here are the ones that each developer intending to use the Framework
+		will have to provide implementations for.  The following table provides more information about
+		each interface. It is suggested that you read the JavaDoc for each interface to become more
+		familiar with them.
+		</p>
+		<p align="center">
+		<table cellpadding="5" cellspacing="1" bgcolor="#000000" border="0">
+			<tr bgcolor="#cccccc">
+				<th>Interface</th>
+				<th>Method</th>
+				<th>Arguments</th>
+			</tr>
+			<tr bgcolor="#ffff66">
+				<td>PhysicalConfiguration</td>
+				<td>configure()</td>
+				<td>PhysicalSystem ps</td>
+			</tr>
+			<tr bgcolor="#ffff66">
+				<td>PhysicalAlgorithm</td>
+				<td valign="top">calculate()</td>
+				<td>Simulation sim<br/>PhysicalSystem ps</td>
+			</tr>
+			<tr bgcolor="#ffff66">
+				<td valign="top" rowspan="3">PhysicalMeasurement</td>
+				<td valign="top">take()</td>
+				<td>Simulation sim<br/>PhysicalSystem ps</td>
+			</tr>
+			<tr bgcolor="#ffff66">
+				<td>toString()</td>
+				<td>None</td>
+			</tr>
+			<tr bgcolor="#ffff66">
+				<td>toSql()</td>
+				<td>None</td>
+			</tr>
+			<tr bgcolor="#ffff66">
+				<td>FinalReport</td>
+				<td>report()</td>
+				<td>Simulation sim<br/>PhysicalSystem ps</td>
+			</tr>
+		</table>
+		</p>
+		<p align="left">
+		In the next section you will see how the sample application provides implementations
+		of these interfaces but for now it is useful to understand what each is meant to provide.
+		The names of each interface are pretty self explanatory.  The PhysicalConfiguration class
+		implementation is meant to setup the initial conditions of the simulation.  In the sample
+		application it sets the balls initial height and velocity. The Controller uses the 
+		PhysicalAlgorithm class implementation to numerically integrate the equations governing the
+		simulation.  In the sample application the Euler algorithm is implemented for the ball's
+		equations of motion.  The PhysicalMeasurement class implementation dictates what physical 
+		quantities will be periodically measured.  The FinalReport is provided so that summary 
+		statistics and final calculations can be reported to the user in a simple text format.
+		</p>
+		<p align="left">
+		If you examine the arguments of some of the methods listed in the 
+		table above you will see they take a Simulation object.  To this point we have mentioned
+		this class and also discussed the simulation in terms of using a computer program to 
+		manipulate numerical equations to simulate a real physical system. It is part of the
+		<em>feynman.framework.simulation</em> package and is a <em>JavaBean</em>.  This is yet
+		another new term, but think of a bean as a class with properties that can be <em>set</em> 
+		using a setter method and retrieved using a <em>get</em> method.  The experienced Java
+		developer you will note the Simulation class is a Singleton since there is only one
+		simulation being performed at a time. As a Framework developer who is just getting 
+		started you will be happy to note that of the 19 properties to date, you will only
+		really need to concern yourself with a few and they will be covered in the sample
+		application section.
+		</p>
+		<p align="left">
+		There is one other class in the <em>feynman.framework.simulation</em> package. The
+		Marshaller class is responsible for processes known as marshalling and unmarshalling
+		the Simulation object.  Using Java's dynamic data binding capabilities, when the
+		the Controller was mentioned to create a Simulation from the Simulation.properties file,
+		it does this by invoking the <tt>marshall()</tt> method of the Marshaller class.  This method
+		retrieves an instance of the Simulation class using the <tt>getInstance()</tt> method.
+		Based on the values in the properties file, it then <em>set</em>s the values of the 
+		properties you specified.
+		</p>
+		<p align="left">
+		The last package in the framework is the <em>feynman.framework.datastore</em> package.  The
+		purpose of the classes in this package is to make it transparent to the Contoller class
+		how it saves the data taken during a PhysicalMeasurement.
+		</p>
+		<p align="center">
+			<img src="images/framework4.png" alt="Figure 4."/>
+		</p>
+		<p align="left">
+		The DataStore interface specifies that an implementation must provide methods to <tt>open()</tt>,
+		<tt>save()</tt> and <tt>close()</tt> a data store.  The only class implementation to date
+		is the FileDataStore which uses the <tt>toString()</tt> method of the PhysicalMeasurement class.
+		It is planned to add relational database capabilities using the DbmsDataStore that would
+		make use of the <tt>toSql()</tt> method.  Unless you are curious about the source code for the
+		implementation classes, it suffices that the knowledgeable Framework user understand how
+		the FileDataStore and DbmsDataStore use the appropriate method from the PhysicalMeasurement
+		class.
+		</p>
+    <div id="footer">
+		Copyright &copy; 2002 Wesley H. Bailey.
+		<br/>
+		<p>
+		<span style="font-size:9px;">
+		Permission is granted to make and distribute verbatim copies of this online manual
+		provided the copyright notice and this permission notice are preserved on all copies.
+		<br/>
+		<br/>
+		Permission is granted to copy and distribute modified verions of this manual under the
+		conditions for veratim copying, provided also that the entire resulting derived work is
+		distrubuted under the terms of a psermission notice identical to this one.
+		<br/>
+		<br/>
+		Permission is granted to copy and distribute translations of this manual into another language,
+		under the above conditions for modified versions, except that this permission notice
+		may be stated in a translation approved by the 
+		<a href="http://www.fsf.org">Free Software Foundation</a>
+		</span>
+		</p>
+	</div>
+
+	</div>
+	<div id="docMenu">
+		<p class="title">Menu</p>
+		<p><a href="index.html">Getting Started</a></p>
+		<p><a href="running.html">Running the Sample Application</a></p>
+		<p><a href="controller.html">Controller Overview</a></p>
+		<p><a href="framework.html">Framework Design</a></p>
+		<p><a href="sample.html">Sample Application Development</a></p>
+		<p class="last"><a href="properties.html">Properties File Configuration</a></p>
+	</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<project name="feynman" default="all" basedir=".">
+	
+	<!-- Define the libraries and files used by the framework -->
+	<property name="regexp.jar" value="jakarta-regexp-1.2.jar"/>
+	<property name="manifest.file" value="FeynmanManifest.mf"/>
+	<property name="build.file" value="build.xml"/>
+	
+	<!-- Project Directories -->
+	<property name="src.dir" value="src"/>
+	<property name="doc.dir" value="doc"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="bin.dir" value="bin"/>
+	
+	<!-- Temporary build Directories -->
+	<property name="build.dir" value="build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+	<property name="build.doc" value="${build.dir}/doc"/>
+	<property name="build.api" value="${build.doc}/api"/>
+	<property name="build.lib" value="${build.dir}/lib"/>
+	
+	<!-- Directory for the javadoc API documentation -->
+	<property name="api.dir" value="${doc.dir}/api"/>
+	
+	<!-- Global Settings -->
+	<property name="javac.debug" value="off"/>
+	
+	<!-- Global "magic" property for <javac> -->
+	<property name="build.compiler" value="modern"/>
+	
+	<!-- Define the classpath to include the library files -->
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- Setup the directory structure for the build -->
+	<target name="prepare" description="Create the build directory structure">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${build.lib}"/>
+		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${build.doc}"/>
+		<mkdir dir="${build.api}"/>
+	</target>
+	
+	<!-- Compile the source for the framework -->
+	<target name="build" depends="prepare" description="Compile the source for the framework">
+		<javac destdir="${build.classes}"
+		       debug="${debug.flag}"
+			   deprecation="off">
+		    <src path="${src.dir}"/>
+			<classpath refid="classpath"/>
+		</javac>
+	</target>
+	
+	<!-- Create the framework package -->
+	<target name="package" depends="build" description="Create the framework jar file">
+		<jar jarfile="${build.lib}/feynman.jar"
+			 basedir="${build.classes}"
+			 manifest="${manifest.file}"/>
+	</target>
+	
+	<!-- Create the API documentation for the framework -->
+	<target name="javadoc" depends="package" description="Create the API documentation for the framework">
+		<javadoc packagenames="feynman.*"
+				 sourcepath="${src.dir}"
+				 destdir="${build.api}"
+				 classpath="${lib.dir}/${regexp.jar}"
+				 author="true"
+				 version="true"
+				 use="true"/>
+	</target>
+	
+	<!-- Default target to build the framework -->
+	<target name="all" depends="package,javadoc" description="Build the framework and produce API documentation">
+		<copy todir="${build.doc}">
+			<fileset dir="${doc.dir}" includes="**/*.*"/>
+		</copy>
+	</target>
+	
+	<!-- Clean up the build files -->
+	<target name="clean" description="Remove the compiled class files and API Documentation">
+		<delete>
+			<fileset dir="${build.classes}" includes="**/*.class"/>
+			<fileset dir="${build.lib}" includes="**/*.jar"/>
+		</delete>
+		<delete dir="${api.dir}"/>
+	</target>
+	
+	<!-- Remove everything associated with a build -->
+	<target name="cleanbuild" description="Removed all directories and files in a build">
+		<delete dir="${build.dir}"/>
+		<delete dir="${api.dir}"/>
+	</target>
+	
+	<!-- The distribution version -->
+	<property name="dist.version" value="0.9.1"/>
+	
+	<!-- Build the binary distribution directory and create its contents -->
+	<target name="bindist" depends="package" description="Build the binary distribution.">
+		<property name="dist.dir" value="feynman-${dist.version}"/>
+		<property name="tar.file" value="${dist.dir}.tar"/>
+		<property name="zip.file" value="${tar.file}.gz"/>
+		<property name="dist.src" value="${dist.dir}/src"/>
+		<property name="dist.lib" value="${dist.dir}/lib"/>
+		<property name="dist.doc" value="${dist.dir}/doc"/>
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${dist.lib}"/>
+		<mkdir dir="${dist.doc}"/>
+		<copy todir="${dist.dir}">
+			<fileset dir="${build.lib}" includes="*.jar"/>
+		</copy>
+		<copy todir="${dist.lib}">
+			<fileset dir="${lib.dir}" includes="*.jar"/>
+		</copy>
+		<copy todir="${dist.doc}">
+			<fileset dir="${build.doc}" includes="**/*"/>
+		</copy>
+		<tar tarfile="${tar.file}" basedir="." includes="${dist.dir}/**"/>
+		<gzip src="${tar.file}" zipfile="${zip.file}"/>
+		<!-- Clean up after yourself -->
+		<delete dir="${dist.dir}">
+			<fileset dir="." includes="${tar.file}"/>
+		</delete>
+	</target>
+	
+	<!-- Build the source distribution -->
+	<target name="srcdist" depends="package" description="Build a source distribution.">
+		<property name="dist.dir" value="feynman-${dist.version}-src"/>
+		<property name="tar.file" value="${dist.dir}.tar"/>
+		<property name="zip.file" value="${tar.file}.gz"/>
+		<property name="dist.src" value="${dist.dir}/src"/>
+		<property name="dist.lib" value="${dist.dir}/lib"/>
+		<property name="dist.doc" value="${dist.dir}/doc"/>
+		<mkdir dir="${dist.dir}"/>
+		<mkdir dir="${dist.src}"/>
+		<mkdir dir="${dist.lib}"/>
+		<mkdir dir="${dist.doc}"/>
+		<copy todir="${dist.src}">
+			<fileset dir="${src.dir}" includes="**/*.java"/>
+		</copy>
+		<copy todir="${dist.dir}">
+			<fileset dir="." includes="${manifest.file},${build.file}"/>
+		</copy>
+		<copy todir="${dist.lib}">
+			<fileset dir="${lib.dir}" includes="*.jar"/>
+		</copy>
+		<copy todir="${dist.doc}">
+			<fileset dir="${build.doc}" includes="**/*"/>
+		</copy>
+		<tar tarfile="${tar.file}" basedir="." includes="${dist.dir}/**"/>
+		<gzip src="${tar.file}" zipfile="${zip.file}"/>
+		<!-- Clean up after yourself -->
+		<delete dir="${dist.dir}">
+			<fileset dir="." includes="*.tar"/>
+		</delete>
+	</target>
+	
+	<!-- Define the directory structure for the sample application -->
+	<property name="app.dir" value="sample_app"/>
+	<property name="app.src" value="${app.dir}/src"/>
+	<property name="app.lib" value="${app.dir}/lib"/>
+	<property name="app.classes" value="${app.dir}/classes"/>
+	<property name="app.config" value="${app.dir}/config"/>
+	<property name="app.doc" value="${app.dir}/doc"/>
+	
+	<!-- Build the sample application -->
+	<target name="sample" depends="package" description="Copy all of the appropriate files to the sample app">
+		<mkdir dir="${app.lib}"/>
+		<mkdir dir="${app.classes}"/>
+		<copy todir="${app.dir}">
+			<fileSet dir="${build.lib}" includes="feynman.jar"/>
+		</copy>
+		<copy todir="${app.lib}">
+			<fileSet dir="${lib.dir}" includes="*.jar"/>
+		</copy>
+		<ant dir="${app.dir}" target="build"/>
+	</target>
+	
+	<!-- Build a distribution for the sample application -->
+	<target name="sampledist" depends="sample" description="Build the sample application distribution">
+		<property name="tar.file" value="feynman-${dist.version}-sample-app.tar"/>
+		<property name="zip.file" value="${tar.file}.gz"/>
+		<tar tarfile="${tar.file}" basedir="." includes="${app.dir}/**"/>
+		<gzip src="${tar.file}" zipfile="${zip.file}"/>
+		<delete>
+			<fileset dir="." includes="${tar.file}"/>
+		</delete>
+	</target>
+	
+</project>

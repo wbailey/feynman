@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/sample_app/src"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="1"
+   name="SimpleGravity.java"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="7a480853554ff9bfdf70a3664fbc85ab"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:17.000000Z"/>
+<entry
+   committed-rev="1"
+   name="Setup.java"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="25f93d94e90bc073a2c01c5317d84718"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="Measurement.java"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="0922ff41bb5ca53692248c6015ce4831"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="Ball.java"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="3e36b4bb96ebe52d95739d27adf4ebd3"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="Report.java"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="885ffa8959e489c36cfa4970f7a49f05"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+</wc-entries>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>process (FeynmanServer::AuthenticateHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/feynman_server.rb, line 162</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process</span>( <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span> )
+      <span class="ruby-identifier">log</span> <span class="ruby-value str">'-- Authentication request start --'</span>
+
+      <span class="ruby-identifier">credentials</span> = <span class="ruby-identifier">parse_params</span>( <span class="ruby-identifier">request</span> )
+
+      <span class="ruby-comment cmt"># In the future we will invoke a call on the authentication server to</span>
+      <span class="ruby-comment cmt"># verify the supplied credentials.</span>
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">credentials</span>[<span class="ruby-identifier">:password</span>].<span class="ruby-identifier">eql?</span>( <span class="ruby-value str">'test'</span> )
+        <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Invalid User Credentials: username = #{credentials[:username]}&quot;</span>
+        <span class="ruby-identifier">respond</span>( <span class="ruby-identifier">response</span>, <span class="ruby-value">403</span>, <span class="ruby-value str">'Invalid User Credentials'</span> )
+        <span class="ruby-identifier">log</span> <span class="ruby-value str">'-- request end --'</span>
+        <span class="ruby-keyword kw">return</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># This will become the user's actual record id.</span>
+      <span class="ruby-identifier">user_id</span> = <span class="ruby-identifier">rand</span>( <span class="ruby-node">&quot;1e#{rand( 8 )}&quot;</span>.<span class="ruby-identifier">to_f</span> )
+
+      <span class="ruby-identifier">token</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>( <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">to_s</span> )
+
+      <span class="ruby-identifier">sql</span> =<span class="ruby-value str">&quot;insert into fs_session\n( token\n, created_by\n, create_date\n, server_host\n, server_port\n, client_ip_address\n) values\n( '\#{token}'\n, '\#{user_id}'\n, now()\n, '\#{request.params[Mongrel::Const::SERVER_NAME]}'\n, '\#{request.params[Mongrel::Const::SERVER_PORT]}'\n, '\#{request.params[Mongrel::Const::REMOTE_ADDR]}'\n);\n&quot;</span>
+
+      <span class="ruby-identifier">conn</span> = <span class="ruby-constant">Mysql</span>.<span class="ruby-identifier">new</span>( <span class="ruby-value str">'localhost'</span>, <span class="ruby-value str">'feynman'</span>, <span class="ruby-value str">'feynman'</span>, <span class="ruby-value str">'fs'</span> )
+
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">query</span>( <span class="ruby-identifier">sql</span> )
+      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+        <span class="ruby-identifier">log</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+        <span class="ruby-identifier">respond</span>( <span class="ruby-identifier">response</span>, <span class="ruby-value">500</span>, <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span> )
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">log</span> <span class="ruby-identifier">token</span>
+        <span class="ruby-identifier">respond</span>( <span class="ruby-identifier">response</span>, <span class="ruby-value">200</span>, <span class="ruby-identifier">token</span> )
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-identifier">log</span> <span class="ruby-value str">'-- request end --'</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

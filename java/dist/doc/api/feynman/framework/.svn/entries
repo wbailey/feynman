@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/dist/doc/api/feynman/framework"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   name="controller"
+   kind="dir"/>
+<entry
+   name="simulation"
+   kind="dir"/>
+<entry
+   name="system"
+   kind="dir"/>
+<entry
+   name="datastore"
+   kind="dir"/>
+</wc-entries>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/dist/doc/api/feynman/framework/system/class-use"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="1"
+   name="CartesianObject.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="219a09320fa3173bdfbb337c8190efce"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystem.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="c9b089f8d1550725f6638f03c338153b"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalMeasurement.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="31ae8556ea657e850334660195609325"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalAlgorithm.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="4711f000b5c142ff451db03be34f2453"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObject.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="817b7919a33a7e45e2cb54ad44c9536c"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalConfiguration.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="4f21b0018e708b3f4040bac2eb657da7"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="FinalReport.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="3dd04be48980d4f107c96f4d85f455de"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="CartesianObjectFactory.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="6b7413eac6d19893c8c9ae79ece4b42b"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystemFactoryException.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="fbdd879f86979db241fc837548ddc3d8"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystemFactory.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="8ba2c65f533f5ea5be696424c7d9cc0b"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObjectFactoryException.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="d8ce0cfcc1da0a3065d259c296000d03"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObjectFactory.html"
+   text-time="2007-04-19T16:19:18.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="410f7c3e52448514deafa6d333457237"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:18.000000Z"/>
+</wc-entries>

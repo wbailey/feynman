@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: FeynmanServer</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">FeynmanServer</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/feynman_server_rb.html">
+                lib/feynman_server.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>Synopsis</h2>
+<p>
+The Feynman Server is a web server that has the specific capability of
+executing simulations built using the Feyman Simulation Framework.
+</p>
+<h2>Usage</h2>
+<p>
+ruby feynman_server.rb [<a href="FeynmanServer.html#M000004">start</a>|<a
+href="FeynmanServer.html#M000005">stop</a>] [options]
+</p>
+<dl>
+<dt><tt>-p, &#8212;port</tt></dt><dd>- Which port to bind to
+
+</dd>
+<dt><tt>-d, &#8212;daemonize</tt></dt><dd>- Run daemonized in the background
+
+</dd>
+<dt><tt>-l, &#8212;<a href="FeynmanServer.html#M000002">log</a></tt></dt><dd>- Where to write the <a href="FeynmanServer.html#M000002">log</a> messages
+
+</dd>
+<dt><tt>-P, &#8212;pid</tt></dt><dd>- Where to write the PID file
+
+</dd>
+<dt><tt>-a, &#8212;address ADDR</tt></dt><dd>- Address to bind to (default: localhost)
+
+</dd>
+<dt><tt>-s, &#8212;storage</tt></dt><dd>- <a href="FeynmanServer/Storage.html">Storage</a> location (default:
+/usr/local/feynman/storage)
+
+</dd>
+<dt><tt>-C, &#8212;config PATH</tt></dt><dd>- Use a config file to specify server options
+
+</dd>
+<dt><tt>-f, &#8212;force</tt></dt><dd>- Issue KILL instead of TERM (specific to <a
+href="FeynmanServer.html#M000005">stop</a>)
+
+</dd>
+</dl>
+<h4>Examples</h4>
+<pre>
+  ruby feynman_server.rb start -C /usr/local/webservers/feynman/config/
+</pre>
+<h2>Author</h2>
+<p>
+Wes Bailey, wes@verticalresponse.com
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000003">load_settings</a>&nbsp;&nbsp;
+      <a href="#M000002">log</a>&nbsp;&nbsp;
+      <a href="#M000004">start</a>&nbsp;&nbsp;
+      <a href="#M000005">stop</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Module <a href="FeynmanServer/Storage.html" class="link">FeynmanServer::Storage</a><br />
+Class <a href="FeynmanServer/AuthenticateHandler.html" class="link">FeynmanServer::AuthenticateHandler</a><br />
+Class <a href="FeynmanServer/ServerHandler.html" class="link">FeynmanServer::ServerHandler</a><br />
+Class <a href="FeynmanServer/SimulationHandler.html" class="link">FeynmanServer::SimulationHandler</a><br />
+
+    </div>
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="FeynmanServer.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('FeynmanServer.src/M000003.html');return false;">
+          <span class="method-name">load_settings</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="FeynmanServer.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('FeynmanServer.src/M000002.html');return false;">
+          <span class="method-name">log</span><span class="method-args">( message )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+A pathetic little logger for the moment.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="FeynmanServer.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('FeynmanServer.src/M000004.html');return false;">
+          <span class="method-name">start</span><span class="method-args">( settings )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="FeynmanServer.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('FeynmanServer.src/M000005.html');return false;">
+          <span class="method-name">stop</span><span class="method-args">( settings )</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+See bin/mongrel_rails from the mongrel gem for where I got the ideas in
+this method.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

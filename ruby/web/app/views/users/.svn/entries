@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="157"
+   name=""
+   committed-date="2008-04-26T06:26:02.384962Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/ruby/web/app/views/users"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="157"
+   name="edit.html.erb"
+   text-time="2008-04-28T16:37:43.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="5ca75cf15731367e34755f6330f7d4ff"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:37:43.000000Z"/>
+<entry
+   committed-rev="157"
+   name="index.html.erb"
+   text-time="2008-04-28T16:37:43.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="fef9d67cbf6d8adfe9bd5fab28f61c18"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:37:43.000000Z"/>
+<entry
+   committed-rev="157"
+   name="new.html.erb"
+   text-time="2008-04-28T16:37:43.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="ea156b431a80bfb535b953995f4c65d7"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:37:43.000000Z"/>
+<entry
+   committed-rev="157"
+   name="show.html.erb"
+   text-time="2008-04-28T16:37:43.000000Z"
+   committed-date="2008-04-26T06:26:02.384962Z"
+   checksum="1bd5458239889996e34eb29bcae21a7e"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-04-28T16:37:43.000000Z"/>
+</wc-entries>

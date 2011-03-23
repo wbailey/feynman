@@ -1,0 +1,21 @@
+    <div id="footer">
+		Copyright &copy; 2002 Wesley H. Bailey.
+		<br/>
+		<p>
+		<span style="font-size:9px;">
+		Permission is granted to make and distribute verbatim copies of this online manual
+		provided the copyright notice and this permission notice are preserved on all copies.
+		<br/>
+		<br/>
+		Permission is granted to copy and distribute modified verions of this manual under the
+		conditions for veratim copying, provided also that the entire resulting derived work is
+		distrubuted under the terms of a psermission notice identical to this one.
+		<br/>
+		<br/>
+		Permission is granted to copy and distribute translations of this manual into another language,
+		under the above conditions for modified versions, except that this permission notice
+		may be stated in a translation approved by the 
+		<a href="http://www.fsf.org">Free Software Foundation</a>
+		</span>
+		</p>
+	</div>

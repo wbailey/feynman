@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="1"
+   name=""
+   committed-date="2007-04-19T05:01:46.855658Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/java/src/feynman/framework/system"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="1"
+   name="CartesianObject.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="19cf71b083a0008aa133d262f4256e83"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="SphericalObject.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="63559ae8fa7566c34ca21a05d3e82c78"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="CylindricalSystem.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="6a98d16d22864a1bf988b2a5c28c4295"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObject.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="33a73d40e30229fb6e03418dc3d3e8eb"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalConfiguration.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="d3b52f6718c405592b377176e45e6f9a"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystemFactory.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="ef3c48e2c476cfd27d8f459752bccb43"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObjectFactoryException.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="8a3d1362bc394cfc32de2a42b0d5dd9e"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="CylindricalObjectFactory.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="95fb25e62aa5efe5cb154eacdfd32679"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="CartesianSystem.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="41959946dfc5278152cf5b38d5b63a06"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="SphericalSystem.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="c58f492c4a157d4d97cebdb15324c2bc"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystem.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="436fba95d9d308851e593c3d2614e317"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalMeasurement.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="d99c14c43dd749e28902342a52b3c6ca"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalAlgorithm.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="0d2e2d0a801c69aaffe95944168256cf"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="CylindricalObject.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="3c63f17f4d1766c44aa4a9930145f2e2"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="FinalReport.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="7d3782eec225021eab40454f2bfb72c5"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalSystemFactoryException.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="29d43dd28e0fb322d163cd01654b5e41"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="CartesianObjectFactory.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="23cff1b2e27bf78a3d12f85a2659de85"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="SphericalObjectFactory.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="18c16ef62b0c8fbb90db688292e64e6a"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+<entry
+   committed-rev="1"
+   name="PhysicalObjectFactory.java"
+   text-time="2007-04-19T16:19:19.000000Z"
+   committed-date="2007-04-19T05:01:46.855658Z"
+   checksum="692dea70f94a21884752112efb627b54"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2007-04-19T16:19:19.000000Z"/>
+</wc-entries>

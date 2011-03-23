@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<title>Feynman Documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Script-Type" content="type"/>
+<meta name="description" content="Feynman Java Simulation Framework, a framework for developing simulation in Java"/>
+<meta name="keywords" content="Feynman, Java, Physics, Simulation, software, framework, GNU, Mac OS X, Windows, Unix, Linux"/>
+<link rel="stylesheet" href="doc.css"/>
+<link rel="start" href="index.html"/>
+<script type="text/javascript"> 
+function DynaWin(url, h, w, l, t) {
+	poph = + h + 70
+	popw = + w + 30
+	disp = window.open(url,"pop","height=" + poph + ",width=" + popw + ",left=" + l + ",top=" + t + "");
+}
+</script> 
+</head>
+<body>
+
+
+	<div id="docContent">
+		<p>
+		<h1>The Sample Application</h1>
+		Running the sample application requires that you at least have Sun's Java&trade; Java Runtime 
+		Environment (JRE) version 1.3 or later installed.  If your machine does not have at least the JRE
+		on it, then	download it from Sun's Java <a href="http://java.sun.com/download">download page</a>. 
+		If you want to build applications using the framework, then download the latest Java 2 Software
+		Development (SDK) Standard Edition.
+		<br/>
+		<br/>
+		To run the sample application first switch into the sample_app directory as shown
+<pre>
+wbailey:/tmp> cd sample_app/
+</pre>
+		After you are there make sure that the <b>feynman.jar</b> file is present and if it is, then
+		issue the following command:
+<pre>
+wbailey:/tmp/sample_app> java -jar feynman.jar config/Simulation.properties 
+</pre>
+		If Java is installed correctly on your machine, then everything should run without error and 
+		produce the following output exactly as it appears below:
+<pre>
+Using properties file: config/Simulation.properties
+Creating the physical system...created
+Configuring system using &lt;Setup&gt;...configured
+Configuring Algorithm using &lt;SimpleGravity&gt;...configured
+Configuring Physical Measurement using &lt;Measurement&gt;...configured
+Configuring the Persistent Data Source using &lt;file&gt;...complete
+Configuring the FinalReport using &lt;Report&gt;...complete
+Running simulation...complete
+
+---------- Simulation Report -----------
+max height:         5.05 m
+impact velocity:   -9.99 m/s
+total flight time:  2.04 s
+----------------------------------------
+</pre>
+		Congradulations!  Dr. Feynman would be proud of you because you just numerically simulated
+		a ball being launched up in the air under Newton's Law of Gravity.  You should also
+		notice that the sample application produced a data file that is in Comma Seperated Value
+		(CSV) format as shown below:
+<pre>
+wbailey:/tmp/sample_app> dir
+build.xml    classes/     config/      <b>data.csv</b>     feynman.jar  lib/         src/
+</pre>
+		The file has all of the measurement data that was taken during the simulation.  As you will learn
+		later, when you are developing an application you have the ability to specify what measurements will be
+		taken and how often they will be performed during the simulation.  The sample application has
+		specified to record the following data that appears in the following columns:
+		<ol>
+			<li><em>Time</em> - The elapsed time when the mearsurement was taken.</li>
+			<li><em>Height</em> - The y position of the ball.</li>
+			<li><em>Kinetic Energy</em></li>
+			<li><em>Potential Energy</em></li>
+			<li><em>Total Energy</em></li>
+		</ol>
+		The first ten lines of the <b>data.csv</b> file are listed below:
+<pre>
+wbailey:/tmp/sample_app> head data.csv 
+000000000.01, 000000000.10, 000000000.97, 000000049.02, 000000050.00
+000000000.03, 000000000.29, 000000002.88, 000000047.10, 000000049.99
+000000000.05, 000000000.49, 000000004.76, 000000045.22, 000000049.98
+000000000.07, 000000000.67, 000000006.59, 000000043.38, 000000049.97
+000000000.09, 000000000.86, 000000008.39, 000000041.57, 000000049.96
+000000000.11, 000000001.04, 000000010.15, 000000039.80, 000000049.95
+000000000.13, 000000001.21, 000000011.87, 000000038.07, 000000049.94
+000000000.15, 000000001.38, 000000013.55, 000000036.38, 000000049.93
+000000000.17, 000000001.55, 000000015.19, 000000034.73, 000000049.92
+000000000.19, 000000001.71, 000000016.80, 000000033.11, 000000049.91
+</pre>
+		For further analysis the data could be imported into a spreadsheet like Microsoft Excel&trade; or
+		another equivalent free graphing utility like <a href="http://www.gnuplot.info">gnuplot</a> available
+		for free under the GNU General Public License (GPL) written by the
+		<a href="http://www.fsf.org">Free Software Foundation</a>.  If you have never used gnuplot, then
+		copy the following into your favorite editor and save as <b>using.gnu</b>:
+<pre>
+set title "Energy Plot"
+set key below box
+set xrange [0:2.1]
+set yrange [0:55]
+set xlabel 'Time (Sec)'
+set ylabel 'Energy (Joule)'
+plot 'data.csv' using 1:3 title "Kinetic" with lines,\
+     'data.csv' using 1:4 title "Potential" with lines;
+</pre>
+		After you save the file, start gnuplot from the shell command prompt and type the
+		following:
+<pre>
+wbailey:/tmp/sample_app> gnuplot
+
+	G N U P L O T
+	Macintosh version 3.7
+	patchlevel 1
+	last modified Fri Oct 22 18:00:00 BST 1999
+
+	Copyright(C) 1986 - 1993, 1998, 1999
+	Thomas Williams, Colin Kelley and many others
+
+	Type `help` to access the on-line reference manual
+	The gnuplot FAQ is available from
+	&lt;http://www.ucc.ie/gnuplot/gnuplot-faq.html&gt;
+
+	Send comments and requests for help to &lt;info-gnuplot@dartmouth.edu&gt;
+	Send bugs, suggestions and mods to &lt;bug-gnuplot@dartmouth.edu&gt;
+
+
+Terminal type set to 'pict'
+gnuplot> cd '/tmp/sample_app'
+gnuplot> load 'using.gnu'
+gnuplot>
+</pre>
+		The first command tells gnuplot to change the specified directory where the <b>data.csv</b> and
+		<b>using.gnu</b> files are located.  The next step tells it to load the file that has all of the
+		plotting commnds in it.  Note the the directory and filename are surrounded by <em>single</em> 
+		quotes.  Double quotes should work as well.  Lack of quotes will produce an error.  If everything
+		is done correctly, the you should see the following plot appear as shown below:
+		</p>
+		<p align="center">
+			<img src="images/energy.png" alt="Energy Plot" width="500" height="450" />
+		</p>
+    <div id="footer">
+		Copyright &copy; 2002 Wesley H. Bailey.
+		<br/>
+		<p>
+		<span style="font-size:9px;">
+		Permission is granted to make and distribute verbatim copies of this online manual
+		provided the copyright notice and this permission notice are preserved on all copies.
+		<br/>
+		<br/>
+		Permission is granted to copy and distribute modified verions of this manual under the
+		conditions for veratim copying, provided also that the entire resulting derived work is
+		distrubuted under the terms of a psermission notice identical to this one.
+		<br/>
+		<br/>
+		Permission is granted to copy and distribute translations of this manual into another language,
+		under the above conditions for modified versions, except that this permission notice
+		may be stated in a translation approved by the 
+		<a href="http://www.fsf.org">Free Software Foundation</a>
+		</span>
+		</p>
+	</div>
+
+	</div>
+	<div id="docMenu">
+		<p class="title">Menu</p>
+		<p><a href="index.html">Getting Started</a></p>
+		<p><a href="running.html">Running the Sample Application</a></p>
+		<p><a href="controller.html">Controller Overview</a></p>
+		<p><a href="framework.html">Framework Design</a></p>
+		<p><a href="sample.html">Sample Application Development</a></p>
+		<p class="last"><a href="properties.html">Properties File Configuration</a></p>
+	</div>
+
+</body>
+</html>
+
+
+

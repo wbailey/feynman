@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="157"
+   name=""
+   committed-date="2008-04-26T06:26:02.384962Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/ruby/auth/tmp"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   name="pids"
+   kind="dir"/>
+<entry
+   name="cache"
+   kind="dir"/>
+<entry
+   name="sessions"
+   kind="dir"/>
+<entry
+   name="sockets"
+   kind="dir"/>
+</wc-entries>

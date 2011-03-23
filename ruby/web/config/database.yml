@@ -1,0 +1,17 @@
+conn_defaults: &conn_defaults
+  adapter: mysql
+  username: feynman
+  password: feynman
+  host: localhost
+
+development:
+  database: feynman_dev
+  <<: *conn_defaults
+
+test:
+  database: feynman_test
+  <<: *conn_defaults
+
+production:
+  database: feynman
+  <<: *conn_defaults

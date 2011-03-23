@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>process (FeynmanServer::SimulationHandler)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/feynman_server.rb, line 217</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process</span>( <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span> )
+      <span class="ruby-identifier">errors</span>, <span class="ruby-identifier">run</span> = [], {}
+
+      <span class="ruby-identifier">log</span> <span class="ruby-value str">'-- Simulation request start --'</span>
+
+      <span class="ruby-comment cmt"># Simply parse the request.</span>
+      <span class="ruby-comment cmt">#ignore_me, run[:user_hash], run[:module_filename], run[:data_filename] = request.params[Mongrel::Const::PATH_INFO].split( '/' )</span>
+
+      <span class="ruby-identifier">run</span> = <span class="ruby-identifier">parse_params</span>( <span class="ruby-identifier">request</span> )
+
+      <span class="ruby-comment cmt"># Validate the required request parameters.</span>
+      <span class="ruby-identifier">run</span>.<span class="ruby-identifier">each_key</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;#{k.to_s}: #{run[k]}&quot;</span>
+
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">k</span>
+          <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:user_hash</span>, <span class="ruby-identifier">:module_filename</span>
+            <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{k.to_s} must be defined in the request.&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">run</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">nil?</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># This may not be a valid path, but it will never fail.  Also note that we </span>
+      <span class="ruby-comment cmt"># put it first in the list because at the end of the simulation we remove it</span>
+      <span class="ruby-comment cmt"># to prevent polluting the server's load path after processing a lot of</span>
+      <span class="ruby-comment cmt"># simulation requests.</span>
+      <span class="ruby-identifier">$LOAD_PATH</span>.<span class="ruby-identifier">unshift</span>( <span class="ruby-constant">Storage</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span><span class="ruby-operator">::</span><span class="ruby-constant">Dir</span>.<span class="ruby-identifier">lib</span>( <span class="ruby-identifier">run</span>[<span class="ruby-identifier">:user_hash</span>] ) )
+
+      <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Added #{Storage::User::Dir.lib( run[:user_hash] )} to $LOAD_PATH&quot;</span>
+
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-identifier">require</span> <span class="ruby-constant">Storage</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">simulation</span>( <span class="ruby-identifier">run</span>[<span class="ruby-identifier">:user_hash</span>], <span class="ruby-identifier">run</span>[<span class="ruby-identifier">:module_filename</span>] )
+      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">LoadError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+        <span class="ruby-identifier">log</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+        <span class="ruby-identifier">errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">message</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">respond</span>( <span class="ruby-identifier">response</span>, <span class="ruby-value">412</span>, <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">join</span>( <span class="ruby-value str">&quot;\n&quot;</span> ) )
+        <span class="ruby-identifier">log</span> <span class="ruby-value str">'-- request end --'</span>
+        <span class="ruby-keyword kw">return</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># For now we are adopting the convention that the module's filename can be used</span>
+      <span class="ruby-comment cmt"># to derive the class name it contains using the simple rule:</span>
+      <span class="ruby-comment cmt">#</span>
+      <span class="ruby-comment cmt"># projectile_motion =&gt; ProjectileMotion</span>
+      <span class="ruby-identifier">classname</span> = <span class="ruby-identifier">run</span>[<span class="ruby-identifier">:module_filename</span>].<span class="ruby-identifier">split</span>( <span class="ruby-value str">'_'</span> ).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">capitalize</span> }.<span class="ruby-identifier">join</span>
+
+      <span class="ruby-comment cmt"># Through the cleverness of the simulation framework we can use this procedure</span>
+      <span class="ruby-comment cmt"># to run the specified simulation.  Example: invoker.call =&gt; ProjectileMotion.execute</span>
+      <span class="ruby-identifier">invoker</span> = <span class="ruby-identifier">lambda</span> { <span class="ruby-constant">Class</span>.<span class="ruby-identifier">const_get</span>( <span class="ruby-identifier">classname</span> ).<span class="ruby-identifier">send</span>( <span class="ruby-value str">'execute'</span> ) }
+
+      <span class="ruby-comment cmt"># The simulation framework uses STDOUT as well so lets ensure that we write to the</span>
+      <span class="ruby-comment cmt"># correct output pipe for the simulation but then have the ability to have the</span>
+      <span class="ruby-comment cmt"># server write to the correct pipe after it has completed.</span>
+      <span class="ruby-identifier">restore_stdout_to</span> = <span class="ruby-identifier">$stdout</span>.<span class="ruby-identifier">clone</span>
+
+      <span class="ruby-comment cmt"># NOTE: background jobs should probably be explicitly defined in the request by more</span>
+      <span class="ruby-comment cmt"># than just the existence of a filename for the data.</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">run</span>[<span class="ruby-identifier">:data_filename</span>]
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">pid</span> = <span class="ruby-identifier">fork</span> <span class="ruby-keyword kw">do</span>
+            <span class="ruby-comment cmt"># This will direct STDOUT in the child process to this file instead of its current setting.</span>
+            <span class="ruby-identifier">$stdout</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>( <span class="ruby-constant">Storage</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">data</span>( <span class="ruby-identifier">run</span>[<span class="ruby-identifier">:user_hash</span>], <span class="ruby-identifier">run</span>[<span class="ruby-identifier">:data_filename</span>] ), <span class="ruby-value str">'w'</span> )
+
+            <span class="ruby-comment cmt"># Run the simulation in the child process.</span>
+            <span class="ruby-identifier">invoker</span>.<span class="ruby-identifier">call</span>
+          <span class="ruby-keyword kw">end</span>
+
+          <span class="ruby-comment cmt"># We are not Zombies so reap the child process</span>
+          <span class="ruby-constant">Process</span>.<span class="ruby-identifier">detach</span>( <span class="ruby-identifier">pid</span> )
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+          <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Background job failed: #{e.message}&quot;</span>
+
+          <span class="ruby-identifier">respond</span>( <span class="ruby-identifier">response</span>, <span class="ruby-value">500</span>, <span class="ruby-node">&quot;Internal Server Error: #{e.message}&quot;</span> )
+          <span class="ruby-keyword kw">return</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-comment cmt"># The background job has been successfully invoked so let the caller</span>
+        <span class="ruby-comment cmt"># know its all good.</span>
+        <span class="ruby-identifier">respond</span>( <span class="ruby-identifier">response</span>, <span class="ruby-value">200</span>, <span class="ruby-identifier">pid</span> )
+
+        <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Background Job PID: #{pid}&quot;</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">log</span> <span class="ruby-value str">'Running simulation...'</span>
+
+        <span class="ruby-comment cmt"># NOTE: What happens if the simulation fails for some reason?</span>
+        <span class="ruby-comment cmt"># Lets create a happy csv.</span>
+        <span class="ruby-identifier">response</span>.<span class="ruby-identifier">start</span>( <span class="ruby-value">200</span> ) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">head</span>, <span class="ruby-identifier">buffer</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">head</span>[<span class="ruby-constant">Mongrel</span><span class="ruby-operator">::</span><span class="ruby-constant">Const</span><span class="ruby-operator">::</span><span class="ruby-constant">CONTENT_TYPE</span>] = <span class="ruby-value str">'application/save-as'</span>
+          <span class="ruby-identifier">head</span>[<span class="ruby-constant">Mongrel</span><span class="ruby-operator">::</span><span class="ruby-constant">Const</span><span class="ruby-operator">::</span><span class="ruby-constant">CONTENT_DISPOSITION</span>] = <span class="ruby-node">&quot;attachment; filename=#{run[:module_filename]}.csv&quot;</span>
+
+          <span class="ruby-comment cmt"># STDOUT is used by the simulation framework to output results so we</span>
+          <span class="ruby-comment cmt"># override this to go the body of our document.</span>
+          <span class="ruby-identifier">$stdout</span> = <span class="ruby-identifier">buffer</span>
+
+          <span class="ruby-identifier">invoker</span>.<span class="ruby-identifier">call</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-identifier">log</span> <span class="ruby-value str">'complete'</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># We don't need the current lib path around in the server's path.</span>
+      <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Removed #{Storage::User::Dir.lib( run[:user_hash] )} from $LOAD_PATH&quot;</span>
+
+      <span class="ruby-identifier">$LOAD_PATH</span>.<span class="ruby-identifier">shift</span>
+
+      <span class="ruby-comment cmt"># Back to the server's stream</span>
+      <span class="ruby-identifier">$stdout</span> = <span class="ruby-identifier">restore_stdout_to</span>
+
+      <span class="ruby-identifier">log</span> <span class="ruby-value str">'-- request end --'</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

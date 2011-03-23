@@ -1,0 +1,36 @@
+<html
+<head>
+<script type="text/javascript" src="data.js"></script>
+<script>
+var ctx;
+var frame = 0;
+
+function drawCircle( x, y ) {
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, 2 * Math.PI, true);
+  ctx.fill();
+}
+
+function init() {
+  ctx = document.getElementById( 'simulation' ).getContext( '2d' );
+  animate();
+}
+
+function animate() {
+  if ( frame < data.length ) {
+      ctx.clearRect( 0, 0, screen_width, screen_height );
+      drawCircle( data[frame][0].x, data[frame][0].y );
+      drawCircle( data[frame][1].x, data[frame][1].y );
+      frame++;
+      setTimeout( 'animate()', 15 );
+  }
+}
+</script>
+<style>
+  canvas { border: 1px solid black; }
+</style>
+</head>
+<body onload="init();">
+<canvas id="simulation" width="800" height="600"></canvas>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="97"
+   name=""
+   committed-date="2008-03-15T04:59:20.777861Z"
+   url="https://feynman.svn.sourceforge.net/svnroot/feynman/ruby/framework/src"
+   last-author="wesley_bailey"
+   kind="dir"
+   uuid="6c6cf199-6f2e-0410-9f3c-84f09332fe18"
+   repos="https://feynman.svn.sourceforge.net/svnroot/feynman"
+   revision="163"/>
+<entry
+   committed-rev="97"
+   name="run_feynman.rb"
+   text-time="2008-03-17T16:24:04.000000Z"
+   committed-date="2008-03-15T04:59:20.777861Z"
+   checksum="483438f96182f5ba80e67a8512bcad49"
+   last-author="wesley_bailey"
+   kind="file"
+   prop-time="2008-03-17T16:24:04.000000Z"/>
+</wc-entries>
