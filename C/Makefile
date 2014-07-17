@@ -14,7 +14,10 @@ $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -I $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) runner.c
 
 $(SRC):
-	$(MAKE) -C $@ all
+	$(MAKE) -e "CFLAGS=$(CFLAGS)" -C $@ all
+
+debug: CFLAGS += -DDEBUG -g
+debug: build
 
 clean:
 	$(MAKE) -is -C $(SRC) clean

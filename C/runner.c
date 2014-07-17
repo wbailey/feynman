@@ -5,23 +5,23 @@
 static const int collection_size = 2;
 
 int main() {
-  BallCollection *collection;
+  BallCollection *ball;
   int i,j;
 
-  collection = new_BallCollection(collection_size);
+  ball = new_BallCollection(collection_size);
 
   for (i = 0; i<1000; i++) {
     for (j = 0; j<2; j++) {
-      collection[j]->x += 0.1;
+      ball[j]->x += 0.1;
     }
   }
 
   for (j = 0; j < collection_size; j++) {
-    Ball_to_string(collection[j]);
+    toString_Ball(ball[j]);
     printf("\n");
   }
 
-  destroy_BallCollection(collection);
+  destroy_BallCollection(ball);
 
   return 0;
 }

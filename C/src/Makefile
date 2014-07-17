@@ -10,8 +10,11 @@ INCLUDE = ../include
 all: $(OBJS)
 	@echo Source objects have been compiled
 
+debug: CFLAGS += -DDEBUG -g
+debug: all
+
 .c.o:
-	$(CC) -I $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
 
 clean:
 	rm *.o

@@ -14,7 +14,7 @@ Ball * new_Ball() {
 
 BallCollection * new_BallCollection(int count) {
   BallCollection *collection;
-  int i,j;
+  int i;
 
   collection = malloc(sizeof(Ball) * count);
 
@@ -30,7 +30,7 @@ BallCollection * new_BallCollection(int count) {
 void destroy_BallCollection(BallCollection *collection) {
   int i;
 
-  for (i = 0; i < sizeof(collection); i++) {
+  for (i = 0; i < sizeof(collection)/sizeof(collection[0]); i++) {
     destroy_Ball(collection[i]);
   }
 
@@ -38,10 +38,11 @@ void destroy_BallCollection(BallCollection *collection) {
 }
 
 void destroy_Ball(struct Ball *ball) {
+  assert(ball != NULL);
   free(ball);
 }
 
-void Ball_to_string(struct Ball *ball) {
+void toString_Ball(struct Ball *ball) {
   printf("x: %12.8f\n", ball->x);
   printf("y: %12.8f\n", ball->y);
   printf("z: %12.8f\n", ball->z);
