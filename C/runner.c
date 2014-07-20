@@ -16,10 +16,8 @@ int main() {
 
   // Initial Conditions
   ball[0]->y = 10.0;
-
   ball[1]->y = 10.0;
   ball[1]->vx = 5.0;
-
 
   ball[0]->ay = -g;
   ball[1]->ay = -g;
