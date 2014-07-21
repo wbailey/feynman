@@ -4,8 +4,6 @@
 
 static const int collection_size = 2;
 
-
-
 int main() {
   BallCollection *ball;
   const double g = 9.8, dt = 0.01;
