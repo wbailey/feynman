@@ -25,6 +25,16 @@ void initialize(BallCollection *ball) {
   ball[1]->vx = 5.0;
 }
 
+void report(double t, BallCollection *ball) {
+  printf("%12.6f ", t);
+
+  for (int j = 0; j < collection_size; j++) {
+    printf("%12.6f %12.6f ", ball[j]->x, ball[j]->y);
+  }
+
+  printf("\n");
+}
+
 int main() {
   BallCollection *ball;
   const double dt = 0.01;
@@ -36,14 +46,12 @@ int main() {
   initialize(ball);
 
   while (ball[0]->y > 0.0 && ball[1]->y > 0.0) {
-    printf("%12.6f ", t);
 
-    for (j = 0; j < 2; j++) {
+    for (j = 0; j < collection_size; j++) {
       euler(ball[j], dt);
-      printf("%12.6f %12.6f ", ball[j]->x, ball[j]->y);
     }
 
-    printf("\n");
+    report(t, ball);
 
     t += dt;
   }
