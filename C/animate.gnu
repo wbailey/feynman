@@ -1,5 +1,5 @@
 set xrange [-1:10]
-set yrange [0:11]
+set yrange [-1:11]
 num_lines="`wc -l data.csv`"
 
 #set terminal png

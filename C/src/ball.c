@@ -28,9 +28,7 @@ BallCollection * new_BallCollection(int count) {
 }
 
 void destroy_BallCollection(BallCollection *collection) {
-  int i;
-
-  for (i = 0; i < sizeof(collection)/sizeof(collection[0]); i++) {
+  for (int i = 0; i <= sizeof(collection)/sizeof(collection[0]); i++) {
     destroy_Ball(collection[i]);
   }
 
