@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "ball.h"
+#include "report.h"
 
 static const int collection_size = 2;
 
@@ -25,35 +25,32 @@ void initialize(BallCollection *ball) {
   ball[1]->vx = 5.0;
 }
 
-void report(double t, BallCollection *ball) {
-  printf("%12.6f ", t);
-
-  for (int j = 0; j < collection_size; j++) {
-    printf("%12.6f %12.6f ", ball[j]->x, ball[j]->y);
-  }
-
-  printf("\n");
-}
-
 int main() {
   BallCollection *ball;
   const double dt = 0.01;
   double t = 0.0;
   int j;
 
+  struct Report *report = malloc(sizeof(struct Report));
+
   ball = new_BallCollection(collection_size);
 
   initialize(ball);
 
-  while (ball[0]->y > 0.0 && ball[1]->y > 0.0) {
+  report->t = t; report->ball = ball;
 
+  run_report(report);
+
+  while (ball[0]->y > 0.0 && ball[1]->y > 0.0) {
     for (j = 0; j < collection_size; j++) {
       euler(ball[j], dt);
     }
 
-    report(t, ball);
-
     t += dt;
+
+    report->t = t; report->ball = ball;
+
+    run_report(report);
   }
 
   destroy_BallCollection(ball);
