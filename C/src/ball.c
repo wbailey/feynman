@@ -13,10 +13,9 @@ Ball * new_Ball() {
 }
 
 BallCollection * new_BallCollection(int count) {
-  BallCollection *collection;
+  BallCollection *collection = malloc(sizeof(Ball) * count);
   int i;
 
-  collection = malloc(sizeof(Ball) * count);
 
   assert(collection != NULL);
 

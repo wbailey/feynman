@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <report.h>
+#include "report.h"
 
 void run_report(Report *report) {
   printf("%12.6f ", report->t);

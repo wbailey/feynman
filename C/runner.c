@@ -37,7 +37,9 @@ int main() {
 
   initialize(ball);
 
-  report->t = t; report->ball = ball;
+  report->maxHeight = ball[0]->y;
+  report->t = t;
+  report->ball = ball;
 
   run_report(report);
 
@@ -52,6 +54,8 @@ int main() {
 
     run_report(report);
   }
+
+  report->flightTime = t;
 
   destroy_BallCollection(ball);
 
