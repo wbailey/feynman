@@ -20,9 +20,9 @@ void euler(Ball *ball, double dt) {
 
 void initialize(BallCollection *ball) {
   // Initial Conditions
-  ball[0]->y = 10.0;
-  ball[1]->y = 10.0;
+  ball[0]->vy = 5.0;
   ball[1]->vx = 5.0;
+  ball[1]->vy = 5.0;
 }
 
 int main() {
@@ -37,25 +37,31 @@ int main() {
 
   initialize(ball);
 
-  report->maxHeight = ball[0]->y;
   report->t = t;
   report->ball = ball;
 
   run_report(report);
 
-  while (ball[0]->y > 0.0 && ball[1]->y > 0.0) {
+  while (ball[0]->y >= 0.0 && ball[1]->y >= 0.0) {
     for (j = 0; j < collection_size; j++) {
+      ball[j]->vyold = ball[j]->vy;
+
       euler(ball[j], dt);
+
+      if (ball[j]->vyold * ball[j]->vy < 0 )
+        ball[j]->maxheight = ball[j]->y;
     }
 
     t += dt;
 
-    report->t = t; report->ball = ball;
+    report->t = t;
+    report->ball = ball;
 
     run_report(report);
   }
 
   report->flightTime = t;
+  report->maxHeight = ball[0]->maxheight;
 
   destroy_BallCollection(ball);
 

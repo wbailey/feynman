@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall
-TARGET = runner
+TARGET = ball_runner
 INCLUDE = include
 SRC = src
 
@@ -11,7 +11,7 @@ build: $(TARGET)
 	@echo Simulation runner has been generated
 
 $(TARGET): $(SRC)
-	$(CC) $(CFLAGS) -I $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) runner.c
+	$(CC) $(CFLAGS) -I $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
 
 $(SRC):
 	$(MAKE) -e "CFLAGS=$(CFLAGS)" -C $@ all

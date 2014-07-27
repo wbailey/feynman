@@ -1,2 +1,4 @@
 **/*.o
 **/*.gif
+**/*.csv
+ball_runner
