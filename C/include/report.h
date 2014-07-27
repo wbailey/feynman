@@ -7,4 +7,10 @@ typedef struct Report {
   double flightTime;
 } Report;
 
-void run_report(Report *);
+Report * new_Report(double t, BallCollection *ball);
+
+void run_Report(Report *);
+
+void destroy_Report(Report *);
+
+void final_Report(Report *);

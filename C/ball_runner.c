@@ -27,20 +27,17 @@ void initialize(BallCollection *ball) {
 
 int main() {
   BallCollection *ball;
+  Report *report;
   const double dt = 0.01;
   double t = 0.0;
   int j;
 
-  struct Report *report = malloc(sizeof(struct Report));
-
   ball = new_BallCollection(collection_size);
+  report = new_Report(t, ball);
 
   initialize(ball);
 
-  report->t = t;
-  report->ball = ball;
-
-  run_report(report);
+  run_Report(report);
 
   while (ball[0]->y >= 0.0 && ball[1]->y >= 0.0) {
     for (j = 0; j < collection_size; j++) {
@@ -57,12 +54,15 @@ int main() {
     report->t = t;
     report->ball = ball;
 
-    run_report(report);
+    run_Report(report);
   }
 
   report->flightTime = t;
   report->maxHeight = ball[0]->maxheight;
 
+  final_Report(report);
+
+  destroy_Report(report);
   destroy_BallCollection(ball);
 
   return 0;

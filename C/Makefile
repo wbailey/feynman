@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall
+CFLAGS = -Wall -g
 TARGET = ball_runner
 INCLUDE = include
 SRC = src

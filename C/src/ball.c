@@ -8,6 +8,20 @@ Ball * new_Ball() {
   struct Ball *ball = malloc(sizeof(struct Ball));
 
   ball->x = 0.0;
+  ball->y = 0.0;
+  ball->z = 0.0;
+
+  ball->maxheight = -1.0;
+
+  ball->vx = 0.0;
+  ball->vy = 0.0;
+  ball->vz = 0.0;
+
+  ball->vyold = 0.0;
+
+  ball->ax = 0.0;
+  ball->ay = 0.0;
+  ball->az = 0.0;
 
   return ball;
 }
