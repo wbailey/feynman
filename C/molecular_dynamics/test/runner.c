@@ -1,6 +1,9 @@
 #include "minunit.h"
+#include "particle.h"
 
 char *test_particle() {
+  Particle *particle = new_Particle();
+
   return NULL;
 }
 

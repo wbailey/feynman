@@ -3,8 +3,9 @@ CFLAGS = -Wall
 TARGET = md
 INCLUDE = include
 SRC = src
+TEST = test
 
-.PHONY: clean $(SRC)
+.PHONY: clean $(SRC) $(TEST)
 .SILENT: clean
 
 build: $(TARGET)
@@ -18,6 +19,10 @@ $(SRC):
 
 debug: CFLAGS += -DDEBUG -g
 debug: build
+
+$(TEST):
+	$(MAKE) -C $@ clean all run
+
 
 clean:
 	$(MAKE) -is -C $(SRC) clean

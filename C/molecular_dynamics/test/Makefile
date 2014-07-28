@@ -1,27 +1,19 @@
 CC = gcc
 CFLAGS = -Wall
 TARGET=runner
-SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.o)
 INCLUDE = ../include
 
-.PHONY: clean
+.PHONY: clean run
 .SILENT: clean
 
-build: $(TARGET)
-	@echo Simulation runner has been generated
+all: $(TARGET)
+	@echo Test runner has been generated
 
-$(TARGET): $(SRC)
+$(TARGET):
 	$(CC) $(CFLAGS) -I $(INCLUDE) -o $(TARGET) $(TARGET).c
 
-all: $(OBJS)
-	@echo Source objects have been compiled
-
-debug: CFLAGS += -DDEBUG -g
-debug: all
-
-.c.o:
-	$(CC) $(CFLAGS) -I $(INCLUDE) -c $< -o $@
+run:
+	./$(TARGET)
 
 clean:
-	rm *.o
+	rm $(TARGET)
