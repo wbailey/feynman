@@ -2,7 +2,10 @@
 #include "particle.h"
 
 char *test_particle() {
-  Particle *particle = new_Particle();
+  Particle *particle1 = new_Particle();
+  Particle *particle2 = new_Particle();
+
+  mu_assert( particle1 != particle2, "Equivalent Particles"); 
 
   return NULL;
 }
