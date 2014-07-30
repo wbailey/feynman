@@ -17,9 +17,6 @@ $(TARGET): $(SRC)
 $(SRC):
 	$(MAKE) -e "CFLAGS=$(CFLAGS)" -C $@ all
 
-debug: CFLAGS += -DDEBUG -g
-debug: build
-
 $(TEST):
 	$(MAKE) -C $@ clean all run
 
