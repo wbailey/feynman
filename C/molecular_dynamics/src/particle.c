@@ -26,7 +26,6 @@ ParticleCollection * new_ParticleCollection(int count) {
   ParticleCollection *collection = malloc(sizeof(Particle) * count);
   int i;
 
-
   assert(collection != NULL);
 
   for (i = 0; i < count; i++) {

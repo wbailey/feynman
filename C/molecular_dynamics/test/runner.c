@@ -1,6 +1,7 @@
 #include "minunit.h"
 #include "particle.h"
 
+
 char *test_particle() {
   Particle *particle1 = new_Particle();
   Particle *particle2 = new_Particle();
@@ -10,10 +11,15 @@ char *test_particle() {
   return NULL;
 }
 
+char *test_collection() {
+  return NULL;
+}
+
 char *all_tests() {
     mu_suite_start();
 
     mu_run_test(test_particle);
+    mu_run_test(test_collection);
 
     return NULL;
 }
