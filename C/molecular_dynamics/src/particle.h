@@ -1,3 +1,6 @@
+#ifndef _PARTICLE_H
+#define _PARTICLE_H
+
 typedef struct Particle {
   double x;
   double y;
@@ -22,3 +25,4 @@ void toString_Particle(struct Particle *);
 
 ParticleCollection * new_ParticleCollection(int);
 
+#endif

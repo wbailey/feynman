@@ -14,7 +14,7 @@ $(TARGET):
 	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
 
 run:
-	./$(TARGET)
+	- ./$(TARGET)
 
 clean:
 	- rm $(TARGET)

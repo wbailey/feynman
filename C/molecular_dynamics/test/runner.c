@@ -12,6 +12,9 @@ char *test_particle() {
 }
 
 char *test_collection() {
+  ParticleCollection *collection = new_ParticleCollection(10);
+
+  mu_assert( sizeof(collection)/sizeof(collection[0]) == 10, "incorrect collection size" );
   return NULL;
 }
 
