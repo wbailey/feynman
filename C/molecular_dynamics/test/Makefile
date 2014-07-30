@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 TARGET=runner
-INCLUDE = ../include
+INCLUDE = -I "../include" -I "../src"
 SRC = ../src
 
 .PHONY: clean run
@@ -11,10 +11,11 @@ all: $(TARGET)
 	@echo Test runner has been generated
 
 $(TARGET):
-	$(CC) $(CFLAGS) -I $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
+	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
 
 run:
 	./$(TARGET)
 
 clean:
-	rm $(TARGET)
+	- rm $(TARGET)
+	@echo All test temporary files have been removed

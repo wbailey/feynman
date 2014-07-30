@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 TARGET = md
-INCLUDE = include
+INCLUDE = -I "include" -I "src"
 SRC = src
 TEST = test
 
@@ -12,16 +12,16 @@ build: $(TARGET)
 	@echo Simulation runner has been generated
 
 $(TARGET): $(SRC)
-	$(CC) $(CFLAGS) -I $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
+	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
 
 $(SRC):
-	$(MAKE) -e "CFLAGS=$(CFLAGS)" -C $@ all
+	$(MAKE) -C $@ all
 
 $(TEST):
 	$(MAKE) -C $@ clean all run
 
-
 clean:
 	$(MAKE) -is -C $(SRC) clean
+	$(MAKE) -is -C $(TEST) clean
 	- rm $(TARGET)
 	@echo All temporary files have been removed
