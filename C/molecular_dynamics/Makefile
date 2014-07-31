@@ -8,8 +8,13 @@ TEST = test
 .PHONY: clean $(SRC) $(TEST)
 .SILENT: clean
 
+all: clean build run
+
 build: $(TARGET)
 	@echo Simulation runner has been generated
+
+run:
+	$(PWD)/$(TARGET)
 
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
