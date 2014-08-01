@@ -25,7 +25,7 @@ int main(void) {
 
   initialize(particle);
 
-  for (int i = 0; i < 100; i++) {
+  for (int i = 0; i < 500; i++) {
     r = abs(particle[0]->x - particle[1]->x);
     force = LJ_Force(r);
 
@@ -34,7 +34,7 @@ int main(void) {
 
     t += dt;
 
-    printf("%12.6f %12.6f %12.6f %12.6f\n", t, force, particle[0]->x, particle[1]->x);
+    printf("%12.6f %12.6f %12.6f %12.6f %12.6f %12.6f\n", t, force, particle[0]->x, particle[0]->y, particle[1]->x, particle[1]->y);
   }
 
   destroy_ParticleCollection(particle);
