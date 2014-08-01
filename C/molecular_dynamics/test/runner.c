@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "minunit.h"
-#include "lennard_jones.h"
-#include "particle.h"
+#include "simulation.h"
 
 char *test_lennard_jones_force_calculation() {
   double r = 5.0;
   double force = 0.0;
+  double force_at_sigma = -24.0 * LJ_Epsilon / LJ_Sigma;
   char result[10];
   char expectation[10] = "0.380";
 
@@ -15,7 +15,15 @@ char *test_lennard_jones_force_calculation() {
   mu_assert(strcmp(result, expectation) == 0, "invalid force calculation");
 
   force = LJ_Force(LJ_Sigma);
-  mu_assert(force == 0, "The force should be 0.0 at Sigma");
+  mu_assert(force == force_at_sigma, "The force should be 0.0 at Sigma");
+
+  return NULL;
+}
+
+char *test_lennard_jones_potential_energy_calculation() {
+  double pe = LJ_Potential_Energy(LJ_Sigma);
+
+  mu_assert(pe == 0, "Potential energy at Sigma should be 0.0");
 
   return NULL;
 }
@@ -47,6 +55,7 @@ char *all_tests() {
     mu_run_test(test_particle_uniqueness);
     mu_run_test(test_collection_intialization);
     mu_run_test(test_lennard_jones_force_calculation);
+    mu_run_test(test_lennard_jones_potential_energy_calculation);
 
     return NULL;
 }

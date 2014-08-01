@@ -3,16 +3,24 @@
 #include <assert.h>
 #include "lennard_jones.h"
 
-double LJ_Force(double r) {
-  double force, r6, r12;
+double LJ_R6(double r) {
+  return pow(LJ_Sigma/r, 6);
+}
 
+double LJ_R12(double r) {
+  return pow(LJ_R6(r), 2);
+}
+
+double LJ_Force(double r) {
   assert(LJ_Epsilon != 0);
   assert(LJ_Sigma != 0);
 
-  r6 = pow(LJ_Sigma/r, 6);
-  r12 = pow(r6, 2);
+  return -(24.0 * LJ_Epsilon/r) * (2.0 * LJ_R12(r) - LJ_R6(r));
+}
 
-  force = -(24.0 * LJ_Epsilon/r) * (2.0 * r12 - r6);
+double LJ_Potential_Energy(double r) {
+  assert(LJ_Epsilon != 0);
+  assert(LJ_Sigma != 0);
 
-  return force;
+  return 4.0 * LJ_Epsilon * (LJ_R12(r) - LJ_R6(r));
 }
