@@ -19,10 +19,12 @@ typedef Particle *ParticleCollection;
 
 Particle * new_Particle();
 
-void destroy_Particle(struct Particle *);
+void destroy_Particle(Particle *);
 
-void toString_Particle(struct Particle *);
+void toString_Particle(Particle *);
 
 ParticleCollection * new_ParticleCollection(int);
+
+void destroy_ParticleCollection(ParticleCollection *);
 
 #endif
