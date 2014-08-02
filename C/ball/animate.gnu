@@ -13,7 +13,7 @@ do for [i=1:num_lines] {
 #  set output sprintf('png/animate%03.0f.png',i)
   plot 'data2.csv' every 1::i-1::i using 2:3 w cir lc 000000 title '' \
      , 'data2.csv' every 1::i-1::i using 4:5 w cir lc 000000 title ''
-  pause 0.05000
+  pause 0.001
 }
 
 #set terminal x11

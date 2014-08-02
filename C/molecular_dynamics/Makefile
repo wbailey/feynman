@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 TARGET = md
-INCLUDE = -I "include" -I "src"
+INCLUDE = -I "include" -I "src" -I "."
 SRC = src
 TEST = test
 

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "minunit.h"
-#include "simulation.h"
+#include "md.h"
 
 char *test_lennard_jones_force_calculation() {
   double r = 5.0;
@@ -49,6 +49,19 @@ char *test_collection_intialization() {
   return NULL;
 }
 
+char *test_periodic() {
+  double length = 12.0;
+  double result, expectation = 2.0;
+
+  result = MD_Periodic(3.0, 5.0, length);
+  mu_assert( result == expectation, "Standard separation");
+  
+  result = MD_Periodic(1.0, 11.0, length);
+  mu_assert( result == expectation, "Using periodic boundary conditions for separation"); 
+
+  return NULL;
+}
+
 char *all_tests() {
     mu_suite_start();
 
@@ -56,6 +69,7 @@ char *all_tests() {
     mu_run_test(test_collection_intialization);
     mu_run_test(test_lennard_jones_force_calculation);
     mu_run_test(test_lennard_jones_potential_energy_calculation);
+    mu_run_test(test_periodic);
 
     return NULL;
 }

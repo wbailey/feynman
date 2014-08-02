@@ -1,4 +1,4 @@
-set xrange [-3:10]
+set xrange [0:12]
 set yrange [-1:1]
 num_lines="`wc -l data.csv`"
 

@@ -13,6 +13,9 @@ all: $(TARGET)
 $(TARGET):
 	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
 
+md:
+	$(CC) $(CFLAGS)
+
 run:
 	- ./$(TARGET)
 
