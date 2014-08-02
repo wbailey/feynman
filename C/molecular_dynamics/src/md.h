@@ -5,6 +5,6 @@
 
 double MD_Periodic(double, double, double);
 void MD_Initialize(ParticleCollection *);
-void MD_Euler(Particle *, double, double);
+void MD_Euler(Particle *, double, double, double, double);
 
 #endif

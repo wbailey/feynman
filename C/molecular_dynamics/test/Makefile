@@ -12,8 +12,11 @@ OBJECTS = $(wildcard $(SRC)/*.o)
 all: $(TARGET)
 	@echo Test runner has been generated
 
-$(TARGET):
+$(TARGET): $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(OBJECTS) $(TARGET).c
+
+$(SRC):
+	$(MAKE) -C $@ all
 
 run:
 	- ./$(TARGET)

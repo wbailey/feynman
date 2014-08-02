@@ -1,5 +1,6 @@
 set xrange [0:12]
-set yrange [-1:1]
+set yrange [0:12]
+unset tics
 num_lines="`wc -l data.csv`"
 
 #set terminal png
