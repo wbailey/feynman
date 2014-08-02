@@ -14,13 +14,13 @@ double MD_Periodic(double pos1, double pos2, double length) {
 
 void MD_Initialize(ParticleCollection *collection) {
   collection[0]->x  =  3.0;
-  collection[0]->y  =  9.0;
+  collection[0]->y  =  0.0;
   collection[0]->vx =  0.5;
-  collection[0]->vy = -0.5;
+  collection[0]->vy =  0.0;
   collection[1]->x  =  9.0;
-  collection[1]->y  =  3.0;
+  collection[1]->y  =  0.0;
   collection[1]->vx = -0.5;
-  collection[1]->vy =  0.5;
+  collection[1]->vy =  0.0;
 }
 
 void MD_Euler(Particle *particle, double dxr, double dyr, double force, double dt) {
@@ -34,7 +34,9 @@ void MD_Euler(Particle *particle, double dxr, double dyr, double force, double d
 }
 
 int main(void) {
-  double dx, dy, r, dxr, dyr, force;
+  double dx, dy, r;
+  double dxr, dyr, force;
+  double pe, ke;
   ParticleCollection *particle = new_ParticleCollection(MD_Collection_Size);
 
   MD_Initialize(particle);
@@ -50,12 +52,19 @@ int main(void) {
 
     force = LJ_Force(r);
 
+    pe = LJ_Potential_Energy(r);
+    ke = 0.0;
+
+    for (int j = 0; j < 2; j++) {
+      ke += 0.5 * (particle[j]->vx * particle[j]->vx + particle[j]->vy * particle[j]->vy);
+    }
+
     MD_Euler(particle[0], dxr, dyr, force, dt);
     MD_Euler(particle[1], dxr, dyr, -force, dt);
 
     t += dt;
 
-    printf("%12.6f %12.6f %12.6f %12.6f %12.6f %12.6f\n", t, r, particle[0]->x, particle[0]->y, particle[1]->x, particle[1]->y);
+    printf("%12.6f %12.6f %12.6f %12.6f %12.6f %12.6f %12.6f %12.6f\n", t, ke + pe, pe, ke, particle[0]->x, particle[0]->y, particle[1]->x, particle[1]->y);
   }
 
   destroy_ParticleCollection(particle);
