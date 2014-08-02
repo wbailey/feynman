@@ -1,2 +1,3 @@
 ./md
 **/*.o
+src/simulation.c

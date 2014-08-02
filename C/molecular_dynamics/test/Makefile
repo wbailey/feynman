@@ -1,8 +1,10 @@
 CC = gcc
 CFLAGS = -Wall
 TARGET=runner
-INCLUDE = -I "../include" -I "../src"
-SRC = ../src
+PATH = ..
+INCLUDE = -I $(PATH)/include -I $(PATH)/src
+SRC = $(PATH)/src
+OBJECTS = $(wildcard $(SRC)/*.o)
 
 .PHONY: clean run
 .SILENT: clean
@@ -11,10 +13,7 @@ all: $(TARGET)
 	@echo Test runner has been generated
 
 $(TARGET):
-	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
-
-md:
-	$(CC) $(CFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(OBJECTS) $(TARGET).c
 
 run:
 	- ./$(TARGET)

@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall
 TARGET = md
-INCLUDE = -I "include" -I "src" -I "."
+INCLUDE = -I "include" -I "src"
 SRC = src
 TEST = test
 
@@ -17,13 +17,13 @@ run:
 	$(PWD)/$(TARGET)
 
 $(TARGET): $(SRC)
-	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c
+	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o)
 
 $(SRC):
 	$(MAKE) -C $@ all
 
-$(TEST):
-	$(MAKE) -C $@ clean all run
+$(TEST): clean
+	$(MAKE) -wC $@ clean all run
 
 clean:
 	$(MAKE) -is -C $(SRC) clean

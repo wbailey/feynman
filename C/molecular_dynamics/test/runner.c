@@ -74,4 +74,6 @@ char *all_tests() {
     return NULL;
 }
 
+#define SKIP_RUNNING
+
 RUN_TESTS(all_tests);

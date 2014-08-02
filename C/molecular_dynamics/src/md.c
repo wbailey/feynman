@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
-#include "simulation.h"
+#include "md.h"
 
 double MD_Periodic(double pos1, double pos2, double length) {
   double separation = fabs(pos1 - pos2);
@@ -25,6 +25,8 @@ void MD_Euler(Particle *particle, double force, double dt) {
   particle->x  += particle->vx * dt;
 }
 
+#ifndef SKIP_RUNNING
+
 int main(void) {
   double r, force;
   ParticleCollection *particle = new_ParticleCollection(MD_Collection_Size);
@@ -45,3 +47,5 @@ int main(void) {
 
   destroy_ParticleCollection(particle);
 }
+
+#endif
