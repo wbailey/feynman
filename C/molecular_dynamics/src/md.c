@@ -23,19 +23,19 @@ void MD_Initialize(ParticleCollection *collection) {
   collection[1]->vy =  0.0;
 }
 
-void MD_Euler(Particle *particle, double dxr, double dyr, double force, double dt) {
-  particle->ax  = dxr * force;
+void MD_Euler(Particle *particle, double ax, double ay, double dt) {
+  particle->ax  = ax;
   particle->vx += particle->ax * dt;
   particle->x  += particle->vx * dt;
 
-  particle->ay  = dyr * force;
+  particle->ay  = ay;
   particle->vy += particle->ay * dt;
   particle->y  += particle->vy * dt;
 }
 
 int main(void) {
   double dx, dy, r;
-  double dxr, dyr, force;
+  double ax, ay, force;
   double pe, ke;
   ParticleCollection *particle = new_ParticleCollection(MD_Collection_Size);
 
@@ -47,10 +47,10 @@ int main(void) {
 
     r = sqrt(dx * dx + dy * dy);
 
-    dxr = dx/r;
-    dyr = dy/r;
-
     force = LJ_Force(r);
+
+    ax = (dx/r) * force;
+    ay = (dy/r) * force;
 
     pe = LJ_Potential_Energy(r);
     ke = 0.0;
@@ -59,8 +59,8 @@ int main(void) {
       ke += 0.5 * (particle[j]->vx * particle[j]->vx + particle[j]->vy * particle[j]->vy);
     }
 
-    MD_Euler(particle[0], dxr, dyr, force, dt);
-    MD_Euler(particle[1], dxr, dyr, -force, dt);
+    MD_Euler(particle[0], ax, ay, dt);
+    MD_Euler(particle[1], -ax, -ay, dt);
 
     t += dt;
 
