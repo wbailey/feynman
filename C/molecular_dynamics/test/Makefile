@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall
-TARGET=runner
+TARGET=test_runner
 PATH = ..
 INCLUDE = -I $(PATH)/include -I $(PATH)/src
 SRC = $(PATH)/src

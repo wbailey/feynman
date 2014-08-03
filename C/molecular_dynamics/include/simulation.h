@@ -1,8 +1,7 @@
 #ifndef SIMULATION_H
 #define SIMULATION_H
 
-#include "lennard_jones.h"
-#include "particle.h"
+#include "md.h"
 
 double LJ_Epsilon = 0.997; // kJ/mol
 double LJ_Sigma = 3.40;    // Angstroms
