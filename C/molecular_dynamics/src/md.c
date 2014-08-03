@@ -12,17 +12,6 @@ double MD_Periodic(double pos1, double pos2, double length) {
   return separation < separation_periodic ? separation : separation_periodic;
 }
 
-void MD_Initialize(ParticleCollection *collection) {
-  collection[0]->x  =  3.0;
-  collection[0]->y  =  0.0;
-  collection[0]->vx =  0.5;
-  collection[0]->vy =  0.0;
-  collection[1]->x  =  9.0;
-  collection[1]->y  =  0.0;
-  collection[1]->vx = -0.5;
-  collection[1]->vy =  0.0;
-}
-
 void MD_Euler(Particle *particle, double ax, double ay, double dt) {
   particle->ax  = ax;
   particle->vx += particle->ax * dt;
