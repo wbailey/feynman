@@ -11,25 +11,29 @@ int main(void) {
   MD_Initialize(particle);
 
   for (int i = 0; i < MD_Iterations; i++) {
-    dx = MD_Periodic(particle[0]->x, particle[1]->x, MD_Box_Length);
-    dy = MD_Periodic(particle[0]->y, particle[1]->y, MD_Box_Length);
-
-    r = sqrt(dx * dx + dy * dy);
-
-    force = LJ_Force(r);
-
-    ax = (dx/r) * force;
-    ay = (dy/r) * force;
-
     pe = LJ_Potential_Energy(r);
     ke = 0.0;
 
-    for (int j = 0; j < 2; j++) {
-      ke += 0.5 * (particle[j]->vx * particle[j]->vx + particle[j]->vy * particle[j]->vy);
-    }
+    for (int m = 0; m < MD_Collection_Size/2; m++) {
+      for (int n = MD_Collection_Size - 1; n > (MD_Collection_Size - 1)/2; n--) {
+        dx = MD_Periodic(particle[m]->x, particle[n]->x, MD_Box_Length);
+        dy = MD_Periodic(particle[m]->y, particle[n]->y, MD_Box_Length);
 
-    MD_Euler(particle[0], ax, ay, dt);
-    MD_Euler(particle[1], -ax, -ay, dt);
+        r = sqrt(dx * dx + dy * dy);
+
+        force = LJ_Force(r);
+
+        ax = (dx/r) * force;
+        ay = (dy/r) * force;
+
+        ke += 0.5 * (particle[m]->vx * particle[m]->vx + particle[m]->vy * particle[m]->vy);
+        ke += 0.5 * (particle[n]->vx * particle[n]->vx + particle[n]->vy * particle[n]->vy);
+
+        MD_Euler(particle[m], -ax, -ay, dt);
+        MD_Euler(particle[n], ax, ay, dt);
+
+      }
+    }
 
     t += dt;
 
