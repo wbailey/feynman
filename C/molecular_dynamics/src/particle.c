@@ -3,6 +3,7 @@
 #include <string.h>
 #include <assert.h>
 #include "particle.h"
+#include "dbg.h"
 
 Particle * new_Particle() {
   struct Particle *particle = malloc(sizeof(struct Particle));
@@ -49,16 +50,16 @@ void destroy_Particle(struct Particle *particle) {
 }
 
 void toString_Particle(struct Particle *particle) {
-  printf("x: %12.8f\n", particle->x);
-  printf("y: %12.8f\n", particle->y);
-  printf("z: %12.8f\n", particle->z);
+  DEBUG_PRINT("x: %12.8f", particle->x);
+  DEBUG_PRINT("y: %12.8f", particle->y);
+  DEBUG_PRINT("z: %12.8f", particle->z);
 
-  printf("vx: %12.8f\n", particle->vx);
-  printf("vy: %12.8f\n", particle->vy);
-  printf("vz: %12.8f\n", particle->vz);
+  DEBUG_PRINT("vx: %12.8f", particle->vx);
+  DEBUG_PRINT("vy: %12.8f", particle->vy);
+  DEBUG_PRINT("vz: %12.8f", particle->vz);
 
-  printf("ax: %12.8f\n", particle->ax);
-  printf("ay: %12.8f\n", particle->ay);
-  printf("az: %12.8f\n", particle->az);
+  DEBUG_PRINT("ax: %12.8f", particle->ax);
+  DEBUG_PRINT("ay: %12.8f", particle->ay);
+  DEBUG_PRINT("az: %12.8f", particle->az);
 }
 

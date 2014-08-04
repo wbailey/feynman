@@ -1,6 +1,7 @@
 #ifndef MD_H
 #define MD_H
 
+#include "dbg.h"
 #include "lennard_jones.h"
 #include "particle.h"
 
@@ -23,6 +24,7 @@ typedef struct MD_Separation {
 
 MD_Separation * MD_new_Separation(Particle *, Particle *, double);
 void MD_destroy_Separation(MD_Separation *);
+void MD_toString_Separation(MD_Separation *);
 
 double MD_calculate_R(MD_Separation *);
 void MD_apply_Periodic(Particle *, double);

@@ -28,6 +28,10 @@ MD_Separation * MD_new_Separation(Particle *p1, Particle *p2, double length) {
   return separation;
 }
 
+void MD_toString_Separation(MD_Separation *sep) {
+  DEBUG_PRINT("dx: %12.8f dy: %12.8f dz: %12.8f", sep->dx, sep->dy, sep->dz);
+}
+
 void MD_destroy_Separation(MD_Separation *separation) {
   assert(separation != NULL);
   free(separation);
@@ -108,22 +112,26 @@ double MD_calc_Kinetic_Energy(ParticleCollection *particle, int collection_size)
         particle[i]->vz * particle[i]->vz;
   }
 
-  return 0.5 * ke;
+  ke *= 0.5;
+
+  DEBUG_PRINT("ke: %12.8f", ke);
+
+  return ke;
 }
 
 void MD_initialize_Collection(ParticleCollection *collection) {
-  collection[0]->x  =  3.0;
-  collection[0]->y  =  6.0;
-  collection[0]->vx =  0.5;
-  collection[0]->vy =  0.0;
-  collection[1]->x  =  9.0;
-  collection[1]->y  =  6.0;
-  collection[1]->vx = -0.5;
-  collection[1]->vy =  0.0;
-  collection[2]->x  =  15.0;
-  collection[2]->y  =  6.0;
-  collection[2]->vx =  0.5;
-  collection[2]->vy =  0.0;
+  collection[0]->x  =  6.0;
+  collection[0]->y  =  3.0;
+  collection[0]->vx =  0.0;
+  collection[0]->vy =  0.5;
+  collection[1]->x  =  6.0;
+  collection[1]->y  =  9.0;
+  collection[1]->vx =  0.0;
+  collection[1]->vy = -0.5;
+  collection[2]->x  =  6.0;
+  collection[2]->y  =  15.0;
+  collection[2]->vx =  0.0;
+  collection[2]->vy =  0.5;
 }
 
 int MD_Sign(double val) {

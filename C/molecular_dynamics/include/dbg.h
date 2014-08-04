@@ -5,10 +5,12 @@
 #include <errno.h>
 #include <string.h>
 
-#ifdef NDEBUG
-#define debug(M, ...)
+//#define DEBUG
+
+#ifdef DEBUG
+#define DEBUG_PRINT(M, ...) fprintf(stderr, "DEBUG %s:%d: " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
 #else
-#define debug(M, ...) fprintf(stderr, "DEBUG %s:%d: " M "\n", __FILE__, __LINE__, ##__VA_ARGS__)
+#define DEBUG_PRINT(M, ...) do {} while(0)
 #endif
 
 #define clean_errno() (errno == 0 ? "None" : strerror(errno))
