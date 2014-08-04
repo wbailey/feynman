@@ -23,7 +23,7 @@ $(TARGET): $(SRC)
 $(SRC):
 	$(MAKE) -C $@ all
 
-$(TEST): clean
+$(TEST): clean $(SRC)
 	$(MAKE) -C $@ clean all run
 
 clean:

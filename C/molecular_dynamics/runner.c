@@ -13,6 +13,7 @@ typedef struct Report {
   double force;
   Particle *p;
   Particle *o;
+  Particle *n;
 } Report;
 
 void destroy_Report(Report *report) {
@@ -35,6 +36,10 @@ void print_Report(Report *report) {
   printf("%12.6f", report->o->y);
   printf("%12.6f", report->o->vx);
   printf("%12.6f", report->o->ax);
+  printf("%12.6f", report->n->x);
+  printf("%12.6f", report->n->y);
+  printf("%12.6f", report->n->vx);
+  printf("%12.6f", report->n->ax);
   printf("\n");
 }
 

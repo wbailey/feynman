@@ -120,6 +120,10 @@ void MD_initialize_Collection(ParticleCollection *collection) {
   collection[1]->y  =  6.0;
   collection[1]->vx = -0.5;
   collection[1]->vy =  0.0;
+  collection[2]->x  =  15.0;
+  collection[2]->y  =  6.0;
+  collection[2]->vx =  0.5;
+  collection[2]->vy =  0.0;
 }
 
 int MD_Sign(double val) {
