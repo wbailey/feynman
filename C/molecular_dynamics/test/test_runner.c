@@ -45,7 +45,7 @@ char *test_collection_intialization() {
     mu_assert( collection[i]->x == 0.0, "particle not initialized");
   }
 
-  free(collection);
+  destroy_ParticleCollection(collection);
 
   return NULL;
 }
@@ -82,15 +82,40 @@ char *test_md_sign() {
 }
 
 char *test_periodic() {
-  double length = 12.0;
-  double result, expectation = 2.0;
+  Particle *p = new_Particle();
+  double test, result, expectation;
 
-  result = 2.0;
-  mu_assert( result == expectation, "Standard separation");
+  p->x = p->y = p->z = -2.0;
+
+  printf("test particle before: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
+
+  test = 10.0;
+  expectation = 8.0;
+
+  MD_apply_Periodic(p, test);
+
+  printf("test particle  after: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
+  printf("test: %8.4f expectation: %8.4f\n", test, expectation);
+
+  mu_assert( p->x == expectation, "Negative side test shift");
+  mu_assert( p->y == expectation, "Negative side test shift");
+  mu_assert( p->z == expectation, "Negative side test shift");
   
-  result = 2.0;
-  mu_assert( result == expectation, "Using periodic boundary conditions for separation"); 
+  p->x = p->y = p->z = 12.0;
 
+  printf("test particle before: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
+
+  test = 10.0;
+  expectation = 2.0;
+
+  MD_apply_Periodic(p, test);
+
+  printf("test particle  after: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
+  printf("test: %8.4f expectation: %8.4f\n", test, expectation);
+
+  mu_assert( p->x == expectation, "Positive side test shift");
+  mu_assert( p->y == expectation, "Positive side test shift");
+  mu_assert( p->z == expectation, "Positive side test shift");
   return NULL;
 }
 
@@ -126,9 +151,9 @@ char *test_md_new_separation() {
   printf("test particle 2: x = %8.4f y = %8.4f z = %8.4f\n", o->x, o->y, o->z);
   printf("test: %8.4f expectation: %8.4f result: dx = %8.4f dy = %8.4f dz = %8.4f\n", test, expectation, pep->dx, pep->dy, pep->dz);
 
-  mu_assert(pep->dx == expectation, "Particles are closer than PBC result")
-  mu_assert(pep->dy == expectation, "Particles are closer than PBC result")
-  mu_assert(pep->dz == expectation, "Particles are closer than PBC result")
+  mu_assert(pep->dx == expectation, "Particles are using PBC result")
+  mu_assert(pep->dy == expectation, "Particles are using PBC result")
+  mu_assert(pep->dz == expectation, "Particles are using PBC result")
 
   MD_destroy_Separation(pep);
 
@@ -144,7 +169,7 @@ char *all_tests() {
     mu_run_test(test_lennard_jones_potential_energy_calculation);
     mu_run_test(test_md_sign);
     mu_run_test(test_md_new_separation);
- //   mu_run_test(test_periodic);
+    mu_run_test(test_periodic);
 
     return NULL;
 }
