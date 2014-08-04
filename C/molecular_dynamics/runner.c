@@ -61,10 +61,8 @@ int main(void) {
         MD_flipsign_Accel(accel);
         MD_iterate_Euler(particle[n], accel, dt);
 
-        /*
         MD_apply_Periodic(particle[m], MD_Box_Length);
         MD_apply_Periodic(particle[n], MD_Box_Length);
-        */
 
         report->r  = MD_calculate_R(sep);
         report->force = LJ_Force(MD_calculate_R(sep));
