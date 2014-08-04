@@ -25,10 +25,22 @@ MD_Separation * MD_new_Separation(Particle *, Particle *, double);
 void MD_destroy_Separation(MD_Separation *);
 
 double MD_calculate_R(MD_Separation *);
-
-//double MD_calculate_Separation(double, double, double);
 void MD_apply_Periodic(Particle *, double);
 void MD_initialize_Collection(ParticleCollection *);
-void MD_iterate_Euler(Particle *, double, double, double, double);
+
+typedef struct MD_Accel {
+  double ax;
+  double ay;
+  double az;
+} MD_Accel;
+
+MD_Accel * MD_new_Accel(MD_Separation *);
+void MD_flipsign_Accel(MD_Accel *);
+void MD_destroy_Accel(MD_Accel *);
+
+void MD_iterate_Euler(Particle *, MD_Accel *, double);
+double MD_calc_Kinetic_Energy(ParticleCollection *, int);
+
+int MD_Sign(double);
 
 #endif

@@ -9,69 +9,75 @@ typedef struct Report {
   double pe;
   double ke;
   double te;
-  double v1;
-  double v2;
-  double v3;
-  double v4;
+  double force;
+  Particle *p;
+  Particle *o;
 } Report;
-
-//void do_report(Report *);
 
 void do_report(Report *report) {
   printf("%12.6f", report->t);
   printf("%12.6f", report->r);
+  printf("%12.6f", report->force);
   printf("%12.6f", report->pe);
   printf("%12.6f", report->ke);
   printf("%12.6f", report->te);
-  printf("%12.6f", report->v1);
-  printf("%12.6f", report->v2);
-  printf("%12.6f", report->v3);
-  printf("%12.6f", report->v4);
+  printf("%12.6f", report->p->x);
+  printf("%12.6f", report->p->y);
+  printf("%12.6f", report->p->vx);
+  printf("%12.6f", report->p->ax);
+  printf("%12.6f", report->o->x);
+  printf("%12.6f", report->o->y);
+  printf("%12.6f", report->o->vx);
+  printf("%12.6f", report->o->ax);
   printf("\n");
 }
 
 int main(void) {
-  double r;
-  double ax, ay, az, force;
   double pe, ke;
   ParticleCollection *particle = new_ParticleCollection(MD_Collection_Size);
   MD_Separation *sep;
+  MD_Accel *accel;
   Report *report = malloc(sizeof(struct Report));
 
   MD_initialize_Collection(particle);
 
   for (int i = 0; i < MD_Iterations; i++) {
-    pe = LJ_Potential_Energy(r);
-    ke = 0.0;
+    pe = ke = 0.0;
+
+    for (int i = 0; i < MD_Collection_Size; i++) {
+      particle[i]->ax = 0.0;
+      particle[i]->ay = 0.0;
+      particle[i]->az = 0.0;
+    }
 
     for (int m = 0; m < MD_Collection_Size - 1; m++) {
-      for (int n = m + 1; n > MD_Collection_Size; n--) {
+      for (int n = m + 1; n < MD_Collection_Size; n++) {
         sep   = MD_new_Separation(particle[m], particle[n], MD_Box_Length);
-        r     = MD_calculate_R(sep);
-        force = LJ_Force(r);
+        accel = MD_new_Accel(sep);
 
-        ax = (sep->dx/r) * force;
-        ay = (sep->dy/r) * force;
-        az = (sep->dz/r) * force;
+        pe += LJ_Potential_Energy(MD_calculate_R(sep));
 
-        ke += 0.5 * (particle[m]->vx * particle[m]->vx + particle[m]->vy * particle[m]->vy + particle[m]->vz * particle[m]->vz);
-        ke += 0.5 * (particle[n]->vx * particle[n]->vx + particle[n]->vy * particle[n]->vy + particle[n]->vz * particle[n]->vz);
+        MD_iterate_Euler(particle[m], accel, dt);
+        MD_flipsign_Accel(accel);
+        MD_iterate_Euler(particle[n], accel, dt);
 
-        MD_iterate_Euler(particle[m], ax, ay, az, dt);
-        MD_iterate_Euler(particle[n], -ax, -ay, -az, dt);
-
+        /*
         MD_apply_Periodic(particle[m], MD_Box_Length);
         MD_apply_Periodic(particle[n], MD_Box_Length);
+        */
 
-        report->r  = r;
-        report->v1 = sep->dx;
-        report->v2 = sep->dy;
-        report->v3 = particle[m]->x;
-        report->v4 = particle[n]->x;
+        report->r  = MD_calculate_R(sep);
+        report->force = LJ_Force(MD_calculate_R(sep));
+        report->p = particle[m];
+        report->o = particle[n];
+
+        MD_destroy_Separation(sep);
+        MD_destroy_Accel(accel);
       }
     }
 
     t += dt;
+    ke = MD_calc_Kinetic_Energy(particle, MD_Collection_Size);
 
     report->t = t;
     report->pe = pe;
@@ -79,7 +85,9 @@ int main(void) {
     report->te = pe + ke;
 
     do_report(report);
+
   }
 
+  free(report);
   destroy_ParticleCollection(particle);
 }

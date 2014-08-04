@@ -12,6 +12,6 @@ double dt = 0.01;
 double MD_Collection_Size = 2;
 double MD_Box_Length = 12;
 
-int MD_Iterations = 25;
+int MD_Iterations = 1000;
 
 #endif

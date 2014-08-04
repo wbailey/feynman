@@ -9,20 +9,20 @@ double MD_calculate_R(MD_Separation *sep) {
 
 MD_Separation * MD_new_Separation(Particle *p1, Particle *p2, double length) {
   struct MD_Separation *separation = malloc(sizeof(struct MD_Separation));
+  double half = 0.5 * length;
   double dx, dy, dz;
-  double sdx, sdy, sdz;
 
-  dx = fabs(p1->x - p2->x);
-  dy = fabs(p1->y - p2->y);
-  dz = fabs(p1->z - p2->z);
+  dx = p1->x - p2->x;
+  dy = p1->y - p2->y;
+  dz = p1->z - p2->z;
 
-  sdx = fabs(length - dx);
-  sdy = fabs(length - dy);
-  sdz = fabs(length - dz);
+  if (fabs(dx) > half) dx -= MD_Sign(dx) * length;
+  if (fabs(dy) > half) dy -= MD_Sign(dy) * length;
+  if (fabs(dz) > half) dz -= MD_Sign(dz) * length;
 
-  separation->dx = dx < sdx ? dx : sdx;
-  separation->dy = dy < sdy ? dy : sdy;
-  separation->dz = dz < sdz ? dz : sdz;
+  separation->dx = dx;
+  separation->dy = dy;
+  separation->dz = dz;
 
   return separation;
 }
@@ -31,16 +31,6 @@ void MD_destroy_Separation(MD_Separation *separation) {
   assert(separation != NULL);
   free(separation);
 }
-
-/*
-double MD_calculate_Separation(double pos1, double pos2, double length) {
-  double separation = fabs(pos1 - pos2);
-  double separation_periodic = fabs(separation - length);
-
-  // Return the shortest distance between the points
-  return separation < separation_periodic ? separation : separation_periodic;
-}
-*/
 
 void MD_apply_Periodic(Particle *particle, double length) {
   if(particle->x < 0.0) {
@@ -62,18 +52,56 @@ void MD_apply_Periodic(Particle *particle, double length) {
   }
 }
 
-void MD_iterate_Euler(Particle *particle, double ax, double ay, double az, double dt) {
-  particle->ax  = ax;
+void MD_iterate_Euler(Particle *particle, MD_Accel *accel, double dt) {
+  particle->ax += accel->ax;
   particle->vx += particle->ax * dt;
   particle->x  += particle->vx * dt;
 
-  particle->ay  = ay;
+  particle->ay += accel->ay;
   particle->vy += particle->ay * dt;
   particle->y  += particle->vy * dt;
 
-  particle->az  = az;
+  particle->az += accel->az;
   particle->vz += particle->az * dt;
   particle->z  += particle->vz * dt;
+}
+
+MD_Accel * MD_new_Accel(MD_Separation *sep) {
+  struct MD_Accel *accel = malloc(sizeof(struct MD_Accel));
+  double r = MD_calculate_R(sep);
+  double force = LJ_Force(r);
+
+  accel->ax = -(sep->dx/r) * force;
+  accel->ay = -(sep->dy/r) * force;
+  accel->az = -(sep->dz/r) * force;
+
+  return accel;
+}
+
+void MD_destroy_Accel(MD_Accel *accel) {
+  assert(accel != NULL);
+  free(accel);
+}
+
+void MD_flipsign_Accel(MD_Accel *accel) {
+  accel->ax = -accel->ax;
+  accel->ay = -accel->ay;
+  accel->az = -accel->az;
+}
+
+#include <stdio.h>
+
+double MD_calc_Kinetic_Energy(ParticleCollection *particle, int collection_size) {
+  double ke = 0.0;
+
+  for (int i = 0; i < collection_size; i++) {
+    ke += 
+        particle[i]->vx * particle[i]->vx + 
+        particle[i]->vy * particle[i]->vy +
+        particle[i]->vz * particle[i]->vz;
+  }
+
+  return 0.5 * ke;
 }
 
 void MD_initialize_Collection(ParticleCollection *collection) {
@@ -87,3 +115,6 @@ void MD_initialize_Collection(ParticleCollection *collection) {
   collection[1]->vy =  0.0;
 }
 
+int MD_Sign(double val) {
+  return (val > 0) - (val < 0);
+}
