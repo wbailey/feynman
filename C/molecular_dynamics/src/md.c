@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
@@ -83,13 +84,19 @@ void MD_destroy_Accel(MD_Accel *accel) {
   free(accel);
 }
 
-void MD_flipsign_Accel(MD_Accel *accel) {
+void MD_thirdlaw_Accel(MD_Accel *accel) {
   accel->ax = -accel->ax;
   accel->ay = -accel->ay;
   accel->az = -accel->az;
 }
 
-#include <stdio.h>
+void MD_reset_Collection_Accel(ParticleCollection *particle, int collection_size) {
+  for (int i = 0; i < collection_size; i++) {
+    particle[i]->ax = 0.0;
+    particle[i]->ay = 0.0;
+    particle[i]->az = 0.0;
+  }
+}
 
 double MD_calc_Kinetic_Energy(ParticleCollection *particle, int collection_size) {
   double ke = 0.0;

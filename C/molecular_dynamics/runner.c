@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include <math.h>
 #include "simulation.h"
 
@@ -14,7 +15,12 @@ typedef struct Report {
   Particle *o;
 } Report;
 
-void do_report(Report *report) {
+void destroy_Report(Report *report) {
+  assert(report != NULL);
+  free(report);
+}
+
+void print_Report(Report *report) {
   printf("%12.6f", report->t);
   printf("%12.6f", report->r);
   printf("%12.6f", report->force);
@@ -44,11 +50,7 @@ int main(void) {
   for (int i = 0; i < MD_Iterations; i++) {
     pe = ke = 0.0;
 
-    for (int i = 0; i < MD_Collection_Size; i++) {
-      particle[i]->ax = 0.0;
-      particle[i]->ay = 0.0;
-      particle[i]->az = 0.0;
-    }
+    MD_reset_Collection_Accel(particle, MD_Collection_Size);
 
     for (int m = 0; m < MD_Collection_Size - 1; m++) {
       for (int n = m + 1; n < MD_Collection_Size; n++) {
@@ -58,16 +60,16 @@ int main(void) {
         pe += LJ_Potential_Energy(MD_calculate_R(sep));
 
         MD_iterate_Euler(particle[m], accel, dt);
-        MD_flipsign_Accel(accel);
+        MD_thirdlaw_Accel(accel);
         MD_iterate_Euler(particle[n], accel, dt);
 
         MD_apply_Periodic(particle[m], MD_Box_Length);
         MD_apply_Periodic(particle[n], MD_Box_Length);
 
-        report->r  = MD_calculate_R(sep);
+        report->r     = MD_calculate_R(sep);
         report->force = LJ_Force(MD_calculate_R(sep));
-        report->p = particle[m];
-        report->o = particle[n];
+        report->p     = particle[m];
+        report->o     = particle[n];
 
         MD_destroy_Separation(sep);
         MD_destroy_Accel(accel);
@@ -82,10 +84,10 @@ int main(void) {
     report->ke = ke;
     report->te = pe + ke;
 
-    do_report(report);
+    print_Report(report);
 
   }
 
-  free(report);
+  destroy_Report(report);
   destroy_ParticleCollection(particle);
 }
