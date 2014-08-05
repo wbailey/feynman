@@ -34,16 +34,14 @@ void print_Report(Report *report) {
 }
 
 int main(void) {
-  double r, pe, ke;
+  double pe, ke;
   ParticleCollection *particle = new_ParticleCollection(MD_Collection_Size);
-  MD_Separation *sep;
-  MD_Accel *accel;
   Report *report = malloc(sizeof(struct Report));
-  int interval = MD_Iterations/MD_ReportCount;
+  int report_interval = MD_Iterations/MD_ReportCount;
 
   MD_initialize_Collection(particle);
 
-  report->collection  = particle;
+  report->collection      = particle;
   report->collection_size = MD_Collection_Size;
 
   for (int i = 0; i < MD_Iterations; i++) {
@@ -51,45 +49,17 @@ int main(void) {
 
     MD_reset_Collection_Accel(particle, MD_Collection_Size);
 
-    // Calculate the cumalative force on each particle
-    for (int m = 0; m < MD_Collection_Size - 1; m++) {
-      for (int n = m + 1; n < MD_Collection_Size; n++) {
-        sep = MD_new_Separation(particle[m], particle[n], MD_Box_Length);
-        r = MD_calculate_R(sep);
+    // This odd function updates the acceleration for all of the particles and returns
+    // the total potential energy calculated
+    pe = MD_calc_Collection_Forces(particle, MD_Collection_Size);
 
-        accel = MD_new_Accel(sep);
+    MD_iterate_Euler(particle, MD_Collection_Size);
 
-        pe += LJ_Potential_Energy(r);
-
-        particle[m]->ax += accel->ax;
-        particle[m]->ay += accel->ay;
-        particle[m]->az += accel->az;
-
-        particle[n]->ax -= accel->ax;
-        particle[n]->ay -= accel->ay;
-        particle[n]->az -= accel->az;
-
-        MD_destroy_Separation(sep);
-        MD_destroy_Accel(accel);
-      }
-    }
-
-    for (int m = 0; m < MD_Collection_Size; m++) {
-      particle[m]->vx += particle[m]->ax * dt;
-      particle[m]->vy += particle[m]->ay * dt;
-      particle[m]->vz += particle[m]->az * dt;
-
-      particle[m]->x  += particle[m]->vx * dt;
-      particle[m]->y  += particle[m]->vy * dt;
-      particle[m]->z  += particle[m]->vz * dt;
-
-      MD_apply_Periodic(particle[m], MD_Box_Length);
-    }
-
-    t += dt;
     ke = MD_calc_Kinetic_Energy(particle, MD_Collection_Size);
 
-    if (i % interval == 0) {
+    t += dt;
+
+    if (i % report_interval == 0) {
       report->t  = t;
       report->pe = pe;
       report->ke = ke;

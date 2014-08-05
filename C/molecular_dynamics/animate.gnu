@@ -16,7 +16,7 @@ do for [i=1:num_lines] {
   plot 'data.csv' every 1::i-1::i using 5:6 w cir lc 000000 title '' \
      , 'data.csv' every 1::i-1::i using 7:8 w cir lc 000000 title '' \
      , 'data.csv' every 1::i-1::i using 9:10 w cir lc 000000 title ''
-  pause 0.00500
+  pause 0.05000
 }
 
 #set terminal x11

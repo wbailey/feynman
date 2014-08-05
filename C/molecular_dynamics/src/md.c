@@ -57,18 +57,18 @@ void MD_apply_Periodic(Particle *particle, double length) {
   }
 }
 
-void MD_iterate_Euler(Particle *particle, MD_Accel *accel, double dt) {
-  particle->ax += accel->ax;
-  particle->vx += particle->ax * dt;
-  particle->x  += particle->vx * dt;
+void MD_iterate_Euler(ParticleCollection *particle, int collection_size) {
+  for (int m = 0; m < collection_size; m++) {
+    particle[m]->vx += particle[m]->ax * dt;
+    particle[m]->vy += particle[m]->ay * dt;
+    particle[m]->vz += particle[m]->az * dt;
 
-  particle->ay += accel->ay;
-  particle->vy += particle->ay * dt;
-  particle->y  += particle->vy * dt;
+    particle[m]->x  += particle[m]->vx * dt;
+    particle[m]->y  += particle[m]->vy * dt;
+    particle[m]->z  += particle[m]->vz * dt;
 
-  particle->az += accel->az;
-  particle->vz += particle->az * dt;
-  particle->z  += particle->vz * dt;
+    MD_apply_Periodic(particle[m], MD_Box_Length);
+  }
 }
 
 MD_Accel * MD_new_Accel(MD_Separation *sep) {
@@ -88,18 +88,41 @@ void MD_destroy_Accel(MD_Accel *accel) {
   free(accel);
 }
 
-void MD_thirdlaw_Accel(MD_Accel *accel) {
-  accel->ax = -accel->ax;
-  accel->ay = -accel->ay;
-  accel->az = -accel->az;
-}
-
 void MD_reset_Collection_Accel(ParticleCollection *particle, int collection_size) {
   for (int i = 0; i < collection_size; i++) {
     particle[i]->ax = 0.0;
     particle[i]->ay = 0.0;
     particle[i]->az = 0.0;
   }
+}
+
+double MD_calc_Collection_Forces(ParticleCollection *particle, int collection_size) {
+  MD_Separation *sep;
+  MD_Accel *accel;
+  double r, pe = 0.0;
+
+  for (int m = 0; m < MD_Collection_Size - 1; m++) {
+    for (int n = m + 1; n < MD_Collection_Size; n++) {
+      sep = MD_new_Separation(particle[m], particle[n], MD_Box_Length);
+      accel = MD_new_Accel(sep); // calculates (dx/r)*force
+
+      r = MD_calculate_R(sep);
+      pe += LJ_Potential_Energy(r);
+
+      particle[m]->ax += accel->ax;
+      particle[m]->ay += accel->ay;
+      particle[m]->az += accel->az;
+
+      particle[n]->ax -= accel->ax;
+      particle[n]->ay -= accel->ay;
+      particle[n]->az -= accel->az;
+
+      MD_destroy_Separation(sep);
+      MD_destroy_Accel(accel);
+    }
+  }
+
+  return pe;
 }
 
 double MD_calc_Kinetic_Energy(ParticleCollection *particle, int collection_size) {

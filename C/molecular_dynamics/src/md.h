@@ -30,6 +30,7 @@ double MD_calculate_R(MD_Separation *);
 void MD_apply_Periodic(Particle *, double);
 void MD_initialize_Collection(ParticleCollection *);
 void MD_reset_Collection_Accel(ParticleCollection *, int);
+double MD_calc_Collection_Forces(ParticleCollection *, int);
 
 typedef struct MD_Accel {
   double ax;
@@ -38,10 +39,9 @@ typedef struct MD_Accel {
 } MD_Accel;
 
 MD_Accel * MD_new_Accel(MD_Separation *);
-void MD_thirdlaw_Accel(MD_Accel *);
 void MD_destroy_Accel(MD_Accel *);
 
-void MD_iterate_Euler(Particle *, MD_Accel *, double);
+void MD_iterate_Euler(ParticleCollection *, int);
 double MD_calc_Kinetic_Energy(ParticleCollection *, int);
 
 int MD_Sign(double);
