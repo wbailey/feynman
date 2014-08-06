@@ -19,8 +19,8 @@
 extern double t;
 extern double dt;
 
-extern double MD_CollectionSize;
-extern int MD_Iterations;
+extern double particle_count;
+extern int iterations;
 
 void MD_apply_Periodic(Particle *, double);
 double MD_initialize_Collection(ParticleCollection *, int, double);

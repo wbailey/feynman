@@ -30,8 +30,8 @@ void MD_calculate_Forces(ParticleCollection *particle, int collection_size, doub
     particle[i]->az = 0.0;
   }
 
-  for (int m = 0; m < MD_CollectionSize - 1; m++) {
-    for (int n = m + 1; n < MD_CollectionSize; n++) {
+  for (int m = 0; m < particle_count - 1; m++) {
+    for (int n = m + 1; n < particle_count; n++) {
       sep = MD_new_Separation(particle[m], particle[n], length);
       accel = MD_new_Accel(sep); // calculates (dx/r)*force
 

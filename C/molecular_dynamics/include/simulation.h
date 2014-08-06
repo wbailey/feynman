@@ -10,9 +10,9 @@ double LJ_Sigma = 3.40;    // Angstroms
 double t = 0;
 double dt = 0.005;
 
-double MD_CollectionSize = 4;
+double particle_count = 4;
 
-int MD_Iterations  = 5000;
-int MD_ReportCount = 500;
+int iterations  = 5000;
+int reportcount = 500;
 
 #endif

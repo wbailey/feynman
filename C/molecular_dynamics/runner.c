@@ -2,28 +2,28 @@
 
 int main(void) {
   MD_SystemEnergy *energy = MD_new_SystemEnergy();
-  ParticleCollection *particle = new_ParticleCollection(MD_CollectionSize);
+  ParticleCollection *particle = new_ParticleCollection(particle_count);
   MD_Report *report = MD_new_Report();
   double box_length;
 
-  int report_interval = MD_Iterations/MD_ReportCount;
+  int report_interval = iterations/reportcount;
 
-  box_length = MD_initialize_Collection(particle, MD_CollectionSize, LJ_Sigma);
+  box_length = MD_initialize_Collection(particle, particle_count, LJ_Sigma);
 
   report->collection      = particle;
-  report->collection_size = MD_CollectionSize;
+  report->collection_size = particle_count;
 
-  MD_calculate_Forces(particle, MD_CollectionSize, box_length);
+  MD_calculate_Forces(particle, particle_count, box_length);
 
-  for (int i = 0; i < MD_Iterations; i++) {
-    MD_iterate_VerletPosition(particle, MD_CollectionSize, dt, box_length, MD_apply_Periodic);
-    MD_iterate_VerletVelocity(particle, MD_CollectionSize, dt);
+  for (int i = 0; i < iterations; i++) {
+    MD_iterate_VerletPosition(particle, particle_count, dt, box_length, MD_apply_Periodic);
+    MD_iterate_VerletVelocity(particle, particle_count, dt);
 
-    MD_calculate_Forces(particle, MD_CollectionSize, box_length);
+    MD_calculate_Forces(particle, particle_count, box_length);
 
-    MD_iterate_VerletVelocity(particle, MD_CollectionSize, dt);
+    MD_iterate_VerletVelocity(particle, particle_count, dt);
 
-    energy = MD_calculate_SystemEnergy(particle, MD_CollectionSize, box_length);
+    energy = MD_calculate_SystemEnergy(particle, particle_count, box_length);
 
     t += dt;
 

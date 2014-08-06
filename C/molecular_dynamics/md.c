@@ -27,11 +27,11 @@ void MD_Euler(Particle *particle, double force, double dt) {
 
 int main(void) {
   double r, force;
-  ParticleCollection *particle = new_ParticleCollection(MD_CollectionSize);
+  ParticleCollection *particle = new_ParticleCollection(particle_count);
 
   MD_Initialize(particle);
 
-  for (int i = 0; i < MD_Iterations; i++) {
+  for (int i = 0; i < iterations; i++) {
     r = MD_Periodic(particle[0]->x, particle[1]->x, MD_BoxLength);
     force = LJ_Force(r);
 
