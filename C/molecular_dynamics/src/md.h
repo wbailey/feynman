@@ -11,8 +11,8 @@ extern double LJ_Sigma;    // Angstroms
 extern double t;
 extern double dt;
 
-extern double MD_Collection_Size;
-extern double MD_Box_Length;
+extern double MD_CollectionSize;
+extern double MD_BoxLength;
 
 extern int MD_Iterations;
 
@@ -26,13 +26,13 @@ MD_Separation * MD_new_Separation(Particle *, Particle *, double);
 void MD_destroy_Separation(MD_Separation *);
 void MD_toString_Separation(MD_Separation *);
 
-double MD_calculate_R(MD_Separation *);
+double MD_calculate_SeparationMagnitude(MD_Separation *);
 
 void MD_apply_Periodic(Particle *, double);
 
-void MD_initialize_Collection(ParticleCollection *);
+void MD_initialize_Collection(ParticleCollection *, int);
 void MD_reset_Collection_Accel(ParticleCollection *, int);
-void MD_calc_Collection_Forces(ParticleCollection *, int);
+void MD_calculate_Forces(ParticleCollection *, int);
 
 typedef struct MD_Accel {
   double ax;
@@ -59,5 +59,18 @@ void MD_destroy_SystemEnergy(MD_SystemEnergy *);
 MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *, int, int);
 
 int MD_Sign(double);
+
+typedef struct MD_Report {
+  double t;
+  double pe;
+  double ke;
+  double te;
+  ParticleCollection *collection;
+  int collection_size;
+} MD_Report;
+
+MD_Report * MD_new_Report();
+void MD_destroy_Report(MD_Report *);
+void MD_print_Report(MD_Report *);
 
 #endif

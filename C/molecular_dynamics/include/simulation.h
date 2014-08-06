@@ -10,8 +10,8 @@ double LJ_Sigma = 3.40;    // Angstroms
 double t = 0;
 double dt = 0.01;
 
-double MD_Collection_Size = 2;
-double MD_Box_Length = 18;
+double MD_CollectionSize = 3;
+double MD_BoxLength = 18;
 
 int MD_Iterations  = 5000;
 int MD_ReportCount = 1000;

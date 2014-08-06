@@ -4,7 +4,7 @@
 #include <math.h>
 #include "md.h"
 
-double MD_calculate_R(MD_Separation *sep) {
+double MD_calculate_SeparationMagnitude(MD_Separation *sep) {
   return sqrt(sep->dx * sep->dx + sep->dy * sep->dy + sep->dz * sep->dz);
 }
 
@@ -63,7 +63,7 @@ void MD_iterate_VerletPosition(ParticleCollection *particle, int collection_size
     particle[m]->y += particle[m]->vy * dt + 0.5 * particle[m]->ay * dt * dt;
     particle[m]->z += particle[m]->vz * dt + 0.5 * particle[m]->az * dt * dt;
 
-    MD_apply_Periodic(particle[m], MD_Box_Length);
+    MD_apply_Periodic(particle[m], MD_BoxLength);
   }
 }
 
@@ -85,13 +85,13 @@ void MD_iterate_Euler(ParticleCollection *particle, int collection_size) {
     particle[m]->y  += particle[m]->vy * dt;
     particle[m]->z  += particle[m]->vz * dt;
 
-    MD_apply_Periodic(particle[m], MD_Box_Length);
+    MD_apply_Periodic(particle[m], MD_BoxLength);
   }
 }
 
 MD_Accel * MD_new_Accel(MD_Separation *sep) {
   struct MD_Accel *accel = malloc(sizeof(struct MD_Accel));
-  double r = MD_calculate_R(sep);
+  double r = MD_calculate_SeparationMagnitude(sep);
   double force = LJ_Force(r);
 
   accel->ax = -(sep->dx/r) * force;
@@ -114,7 +114,7 @@ void MD_reset_Collection_Accel(ParticleCollection *particle, int collection_size
   }
 }
 
-void MD_calc_Collection_Forces(ParticleCollection *particle, int collection_size) {
+void MD_calculate_Forces(ParticleCollection *particle, int collection_size) {
   MD_Separation *sep;
   MD_Accel *accel;
 
@@ -124,9 +124,9 @@ void MD_calc_Collection_Forces(ParticleCollection *particle, int collection_size
     particle[i]->az = 0.0;
   }
 
-  for (int m = 0; m < MD_Collection_Size - 1; m++) {
-    for (int n = m + 1; n < MD_Collection_Size; n++) {
-      sep = MD_new_Separation(particle[m], particle[n], MD_Box_Length);
+  for (int m = 0; m < MD_CollectionSize - 1; m++) {
+    for (int n = m + 1; n < MD_CollectionSize; n++) {
+      sep = MD_new_Separation(particle[m], particle[n], MD_BoxLength);
       accel = MD_new_Accel(sep); // calculates (dx/r)*force
 
       particle[m]->ax += accel->ax;
@@ -173,7 +173,7 @@ MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int co
     if (i < collection_size - 1) {
       for (int j = i + 1; j < collection_size; j++) {
         sep = MD_new_Separation(particle[i], particle[j], length);
-        r = MD_calculate_R(sep);
+        r = MD_calculate_SeparationMagnitude(sep);
         pe += LJ_Potential_Energy(r);
       }
     }
@@ -190,7 +190,7 @@ MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int co
   return system;
 }
 
-void MD_initialize_Collection(ParticleCollection *collection) {
+void MD_initialize_Collection(ParticleCollection *collection, int collection_size) {
   collection[0]->x  =  3.0;
   collection[0]->y  =  6.0;
   collection[0]->vx =  0.5;
@@ -199,14 +199,38 @@ void MD_initialize_Collection(ParticleCollection *collection) {
   collection[1]->y  =  6.0;
   collection[1]->vx = -0.5;
   collection[1]->vy = -0.0;
-  /*
-  collection[2]->x  =  6.0;
-  collection[2]->y  =  15.0;
-  collection[2]->vx =  0.0;
-  collection[2]->vy =  0.5;
-  */
+  collection[2]->x  =  15.0;
+  collection[2]->y  =  6.0;
+  collection[2]->vx =  5.0;
+  collection[2]->vy =  0.0;
 }
 
 int MD_Sign(double val) {
   return (val > 0) - (val < 0);
 }
+
+MD_Report * MD_new_Report() {
+  struct MD_Report *report = malloc(sizeof(struct MD_Report));
+  return report;
+}
+
+void MD_destroy_Report(MD_Report *report) {
+  assert(report != NULL);
+  free(report);
+}
+
+void MD_print_Report(MD_Report *report) {
+  ParticleCollection *c = report->collection;
+
+  printf("%9.6f ", report->t);
+  printf("%9.6f ", report->pe);
+  printf("%9.6f ", report->ke);
+  printf("%9.6f ", report->te);
+  
+  for (int i = 0; i < report->collection_size; i++) {
+    printf("%9.6f %9.6f ", c[i]->x, c[i]->y);
+  }
+
+  printf("\n");
+}
+
