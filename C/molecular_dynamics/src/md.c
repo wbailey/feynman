@@ -57,6 +57,24 @@ void MD_apply_Periodic(Particle *particle, double length) {
   }
 }
 
+void MD_iterate_VerletPosition(ParticleCollection *particle, int collection_size) {
+  for (int m = 0; m < collection_size; m++) {
+    particle[m]->x += particle[m]->vx * dt + 0.5 * particle[m]->ax * dt * dt;
+    particle[m]->y += particle[m]->vy * dt + 0.5 * particle[m]->ay * dt * dt;
+    particle[m]->z += particle[m]->vz * dt + 0.5 * particle[m]->az * dt * dt;
+
+    MD_apply_Periodic(particle[m], MD_Box_Length);
+  }
+}
+
+void MD_iterate_VerletVelocity(ParticleCollection *particle, int collection_size) {
+  for (int m = 0; m < collection_size; m++) {
+    particle[m]->vx += 0.5 * particle[m]->ax * dt;
+    particle[m]->vy += 0.5 * particle[m]->ay * dt;
+    particle[m]->vz += 0.5 * particle[m]->az * dt;
+  }
+}
+
 void MD_iterate_Euler(ParticleCollection *particle, int collection_size) {
   for (int m = 0; m < collection_size; m++) {
     particle[m]->vx += particle[m]->ax * dt;
@@ -96,18 +114,20 @@ void MD_reset_Collection_Accel(ParticleCollection *particle, int collection_size
   }
 }
 
-double MD_calc_Collection_Forces(ParticleCollection *particle, int collection_size) {
+void MD_calc_Collection_Forces(ParticleCollection *particle, int collection_size) {
   MD_Separation *sep;
   MD_Accel *accel;
-  double r, pe = 0.0;
+
+  for (int i = 0; i < collection_size; i++) {
+    particle[i]->ax = 0.0;
+    particle[i]->ay = 0.0;
+    particle[i]->az = 0.0;
+  }
 
   for (int m = 0; m < MD_Collection_Size - 1; m++) {
     for (int n = m + 1; n < MD_Collection_Size; n++) {
       sep = MD_new_Separation(particle[m], particle[n], MD_Box_Length);
       accel = MD_new_Accel(sep); // calculates (dx/r)*force
-
-      r = MD_calculate_R(sep);
-      pe += LJ_Potential_Energy(r);
 
       particle[m]->ax += accel->ax;
       particle[m]->ay += accel->ay;
@@ -121,40 +141,70 @@ double MD_calc_Collection_Forces(ParticleCollection *particle, int collection_si
       MD_destroy_Accel(accel);
     }
   }
-
-  return pe;
 }
 
-double MD_calc_Kinetic_Energy(ParticleCollection *particle, int collection_size) {
-  double ke = 0.0;
+MD_SystemEnergy * MD_new_SystemEnergy() {
+  struct MD_SystemEnergy *system = malloc(sizeof(struct MD_SystemEnergy));
+
+  system->pe = 0.0;
+  system->ke = 0.0;
+  system->te = 0.0;
+
+  return system;
+}
+
+void MD_destroy_SystemEnergy(MD_SystemEnergy *system) {
+  assert(system != NULL);
+  free(system);
+}
+
+MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int collection_size, int length) {
+  double pe, ke, r;
+  MD_Separation *sep;
+  MD_SystemEnergy *system = MD_new_SystemEnergy();
+  
+  pe = ke = 0.0;
 
   for (int i = 0; i < collection_size; i++) {
     ke += 
         particle[i]->vx * particle[i]->vx + 
         particle[i]->vy * particle[i]->vy +
         particle[i]->vz * particle[i]->vz;
+    if (i < collection_size - 1) {
+      for (int j = i + 1; j < collection_size; j++) {
+        sep = MD_new_Separation(particle[i], particle[j], length);
+        r = MD_calculate_R(sep);
+        pe += LJ_Potential_Energy(r);
+      }
+    }
   }
 
   ke *= 0.5;
 
-  DEBUG_PRINT("ke: %12.8f", ke);
+  system->pe = pe;
+  system->ke = ke;
+  system->te = pe + ke;
 
-  return ke;
+  DEBUG_PRINT("pe: %12.8f ke: %12.8f te: %12.8f", pe, ke, te);
+
+  return system;
 }
 
 void MD_initialize_Collection(ParticleCollection *collection) {
-  collection[0]->x  =  6.0;
-  collection[0]->y  =  3.0;
-  collection[0]->vx =  0.0;
-  collection[0]->vy =  0.5;
-  collection[1]->x  =  6.0;
-  collection[1]->y  =  9.0;
-  collection[1]->vx =  0.0;
-  collection[1]->vy = -0.5;
+  collection[0]->x  =  3.0;
+  collection[0]->y  =  6.0;
+  collection[0]->vx =  0.5;
+  collection[0]->vy =  0.0;
+  collection[1]->x  =  9.0;
+  collection[1]->y  =  6.0;
+  collection[1]->vx = -0.5;
+  collection[1]->vy = -0.0;
+  /*
   collection[2]->x  =  6.0;
   collection[2]->y  =  15.0;
   collection[2]->vx =  0.0;
   collection[2]->vy =  0.5;
+  */
 }
 
 int MD_Sign(double val) {

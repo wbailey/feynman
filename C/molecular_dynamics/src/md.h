@@ -27,10 +27,12 @@ void MD_destroy_Separation(MD_Separation *);
 void MD_toString_Separation(MD_Separation *);
 
 double MD_calculate_R(MD_Separation *);
+
 void MD_apply_Periodic(Particle *, double);
+
 void MD_initialize_Collection(ParticleCollection *);
 void MD_reset_Collection_Accel(ParticleCollection *, int);
-double MD_calc_Collection_Forces(ParticleCollection *, int);
+void MD_calc_Collection_Forces(ParticleCollection *, int);
 
 typedef struct MD_Accel {
   double ax;
@@ -42,7 +44,19 @@ MD_Accel * MD_new_Accel(MD_Separation *);
 void MD_destroy_Accel(MD_Accel *);
 
 void MD_iterate_Euler(ParticleCollection *, int);
-double MD_calc_Kinetic_Energy(ParticleCollection *, int);
+
+void MD_iterate_VerletPosition(ParticleCollection *, int);
+void MD_iterate_VerletVelocity(ParticleCollection *, int);
+
+typedef struct MD_SystemEnergy {
+  double pe;
+  double ke;
+  double te;
+} MD_SystemEnergy;
+
+MD_SystemEnergy * MD_new_SystemEnergy();
+void MD_destroy_SystemEnergy(MD_SystemEnergy *);
+MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *, int, int);
 
 int MD_Sign(double);
 
