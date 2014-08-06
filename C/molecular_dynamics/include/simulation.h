@@ -13,6 +13,6 @@ double dt = 0.005;
 double MD_CollectionSize = 4;
 
 int MD_Iterations  = 5000;
-int MD_ReportCount = 1000;
+int MD_ReportCount = 500;
 
 #endif

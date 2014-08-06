@@ -1,7 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <assert.h>
-#include <math.h>
 #include "simulation.h"
 
 int main(void) {
@@ -20,12 +16,12 @@ int main(void) {
   MD_calculate_Forces(particle, MD_CollectionSize, box_length);
 
   for (int i = 0; i < MD_Iterations; i++) {
-    MD_iterate_VerletPosition(particle, MD_CollectionSize, box_length);
-    MD_iterate_VerletVelocity(particle, MD_CollectionSize);
+    MD_iterate_VerletPosition(particle, MD_CollectionSize, dt, box_length, MD_apply_Periodic);
+    MD_iterate_VerletVelocity(particle, MD_CollectionSize, dt);
 
     MD_calculate_Forces(particle, MD_CollectionSize, box_length);
 
-    MD_iterate_VerletVelocity(particle, MD_CollectionSize);
+    MD_iterate_VerletVelocity(particle, MD_CollectionSize, dt);
 
     energy = MD_calculate_SystemEnergy(particle, MD_CollectionSize, box_length);
 

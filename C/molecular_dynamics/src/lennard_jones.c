@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
 #include "lennard_jones.h"
 
 double LJ_R6(double r) {
