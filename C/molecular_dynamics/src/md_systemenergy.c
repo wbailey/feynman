@@ -15,7 +15,7 @@ void MD_destroy_SystemEnergy(MD_SystemEnergy *system) {
   free(system);
 }
 
-MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int collection_size, int length) {
+MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int collection_size, double length) {
   double pe, ke, r;
   MD_Separation *sep;
   MD_SystemEnergy *system = MD_new_SystemEnergy();

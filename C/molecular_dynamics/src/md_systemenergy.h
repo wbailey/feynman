@@ -15,6 +15,6 @@ typedef struct MD_SystemEnergy {
 
 MD_SystemEnergy * MD_new_SystemEnergy();
 void MD_destroy_SystemEnergy(MD_SystemEnergy *);
-MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *, int, int);
+MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *, int, double);
 
 #endif

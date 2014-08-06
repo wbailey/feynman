@@ -16,4 +16,3 @@ void MD_destroy_Accel(MD_Accel *accel) {
   assert(accel != NULL);
   free(accel);
 }
-
