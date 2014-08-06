@@ -36,8 +36,10 @@ ParticleCollection * new_ParticleCollection(int count) {
   return collection;
 }
 
-void destroy_ParticleCollection(ParticleCollection *collection) {
-  for (int i = 0; i <= sizeof(collection)/sizeof(collection[0]); i++) {
+void destroy_ParticleCollection(ParticleCollection *collection, int size) {
+  assert(collection != NULL);
+
+  for (int i = 0; i < size; i++) {
     destroy_Particle(collection[i]);
   }
 

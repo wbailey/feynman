@@ -10,9 +10,9 @@ MD_SystemEnergy * MD_new_SystemEnergy() {
   return system;
 }
 
-void MD_destroy_SystemEnergy(MD_SystemEnergy *system) {
-  assert(system != NULL);
-  free(system);
+void MD_destroy_SystemEnergy(MD_SystemEnergy *energy) {
+  assert(energy != NULL);
+  free(energy);
 }
 
 MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int collection_size, double length) {
@@ -30,8 +30,11 @@ MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int co
     if (i < collection_size - 1) {
       for (int j = i + 1; j < collection_size; j++) {
         sep = MD_new_Separation(particle[i], particle[j], length);
+
         r = MD_calculate_SeparationMagnitude(sep);
         pe += LJ_Potential_Energy(r);
+
+        MD_destroy_Separation(sep);
       }
     }
   }

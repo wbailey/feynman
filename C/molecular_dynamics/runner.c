@@ -34,9 +34,10 @@ int main(void) {
       report->te = energy->te;
       MD_print_Report(report);
     }
+  
+    MD_destroy_SystemEnergy(energy);
   }
 
-  MD_destroy_SystemEnergy(energy);
   MD_destroy_Report(report);
-  destroy_ParticleCollection(particle);
+  destroy_ParticleCollection(particle, particle_count);
 }

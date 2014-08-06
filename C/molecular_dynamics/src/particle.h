@@ -25,6 +25,6 @@ void toString_Particle(Particle *);
 
 ParticleCollection * new_ParticleCollection(int);
 
-void destroy_ParticleCollection(ParticleCollection *);
+void destroy_ParticleCollection(ParticleCollection *, int);
 
 #endif

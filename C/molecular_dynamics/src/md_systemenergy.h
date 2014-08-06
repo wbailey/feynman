@@ -6,6 +6,7 @@
 #include "particle.h"
 #include "md_separation.H"
 #include "lennard_jones.h"
+#include "dbg.h"
 
 typedef struct MD_SystemEnergy {
   double pe;
