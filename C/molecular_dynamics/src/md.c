@@ -57,13 +57,13 @@ void MD_apply_Periodic(Particle *particle, double length) {
   }
 }
 
-void MD_iterate_VerletPosition(ParticleCollection *particle, int collection_size) {
+void MD_iterate_VerletPosition(ParticleCollection *particle, int collection_size, double length) {
   for (int m = 0; m < collection_size; m++) {
     particle[m]->x += particle[m]->vx * dt + 0.5 * particle[m]->ax * dt * dt;
     particle[m]->y += particle[m]->vy * dt + 0.5 * particle[m]->ay * dt * dt;
     particle[m]->z += particle[m]->vz * dt + 0.5 * particle[m]->az * dt * dt;
 
-    MD_apply_Periodic(particle[m], MD_BoxLength);
+    MD_apply_Periodic(particle[m], length);
   }
 }
 
@@ -75,7 +75,7 @@ void MD_iterate_VerletVelocity(ParticleCollection *particle, int collection_size
   }
 }
 
-void MD_iterate_Euler(ParticleCollection *particle, int collection_size) {
+void MD_iterate_Euler(ParticleCollection *particle, int collection_size, double length) {
   for (int m = 0; m < collection_size; m++) {
     particle[m]->vx += particle[m]->ax * dt;
     particle[m]->vy += particle[m]->ay * dt;
@@ -85,7 +85,7 @@ void MD_iterate_Euler(ParticleCollection *particle, int collection_size) {
     particle[m]->y  += particle[m]->vy * dt;
     particle[m]->z  += particle[m]->vz * dt;
 
-    MD_apply_Periodic(particle[m], MD_BoxLength);
+    MD_apply_Periodic(particle[m], length);
   }
 }
 
@@ -114,7 +114,7 @@ void MD_reset_Collection_Accel(ParticleCollection *particle, int collection_size
   }
 }
 
-void MD_calculate_Forces(ParticleCollection *particle, int collection_size) {
+void MD_calculate_Forces(ParticleCollection *particle, int collection_size, double length) {
   MD_Separation *sep;
   MD_Accel *accel;
 
@@ -126,7 +126,7 @@ void MD_calculate_Forces(ParticleCollection *particle, int collection_size) {
 
   for (int m = 0; m < MD_CollectionSize - 1; m++) {
     for (int n = m + 1; n < MD_CollectionSize; n++) {
-      sep = MD_new_Separation(particle[m], particle[n], MD_BoxLength);
+      sep = MD_new_Separation(particle[m], particle[n], length);
       accel = MD_new_Accel(sep); // calculates (dx/r)*force
 
       particle[m]->ax += accel->ax;
@@ -185,28 +185,75 @@ MD_SystemEnergy * MD_calculate_SystemEnergy(ParticleCollection *particle, int co
   system->ke = ke;
   system->te = pe + ke;
 
-  DEBUG_PRINT("pe: %12.8f ke: %12.8f te: %12.8f", pe, ke, te);
+  DEBUG_PRINT("pe: %12.8f ke: %12.8f te: %12.8f", pe, ke, system->te);
 
   return system;
 }
 
-void MD_initialize_Collection(ParticleCollection *collection, int collection_size) {
-  collection[0]->x  =  3.0;
-  collection[0]->y  =  6.0;
-  collection[0]->vx =  0.5;
-  collection[0]->vy =  0.0;
-  collection[1]->x  =  9.0;
-  collection[1]->y  =  6.0;
-  collection[1]->vx = -0.5;
-  collection[1]->vy = -0.0;
-  collection[2]->x  =  15.0;
-  collection[2]->y  =  6.0;
-  collection[2]->vx =  5.0;
-  collection[2]->vy =  0.0;
+double MD_initialize_Collection(ParticleCollection *p, int collection_size, double sigma) {
+  int Nx = sqrt(collection_size);
+  double x, y, vmax;
+  double length;
+
+  x = y = sigma;
+
+  MD_RandomSeed();
+  vmax = 0.1; // relate to temperature going forward
+
+  for (int i = 0; i < collection_size; i++) {
+    p[i]->x = x;
+    p[i]->y = y;
+
+    p[i]->vx = vmax * (2 * MD_Random() - 1.0);
+    p[i]->vy = vmax * (2 * MD_Random() - 1.0);
+
+    DEBUG_PRINT("%d %8.4f %8.4f %12.6f %12.6f", Nx, x, y, p[i]->vx, p[i]->vy);
+
+    x += 2 * sigma;
+
+    if ( (i - 1) % Nx == 0) {
+      y += 2 * sigma;
+      x = sigma;
+      DEBUG_PRINT("switch: %d %8.4f %8.4f", i, x, y);
+    }
+  }
+
+  // Calculate the center of mass
+  double vxcum, vycum;
+  vxcum = vycum = 0.0;
+
+  for (int i = 0; i < collection_size; i++) {
+    vxcum += p[i]->vx;
+    vycum += p[i]->vy;
+  }
+
+  vxcum = vxcum/(double) collection_size;
+  vycum = vycum/(double) collection_size;
+
+  for (int i = 0; i < collection_size; i++) {
+    p[i]->vx -= vxcum;
+    p[i]->vy -= vycum;
+
+    DEBUG_PRINT("%12.6f %12.6f %12.6f %12.6f", p[i]->x, p[i]->y, p[i]->vx, p[i]->vy);
+  }
+
+  length = sigma * (2 * Nx);
+
+  DEBUG_PRINT("box length: %12.6f", length);
+
+  return length;
 }
 
 int MD_Sign(double val) {
   return (val > 0) - (val < 0);
+}
+
+void MD_RandomSeed() {
+  srand(time(NULL));
+}
+
+double MD_Random() {
+  return (double) rand()/(double) RAND_MAX;
 }
 
 MD_Report * MD_new_Report() {
