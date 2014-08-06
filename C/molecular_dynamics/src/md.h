@@ -5,9 +5,6 @@
 #include "lennard_jones.h"
 #include "particle.h"
 
-extern double LJ_Epsilon; // kJ/mol
-extern double LJ_Sigma;    // Angstroms
-
 extern double t;
 extern double dt;
 

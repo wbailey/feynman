@@ -7,8 +7,8 @@
 double LJ_Epsilon = 0.997; // kJ/mol
 double LJ_Sigma = 3.40;    // Angstroms
 
-double t = 0;
-double dt = 0.01;
+double t;
+double dt;
 
 double MD_CollectionSize = 3;
 double MD_BoxLength = 18;

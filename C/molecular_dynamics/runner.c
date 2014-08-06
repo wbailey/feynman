@@ -5,9 +5,10 @@
 #include "simulation.h"
 
 int main(void) {
-  MD_SystemEnergy *energy;
+  MD_SystemEnergy *energy = MD_new_SystemEnergy();
   ParticleCollection *particle = new_ParticleCollection(MD_CollectionSize);
   MD_Report *report = MD_new_Report();
+
   int report_interval = MD_Iterations/MD_ReportCount;
 
   MD_initialize_Collection(particle, MD_CollectionSize);
