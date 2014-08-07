@@ -8,12 +8,12 @@ MD_Report * MD_new_Report() {
   return report;
 }
 
-void MD_destroy_Report(MD_Report *report) {
+void destroy_MD_Report(MD_Report *report) {
   assert(report != NULL);
   free(report);
 }
 
-void MD_print_Report(MD_Report *report) {
+void print_MD_Report(MD_Report *report) {
   ParticleCollection *c = report->collection;
 
   printf("%9.6f ", report->t);

@@ -13,7 +13,7 @@ typedef struct MD_Report {
 } MD_Report;
 
 MD_Report * MD_new_Report();
-void MD_destroy_Report(MD_Report *);
-void MD_print_Report(MD_Report *);
+void destroy_MD_Report(MD_Report *);
+void print_MD_Report(MD_Report *);
 
 #endif
