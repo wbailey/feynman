@@ -1,16 +1,17 @@
 #ifndef LENNARD_JONES_H
 #define LENNARD_JONES_H
 
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
+typedef struct LennardJonesPotential {
+  double sigma;
+  double epsilon;
+} LennardJonesPotential;
 
-double LJ_R6(double);
-double LJ_R12(double);
-double LJ_Force(double);
-double LJ_Potential_Energy(double);
+LennardJonesPotential * new_LennardJonesPotential(double, double);
+void destroy_LennardJonesPotential(LennardJonesPotential *);
 
-extern double LJ_Epsilon;
-extern double LJ_Sigma;
+double LennardJones_R6(LennardJonesPotential *, double);
+double LennardJones_R12(LennardJonesPotential *, double);
+double LennardJones_Force(LennardJonesPotential *, double);
+double LennardJones_PotentialEnergy(LennardJonesPotential *, double);
 
 #endif

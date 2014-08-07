@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include "md_report.h"
 
 MD_Report * MD_new_Report() {

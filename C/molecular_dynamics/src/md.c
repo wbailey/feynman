@@ -1,4 +1,30 @@
+#include <stdlib.h>
+#include <assert.h>
+#include <math.h>
 #include "md.h"
+#include "md_math.h"
+#include "md_separation.h"
+#include "md_accel.h"
+#include "lennard_jones.h"
+#include "dbg.h"
+
+MD_Parameters * new_MD_Parameters(double t, double dt, int pc, int itr, int eqi, int rc) {
+  MD_Parameters *mdp = malloc(sizeof(struct MD_Parameters));
+
+  mdp->t = t;
+  mdp->dt = dt;
+  mdp->particle_count = pc;
+  mdp->iterations = itr;
+  mdp->equilibrium = eqi;
+  mdp->report_count = rc;
+
+  return mdp;
+}
+
+void destroy_MD_Parameters(MD_Parameters *mdp) {
+  assert(mdp != NULL);
+  free(mdp);
+}
 
 void MD_apply_Periodic(Particle *particle, double length) {
   if(particle->x < 0.0) {
@@ -20,7 +46,7 @@ void MD_apply_Periodic(Particle *particle, double length) {
   }
 }
 
-void MD_calculate_Forces(ParticleCollection *particle, int collection_size, double length) {
+void MD_calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
   MD_Separation *sep;
   MD_Accel *accel;
 
@@ -30,10 +56,10 @@ void MD_calculate_Forces(ParticleCollection *particle, int collection_size, doub
     particle[i]->az = 0.0;
   }
 
-  for (int m = 0; m < particle_count - 1; m++) {
-    for (int n = m + 1; n < particle_count; n++) {
+  for (int m = 0; m < collection_size - 1; m++) {
+    for (int n = m + 1; n < collection_size; n++) {
       sep = MD_new_Separation(particle[m], particle[n], length);
-      accel = MD_new_Accel(sep); // calculates (dx/r)*force
+      accel = MD_new_Accel(ljp, sep); // calculates (dx/r)*force
 
       particle[m]->ax += accel->ax;
       particle[m]->ay += accel->ay;
@@ -58,7 +84,7 @@ double MD_initialize_Collection(ParticleCollection *p, int collection_size, doub
   x = y = sigma;
 
   MD_RandomSeed();
-  vmax = 0.1; // relate to temperature going forward
+  vmax = 2.1; // relate to temperature going forward
 
   /*
    * Given a number N we need to compute the number of rows and columns

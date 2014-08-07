@@ -1,4 +1,9 @@
+#include <stdlib.h>
+#include <assert.h>
+#include <math.h>
 #include "md_separation.h"
+#include "md_math.h"
+#include "dbg.h"
 
 MD_Separation * MD_new_Separation(Particle *p1, Particle *p2, double length) {
   struct MD_Separation *separation = malloc(sizeof(struct MD_Separation));

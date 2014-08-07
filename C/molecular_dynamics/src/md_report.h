@@ -1,9 +1,6 @@
 #ifndef MD_REPORT
 #define MD_REPORT
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
 #include "particle.h"
 
 typedef struct MD_Report {

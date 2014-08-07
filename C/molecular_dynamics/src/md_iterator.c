@@ -1,3 +1,4 @@
+#include "particle.h"
 #include "md_iterator.h"
 
 void MD_iterate_VerletPosition(ParticleCollection *particle, int collection_size, double dt, double length, MD_pbc pbc) {

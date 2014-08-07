@@ -1,11 +1,7 @@
 #ifndef MD_SEPARATION
 #define MD_SEPARATION
 
-#include <stdlib.h>
-#include <math.h>
 #include "particle.h"
-#include "md_math.h"
-#include "dbg.h"
 
 typedef struct MD_Separation {
   double dx;

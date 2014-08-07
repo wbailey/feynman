@@ -1,23 +1,41 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+#include <assert.h>
 #include "lennard_jones.h"
 
-double LJ_R6(double r) {
-  return pow(LJ_Sigma/r, 6);
+LennardJonesPotential * new_LennardJonesPotential(double sigma, double epsilon) {
+  LennardJonesPotential *ljp = malloc(sizeof(struct LennardJonesPotential));
+
+  ljp->sigma = sigma;
+  ljp->epsilon = epsilon;
+
+  return ljp;
 }
 
-double LJ_R12(double r) {
-  return pow(LJ_R6(r), 2);
+void destroy_LennardJonesPotential(LennardJonesPotential *ljp) {
+  assert(ljp != NULL);
+  free(ljp);
 }
 
-double LJ_Force(double r) {
-  assert(LJ_Epsilon != 0);
-  assert(LJ_Sigma != 0);
-
-  return -(24.0 * LJ_Epsilon/r) * (2.0 * LJ_R12(r) - LJ_R6(r));
+double LennardJones_R6(LennardJonesPotential *ljp, double r) {
+  return pow(ljp->sigma/r, 6);
 }
 
-double LJ_Potential_Energy(double r) {
-  assert(LJ_Epsilon != 0);
-  assert(LJ_Sigma != 0);
+double LennardJones_R12(LennardJonesPotential *ljp, double r) {
+  return pow(LennardJones_R6(ljp, r), 2);
+}
 
-  return 4.0 * LJ_Epsilon * (LJ_R12(r) - LJ_R6(r));
+double LennardJones_Force(LennardJonesPotential *ljp, double r) {
+  assert(ljp->sigma != 0);
+  assert(ljp->epsilon != 0);
+
+  return -(24.0 * ljp->epsilon/r) * (2.0 * LennardJones_R12(ljp, r) - LennardJones_R6(ljp, r));
+}
+
+double LennardJones_PotentialEnergy(LennardJonesPotential *ljp, double r) {
+  assert(ljp->sigma != 0);
+  assert(ljp->epsilon != 0);
+
+  return 4.0 * ljp->epsilon * (LennardJones_R12(ljp, r) - LennardJones_R6(ljp, r));
 }

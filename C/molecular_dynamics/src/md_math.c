@@ -1,3 +1,7 @@
+#include <stdlib.h>
+#include <assert.h>
+#include <math.h>
+#include <time.h>
 #include "md_math.h"
 
 int MD_Sign(double val) {
