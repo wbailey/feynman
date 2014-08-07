@@ -1,7 +1,6 @@
 #include "simulation.h"
 
 int main(void) {
-  MD_SystemEnergy *energy = MD_new_SystemEnergy();
   ParticleCollection *particle = new_ParticleCollection(particle_count);
   MD_Report *report = MD_new_Report();
   double box_length;
@@ -23,7 +22,7 @@ int main(void) {
 
     MD_iterate_VerletVelocity(particle, particle_count, dt);
 
-    energy = MD_calculate_SystemEnergy(particle, particle_count, box_length);
+    MD_SystemEnergy *energy = MD_calculate_SystemEnergy(particle, particle_count, box_length);
 
     t += dt;
 

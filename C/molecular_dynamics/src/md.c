@@ -50,7 +50,8 @@ void MD_calculate_Forces(ParticleCollection *particle, int collection_size, doub
 }
 
 double MD_initialize_Collection(ParticleCollection *p, int collection_size, double sigma) {
-  int Nx = sqrt(collection_size);
+  int Nx, Ny;
+  int c, d;
   double x, y, vmax;
   double length;
 
@@ -59,22 +60,82 @@ double MD_initialize_Collection(ParticleCollection *p, int collection_size, doub
   MD_RandomSeed();
   vmax = 0.1; // relate to temperature going forward
 
-  for (int i = 0; i < collection_size; i++) {
-    p[i]->x = x;
-    p[i]->y = y;
+  /*
+   * Given a number N we need to compute the number of rows and columns
+   * making up a grid that supports the remainder.  Consider the following:
+   *
+   * NOTE: integer math
+   *
+   * Nx * Ny + c = N
+   *
+   * and
+   *
+   * (Nx + 1) * (Ny + 1) - d = N
+   *
+   * solving for c and d yields:
+   *
+   * c = N - Nx * Ny
+   * d = 2 * sqrt(N) + 1 - c
+   *
+   * Consider the example:
+   *
+   * N = 15
+   *
+   * (3)^2 + 6 = 15
+   * (4)^2 - 1 = 15
+   *
+   * so Nx=3, Ny=3, c=6 and d=1.  When c > d then we add 1 to Nx and Ny and go until
+   * we have layed out 15 particles.
+   *
+   * Consider the next example:
+   *
+   * N = 17
+   *
+   * (4)^2 + 1 = 17
+   * (5)^2 - 8 = 17
+   *
+   * so Nx=4 and Ny=4, c=1 and d=8.  When d > c then we choose Nx = 5 and Ny = 4 and
+   * stop when we have layed out 17 particles.
+   *
+   * The formulas and conditionals below implement this logic.
+   */
 
-    p[i]->vx = vmax * (2 * MD_Random() - 1.0);
-    p[i]->vy = vmax * (2 * MD_Random() - 1.0);
+  Ny = Nx = sqrt(collection_size);
 
-    DEBUG_PRINT("%d %8.4f %8.4f %12.6f %12.6f", Nx, x, y, p[i]->vx, p[i]->vy);
+  c = collection_size - Nx * Nx;
+  d = 2 * Nx + 1 - c;
 
-    x += 2 * sigma;
+  DEBUG_PRINT("collection size: %d Nx: %d Ny: %d c: %d d: %d", collection_size, Nx, Ny, c, d);
 
-    if ( (i - 1) % Nx == 0) {
-      y += 2 * sigma;
-      x = sigma;
-      DEBUG_PRINT("switch: %d %8.4f %8.4f", i, x, y);
+  if (c == 0) {
+    // do nothing on purpose
+  } else if (c < d) {
+    Nx += 1;
+  } else {
+    Nx += 1;
+    Ny += 1;
+  }
+
+  int i = 0;
+
+  for (int m = 0; m < Nx; m++) {
+    for (int n = 0; n < Ny; n++) {
+      if (i > collection_size - 1) break;
+
+      p[i]->x = x;
+      p[i]->y = y;
+
+      p[i]->vx = vmax * (2 * MD_Random() - 1.0);
+      p[i]->vy = vmax * (2 * MD_Random() - 1.0);
+
+      DEBUG_PRINT("%d %d %8.4f %8.4f %12.6f %12.6f",i, Nx, x, y, p[i]->vx, p[i]->vy);
+
+      y += 2.0 * sigma;
+
+      i++;
     }
+    x += 2.0 * sigma;
+    y = sigma;
   }
 
   // Calculate the velocity drift
