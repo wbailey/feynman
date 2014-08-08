@@ -34,7 +34,7 @@ MD_SystemEnergy * calculate_SystemEnergy(LennardJonesPotential *ljp, ParticleCol
         particle[i]->vz * particle[i]->vz;
     if (i < collection_size - 1) {
       for (int j = i + 1; j < collection_size; j++) {
-        sep = MD_new_Separation(particle[i], particle[j], length);
+        sep = new_MD_Separation(particle[i], particle[j], length);
 
         r = calculate_SeparationMagnitude(sep);
         pe += LennardJones_PotentialEnergy(ljp, r);

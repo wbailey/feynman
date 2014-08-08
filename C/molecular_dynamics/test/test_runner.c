@@ -130,7 +130,7 @@ char *test_md_new_separation() {
   test =  30.0;
   expectation = -10.0;
 
-  MD_Separation *sep = MD_new_Separation(p, o, test);
+  MD_Separation *sep = new_MD_Separation(p, o, test);
 
   printf("test particle 1: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
   printf("test particle 2: x = %8.4f y = %8.4f z = %8.4f\n", o->x, o->y, o->z);
@@ -145,7 +145,7 @@ char *test_md_new_separation() {
   test =  18.0;
   expectation = 8.0;
 
-  MD_Separation *pep = MD_new_Separation(p, o, test);
+  MD_Separation *pep = new_MD_Separation(p, o, test);
 
   printf("test particle 1: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
   printf("test particle 2: x = %8.4f y = %8.4f z = %8.4f\n", o->x, o->y, o->z);

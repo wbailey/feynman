@@ -58,7 +58,7 @@ void calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, 
 
   for (int m = 0; m < collection_size - 1; m++) {
     for (int n = m + 1; n < collection_size; n++) {
-      sep = MD_new_Separation(particle[m], particle[n], length);
+      sep = new_MD_Separation(particle[m], particle[n], length);
       accel = new_MD_Accel(ljp, sep); // calculates (dx/r)*force
 
       particle[m]->ax += accel->ax;
