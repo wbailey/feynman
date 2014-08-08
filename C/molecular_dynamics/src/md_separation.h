@@ -10,9 +10,9 @@ typedef struct MD_Separation {
 } MD_Separation;
 
 MD_Separation * MD_new_Separation(Particle *, Particle *, double);
-void MD_destroy_Separation(MD_Separation *);
-void MD_toString_Separation(MD_Separation *);
+void destroy_MD_Separation(MD_Separation *);
+void toString_MD_Separation(MD_Separation *);
 
-double MD_calculate_SeparationMagnitude(MD_Separation *);
+double calculate_SeparationMagnitude(MD_Separation *);
 
 #endif

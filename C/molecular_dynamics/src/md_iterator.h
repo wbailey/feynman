@@ -5,9 +5,9 @@
 
 typedef void (*MD_pbc)(Particle *, double);
 
-void MD_iterate_Euler(ParticleCollection *, int, double, double, MD_pbc);
+void euler_Iterate(ParticleCollection *, int, double, double, MD_pbc);
 
-void MD_iterate_VerletPosition(ParticleCollection *, int, double, double, MD_pbc);
-void MD_iterate_VerletVelocity(ParticleCollection *, int, double);
+void verlet_IteratePosition(ParticleCollection *, int, double, double, MD_pbc);
+void verlet_IterateVelocity(ParticleCollection *, int, double);
 
 #endif

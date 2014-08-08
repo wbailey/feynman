@@ -12,8 +12,8 @@ typedef struct MD_Report {
   int collection_size;
 } MD_Report;
 
-MD_Report * MD_new_Report();
-void destroy_MD_Report(MD_Report *);
-void print_MD_Report(MD_Report *);
+MD_Report * new_Report();
+void destroy_Report(MD_Report *);
+void print_Report(MD_Report *);
 
 #endif

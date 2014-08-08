@@ -3,17 +3,17 @@
 #include <assert.h>
 #include "md_report.h"
 
-MD_Report * MD_new_Report() {
+MD_Report * new_Report() {
   struct MD_Report *report = malloc(sizeof(struct MD_Report));
   return report;
 }
 
-void destroy_MD_Report(MD_Report *report) {
+void destroy_Report(MD_Report *report) {
   assert(report != NULL);
   free(report);
 }
 
-void print_MD_Report(MD_Report *report) {
+void print_Report(MD_Report *report) {
   ParticleCollection *c = report->collection;
 
   printf("%9.6f ", report->t);

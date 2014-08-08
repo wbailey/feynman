@@ -10,8 +10,8 @@ typedef struct MD_SystemEnergy {
   double te;
 } MD_SystemEnergy;
 
-MD_SystemEnergy * MD_new_SystemEnergy();
-void MD_destroy_SystemEnergy(MD_SystemEnergy *);
-MD_SystemEnergy * MD_calculate_SystemEnergy(LennardJonesPotential *, ParticleCollection *, int, double);
+MD_SystemEnergy * new_SystemEnergy();
+void destroy_SystemEnergy(MD_SystemEnergy *);
+MD_SystemEnergy * calculate_SystemEnergy(LennardJonesPotential *, ParticleCollection *, int, double);
 
 #endif

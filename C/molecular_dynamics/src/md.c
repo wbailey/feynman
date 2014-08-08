@@ -26,7 +26,7 @@ void destroy_MD_Parameters(MD_Parameters *mdp) {
   free(mdp);
 }
 
-void MD_apply_Periodic(Particle *particle, double length) {
+void apply_Periodic(Particle *particle, double length) {
   if(particle->x < 0.0) {
     particle->x += length;
   } else if (particle->x > length) {
@@ -46,7 +46,7 @@ void MD_apply_Periodic(Particle *particle, double length) {
   }
 }
 
-void MD_calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
+void calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
   MD_Separation *sep;
   MD_Accel *accel;
 
@@ -59,7 +59,7 @@ void MD_calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particl
   for (int m = 0; m < collection_size - 1; m++) {
     for (int n = m + 1; n < collection_size; n++) {
       sep = MD_new_Separation(particle[m], particle[n], length);
-      accel = MD_new_Accel(ljp, sep); // calculates (dx/r)*force
+      accel = new_MD_Accel(ljp, sep); // calculates (dx/r)*force
 
       particle[m]->ax += accel->ax;
       particle[m]->ay += accel->ay;
@@ -69,13 +69,13 @@ void MD_calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particl
       particle[n]->ay -= accel->ay;
       particle[n]->az -= accel->az;
 
-      MD_destroy_Separation(sep);
-      MD_destroy_Accel(accel);
+      destroy_MD_Separation(sep);
+      destroy_MD_Accel(accel);
     }
   }
 }
 
-double MD_initialize_Collection(ParticleCollection *p, int collection_size, double sigma) {
+double initialize_Collection(ParticleCollection *p, int collection_size, double sigma) {
   int Nx, Ny;
   int c, d;
   double x, y, vmax;
@@ -83,7 +83,7 @@ double MD_initialize_Collection(ParticleCollection *p, int collection_size, doub
 
   x = y = sigma;
 
-  MD_RandomSeed();
+  math_RandomSeed();
   vmax = 2.1; // relate to temperature going forward
 
   /*
@@ -151,8 +151,8 @@ double MD_initialize_Collection(ParticleCollection *p, int collection_size, doub
       p[i]->x = x;
       p[i]->y = y;
 
-      p[i]->vx = vmax * (2 * MD_Random() - 1.0);
-      p[i]->vy = vmax * (2 * MD_Random() - 1.0);
+      p[i]->vx = vmax * (2 * math_Random() - 1.0);
+      p[i]->vy = vmax * (2 * math_Random() - 1.0);
 
       DEBUG_PRINT("%d %d %8.4f %8.4f %12.6f %12.6f",i, Nx, x, y, p[i]->vx, p[i]->vy);
 

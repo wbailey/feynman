@@ -14,9 +14,9 @@ MD_Separation * MD_new_Separation(Particle *p1, Particle *p2, double length) {
   dy = p1->y - p2->y;
   dz = p1->z - p2->z;
 
-  if (fabs(dx) > half) dx -= MD_Sign(dx) * length;
-  if (fabs(dy) > half) dy -= MD_Sign(dy) * length;
-  if (fabs(dz) > half) dz -= MD_Sign(dz) * length;
+  if (fabs(dx) > half) dx -= math_Sign(dx) * length;
+  if (fabs(dy) > half) dy -= math_Sign(dy) * length;
+  if (fabs(dz) > half) dz -= math_Sign(dz) * length;
 
   separation->dx = dx;
   separation->dy = dy;
@@ -25,16 +25,16 @@ MD_Separation * MD_new_Separation(Particle *p1, Particle *p2, double length) {
   return separation;
 }
 
-void MD_destroy_Separation(MD_Separation *separation) {
+void destroy_MD_Separation(MD_Separation *separation) {
   assert(separation != NULL);
   free(separation);
 }
 
-void MD_toString_Separation(MD_Separation *sep) {
+void toString_MD_Separation(MD_Separation *sep) {
   DEBUG_PRINT("dx: %12.8f dy: %12.8f dz: %12.8f", sep->dx, sep->dy, sep->dz);
 }
 
-double MD_calculate_SeparationMagnitude(MD_Separation *sep) {
+double calculate_SeparationMagnitude(MD_Separation *sep) {
   return sqrt(sep->dx * sep->dx + sep->dy * sep->dy + sep->dz * sep->dz);
 }
 

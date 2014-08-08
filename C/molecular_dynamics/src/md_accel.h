@@ -10,7 +10,7 @@ typedef struct MD_Accel {
   double az;
 } MD_Accel;
 
-MD_Accel * MD_new_Accel(LennardJonesPotential *, MD_Separation *);
-void MD_destroy_Accel(MD_Accel *);
+MD_Accel * new_MD_Accel(LennardJonesPotential *, MD_Separation *);
+void destroy_MD_Accel(MD_Accel *);
 
 #endif

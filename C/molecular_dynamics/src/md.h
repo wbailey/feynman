@@ -16,8 +16,8 @@ typedef struct MD_Parameters {
 MD_Parameters * new_MD_Parameters(double, double, int, int, int, int);
 void destroy_MD_Parameters(MD_Parameters *);
 
-void MD_apply_Periodic(Particle *, double);
-double MD_initialize_Collection(ParticleCollection *, int, double);
-void MD_calculate_Forces(LennardJonesPotential *, ParticleCollection *, int, double);
+void apply_Periodic(Particle *, double);
+double initialize_Collection(ParticleCollection *, int, double);
+void calculate_Forces(LennardJonesPotential *, ParticleCollection *, int, double);
 
 #endif

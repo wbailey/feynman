@@ -1,7 +1,7 @@
 #include "particle.h"
 #include "md_iterator.h"
 
-void MD_iterate_VerletPosition(ParticleCollection *particle, int collection_size, double dt, double length, MD_pbc pbc) {
+void verlet_IteratePosition(ParticleCollection *particle, int collection_size, double dt, double length, MD_pbc pbc) {
   for (int m = 0; m < collection_size; m++) {
     particle[m]->x += particle[m]->vx * dt + 0.5 * particle[m]->ax * dt * dt;
     particle[m]->y += particle[m]->vy * dt + 0.5 * particle[m]->ay * dt * dt;
@@ -11,7 +11,7 @@ void MD_iterate_VerletPosition(ParticleCollection *particle, int collection_size
   }
 }
 
-void MD_iterate_VerletVelocity(ParticleCollection *particle, int collection_size, double dt) {
+void verlet_IterateVelocity(ParticleCollection *particle, int collection_size, double dt) {
   for (int m = 0; m < collection_size; m++) {
     particle[m]->vx += 0.5 * particle[m]->ax * dt;
     particle[m]->vy += 0.5 * particle[m]->ay * dt;
@@ -19,7 +19,7 @@ void MD_iterate_VerletVelocity(ParticleCollection *particle, int collection_size
   }
 }
 
-void MD_iterate_Euler(ParticleCollection *particle, int collection_size, double dt, double length, MD_pbc pbc) {
+void euler_Iterate(ParticleCollection *particle, int collection_size, double dt, double length, MD_pbc pbc) {
   for (int m = 0; m < collection_size; m++) {
     particle[m]->vx += particle[m]->ax * dt;
     particle[m]->vy += particle[m]->ay * dt;

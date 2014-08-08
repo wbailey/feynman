@@ -5,7 +5,7 @@
 #include "lennard_jones.h"
 #include "dbg.h"
 
-MD_SystemEnergy * MD_new_SystemEnergy() {
+MD_SystemEnergy * new_SystemEnergy() {
   struct MD_SystemEnergy *system = malloc(sizeof(struct MD_SystemEnergy));
 
   system->pe = 0.0;
@@ -15,15 +15,15 @@ MD_SystemEnergy * MD_new_SystemEnergy() {
   return system;
 }
 
-void MD_destroy_SystemEnergy(MD_SystemEnergy *energy) {
+void destroy_SystemEnergy(MD_SystemEnergy *energy) {
   assert(energy != NULL);
   free(energy);
 }
 
-MD_SystemEnergy * MD_calculate_SystemEnergy(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
+MD_SystemEnergy * calculate_SystemEnergy(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
   double pe, ke, r;
   MD_Separation *sep;
-  MD_SystemEnergy *system = MD_new_SystemEnergy();
+  MD_SystemEnergy *system = new_SystemEnergy();
   
   pe = ke = 0.0;
 
@@ -36,10 +36,10 @@ MD_SystemEnergy * MD_calculate_SystemEnergy(LennardJonesPotential *ljp, Particle
       for (int j = i + 1; j < collection_size; j++) {
         sep = MD_new_Separation(particle[i], particle[j], length);
 
-        r = MD_calculate_SeparationMagnitude(sep);
+        r = calculate_SeparationMagnitude(sep);
         pe += LennardJones_PotentialEnergy(ljp, r);
 
-        MD_destroy_Separation(sep);
+        destroy_MD_Separation(sep);
       }
     }
   }

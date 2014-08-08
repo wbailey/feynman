@@ -56,7 +56,7 @@ char *test_md_sign() {
 
   test = 0.9;
   expectation = 1;
-  result = MD_Sign(test);
+  result = math_Sign(test);
 
   printf("test: %8.4f result: %d, expectation: %d\n", test, result, expectation);
 
@@ -64,7 +64,7 @@ char *test_md_sign() {
 
   test = 0.0;
   expectation = 0;
-  result = MD_Sign(test);
+  result = math_Sign(test);
 
   printf("test: %8.4f result: %d, expectation: %d\n", test, result, expectation);
   
@@ -72,7 +72,7 @@ char *test_md_sign() {
   
   test = -9.5;
   expectation = -1;
-  result = MD_Sign(test);
+  result = math_Sign(test);
 
   printf("test: %8.4f result: %d, expectation: %d\n", test, result, expectation);
   
@@ -92,7 +92,7 @@ char *test_periodic() {
   test = 10.0;
   expectation = 8.0;
 
-  MD_apply_Periodic(p, test);
+  apply_Periodic(p, test);
 
   printf("test particle  after: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
   printf("test: %8.4f expectation: %8.4f\n", test, expectation);
@@ -108,7 +108,7 @@ char *test_periodic() {
   test = 10.0;
   expectation = 2.0;
 
-  MD_apply_Periodic(p, test);
+  apply_Periodic(p, test);
 
   printf("test particle  after: x = %8.4f y = %8.4f z = %8.4f\n", p->x, p->y, p->z);
   printf("test: %8.4f expectation: %8.4f\n", test, expectation);
@@ -140,7 +140,7 @@ char *test_md_new_separation() {
   mu_assert(sep->dy == expectation, "Particles are closer than PBC result")
   mu_assert(sep->dz == expectation, "Particles are closer than PBC result")
 
-  MD_destroy_Separation(sep);
+  destroy_MD_Separation(sep);
 
   test =  18.0;
   expectation = 8.0;
@@ -155,7 +155,7 @@ char *test_md_new_separation() {
   mu_assert(pep->dy == expectation, "Particles are using PBC result")
   mu_assert(pep->dz == expectation, "Particles are using PBC result")
 
-  MD_destroy_Separation(pep);
+  destroy_MD_Separation(pep);
 
   return NULL;
 }
