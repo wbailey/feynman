@@ -76,7 +76,7 @@ void calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, 
 }
 
 double initialize_Collection(ParticleCollection *p, int collection_size, double sigma) {
-  int Nx, Ny;
+  int Nx, Ny, Nz;
   int c, d;
   double x, y, vmax;
   double length;
@@ -126,7 +126,7 @@ double initialize_Collection(ParticleCollection *p, int collection_size, double 
    * The formulas and conditionals below implement this logic.
    */
 
-  Ny = Nx = sqrt(collection_size);
+  Ny = Nx = Nz = sqrt(collection_size);
 
   c = collection_size - Nx * Nx;
   d = 2 * Nx + 1 - c;
