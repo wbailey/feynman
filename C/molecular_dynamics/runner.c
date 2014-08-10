@@ -5,30 +5,32 @@
 #include "md.h"
 
 int main(void) {
-  MD_Parameters *mdp = new_MD_Parameters(0.0, 0.01, 50, 6000, 1000, 1000);
   LennardJonesPotential *ljp = new_LennardJonesPotential(3.40, 0.997);
-  ParticleCollection *particle = new_ParticleCollection(mdp->particle_count);
+  MD_BoxParameters *mdb = new_MD_BoxParameters(10, 10, 10, 2.0 * ljp->sigma, 2.0);
+  MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 6000, 1000, 1000);
+  int collection_size = mdb->Nx * mdb->Ny * mdb->Nz;
+  ParticleCollection *particle = new_ParticleCollection(collection_size);
   MD_Report *report = new_Report();
   double box_length;
 
   int report_interval = (mdp->iterations - mdp->equilibrium)/mdp->report_count;
 
-  box_length = initialize_Collection(particle, mdp->particle_count, ljp->sigma);
+  box_length = initialize_Collection(particle, mdb);
 
   report->collection      = particle;
-  report->collection_size = mdp->particle_count;
+  report->collection_size = collection_size;
 
-  calculate_Forces(ljp, particle, mdp->particle_count, box_length);
+  calculate_Forces(ljp, particle, collection_size, box_length);
 
   for (int i = 0; i < mdp->iterations; i++) {
-    verlet_IteratePosition(particle, mdp->particle_count, mdp->dt, box_length, apply_Periodic);
-    verlet_IterateVelocity(particle, mdp->particle_count, mdp->dt);
+    verlet_IteratePosition(particle, collection_size, mdp->dt, box_length, apply_Periodic);
+    verlet_IterateVelocity(particle, collection_size, mdp->dt);
 
-    calculate_Forces(ljp, particle, mdp->particle_count, box_length);
+    calculate_Forces(ljp, particle, collection_size, box_length);
 
-    verlet_IterateVelocity(particle, mdp->particle_count, mdp->dt);
+    verlet_IterateVelocity(particle, collection_size, mdp->dt);
 
-    MD_SystemEnergy *energy = calculate_SystemEnergy(ljp, particle, mdp->particle_count, box_length);
+    MD_SystemEnergy *energy = calculate_SystemEnergy(ljp, particle, collection_size, box_length);
 
     mdp->t += mdp->dt;
 
@@ -44,7 +46,8 @@ int main(void) {
   }
 
   destroy_Report(report);
-  destroy_MD_Parameters(mdp);
+  destroy_MD_BoxParameters(mdb);
+  destroy_MD_RunParameters(mdp);
   destroy_LennardJonesPotential(ljp);
-  destroy_ParticleCollection(particle, mdp->particle_count);
+  destroy_ParticleCollection(particle, collection_size);
 }

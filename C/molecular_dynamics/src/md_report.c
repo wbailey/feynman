@@ -26,4 +26,5 @@ void print_Report(MD_Report *report) {
   }
 
   printf("\n");
+  fflush(stdout);
 }

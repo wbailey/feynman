@@ -8,12 +8,28 @@
 #include "lennard_jones.h"
 #include "dbg.h"
 
-MD_Parameters * new_MD_Parameters(double t, double dt, int pc, int itr, int eqi, int rc) {
-  MD_Parameters *mdp = malloc(sizeof(struct MD_Parameters));
+MD_BoxParameters * new_MD_BoxParameters(int Nx, int Ny, int Nz, double spacing, double vmax) {
+  MD_BoxParameters *mdb = malloc(sizeof(struct MD_BoxParameters));
+
+  mdb->Nx = Nx;
+  mdb->Ny = Ny;
+  mdb->Nz = Nz;
+  mdb->spacing = spacing;
+  mdb->vmax = vmax;
+
+  return mdb;
+}
+
+void destroy_MD_BoxParameters(MD_BoxParameters *mdb) {
+  assert(mdb != NULL);
+  free(mdb);
+}
+
+MD_RunParameters * new_MD_RunParameters(double t, double dt, int itr, int eqi, int rc) {
+  MD_RunParameters *mdp = malloc(sizeof(struct MD_RunParameters));
 
   mdp->t = t;
   mdp->dt = dt;
-  mdp->particle_count = pc;
   mdp->iterations = itr;
   mdp->equilibrium = eqi;
   mdp->report_count = rc;
@@ -21,7 +37,7 @@ MD_Parameters * new_MD_Parameters(double t, double dt, int pc, int itr, int eqi,
   return mdp;
 }
 
-void destroy_MD_Parameters(MD_Parameters *mdp) {
+void destroy_MD_RunParameters(MD_RunParameters *mdp) {
   assert(mdp != NULL);
   free(mdp);
 }
@@ -75,117 +91,68 @@ void calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, 
   }
 }
 
-double initialize_Collection(ParticleCollection *p, int collection_size, double sigma) {
-  int Nx, Ny, Nz;
-  int c, d;
-  double x, y, vmax;
+double initialize_Collection(ParticleCollection *p, MD_BoxParameters *mdb) {
+  double x, y, z;
   double length;
+  int collection_size = mdb->Nx * mdb->Ny * mdb->Nz;
 
-  x = y = sigma;
+  x = y = z = mdb->spacing;
 
   math_RandomSeed();
-  vmax = 2.1; // relate to temperature going forward
-
-  /*
-   * Given a number N we need to compute the number of rows and columns
-   * making up a grid that supports the remainder.  Consider the following:
-   *
-   * NOTE: integer math
-   *
-   * Nx * Ny + c = N
-   *
-   * and
-   *
-   * (Nx + 1) * (Ny + 1) - d = N
-   *
-   * solving for c and d yields:
-   *
-   * c = N - Nx * Ny
-   * d = 2 * sqrt(N) + 1 - c
-   *
-   * Consider the example:
-   *
-   * N = 15
-   *
-   * (3)^2 + 6 = 15
-   * (4)^2 - 1 = 15
-   *
-   * so Nx=3, Ny=3, c=6 and d=1.  When c > d then we add 1 to Nx and Ny and go until
-   * we have layed out 15 particles.
-   *
-   * Consider the next example:
-   *
-   * N = 17
-   *
-   * (4)^2 + 1 = 17
-   * (5)^2 - 8 = 17
-   *
-   * so Nx=4 and Ny=4, c=1 and d=8.  When d > c then we choose Nx = 5 and Ny = 4 and
-   * stop when we have layed out 17 particles.
-   *
-   * The formulas and conditionals below implement this logic.
-   */
-
-  Ny = Nx = Nz = sqrt(collection_size);
-
-  c = collection_size - Nx * Nx;
-  d = 2 * Nx + 1 - c;
-
-  DEBUG_PRINT("collection size: %d Nx: %d Ny: %d c: %d d: %d", collection_size, Nx, Ny, c, d);
-
-  if (c == 0) {
-    // do nothing on purpose
-  } else if (c < d) {
-    Nx += 1;
-  } else {
-    Nx += 1;
-    Ny += 1;
-  }
 
   int i = 0;
 
-  for (int m = 0; m < Nx; m++) {
-    for (int n = 0; n < Ny; n++) {
-      if (i > collection_size - 1) break;
+  for (int m = 0; m < mdb->Nx; m++) {
+    for (int n = 0; n < mdb->Ny; n++) {
+      for (int o = 0; o < mdb->Nz; o++) {
+        if (i > collection_size - 1) break;
 
-      p[i]->x = x;
-      p[i]->y = y;
+        p[i]->x = x;
+        p[i]->y = y;
+        p[i]->z = z;
 
-      p[i]->vx = vmax * (2 * math_Random() - 1.0);
-      p[i]->vy = vmax * (2 * math_Random() - 1.0);
+        p[i]->vx = mdb->vmax * (2 * math_Random() - 1.0);
+        p[i]->vy = mdb->vmax * (2 * math_Random() - 1.0);
+        p[i]->vz = mdb->vmax * (2 * math_Random() - 1.0);
 
-      DEBUG_PRINT("%d %d %8.4f %8.4f %12.6f %12.6f",i, Nx, x, y, p[i]->vx, p[i]->vy);
+        DEBUG_PRINT("%d %8.4f %8.4f %8.4f %8.4f %8.4f %8.4f",i, x, y, z, p[i]->vx, p[i]->vy, p[i]->vz);
 
-      y += 2.0 * sigma;
+        z += mdb->spacing;
 
-      i++;
+        i++;
+      }
+      y += mdb->spacing;
+      z =  mdb->spacing;
     }
-    x += 2.0 * sigma;
-    y = sigma;
+    x += mdb->spacing;
+    y =  mdb->spacing;
   }
 
   // Calculate the velocity drift
-  double vxcum, vycum;
-  vxcum = vycum = 0.0;
+  double vxcum, vycum, vzcum;
+  vxcum = vycum = vzcum = 0.0;
 
   for (int i = 0; i < collection_size; i++) {
     vxcum += p[i]->vx;
     vycum += p[i]->vy;
+    vzcum += p[i]->vy;
   }
 
   vxcum = vxcum/(double) collection_size;
   vycum = vycum/(double) collection_size;
+  vzcum = vzcum/(double) collection_size;
 
-  DEBUG_PRINT("vxcum: %12.6f vycum: %12.6f", vxcum, vycum);
+  DEBUG_PRINT("vxcum: %12.6f vycum: %12.6f vycum: %12.6f", vxcum, vycum, vzcum);
 
   for (int i = 0; i < collection_size; i++) {
     p[i]->vx -= vxcum;
     p[i]->vy -= vycum;
+    p[i]->vz -= vzcum;
 
-    DEBUG_PRINT("%12.6f %12.6f %12.6f %12.6f", p[i]->x, p[i]->y, p[i]->vx, p[i]->vy);
+    DEBUG_PRINT("%12.6f %12.6f %12.6f", p[i]->vx, p[i]->vy, p[i]->vz);
   }
 
-  length = sigma * (2 * Nx);
+  length = x;
 
   DEBUG_PRINT("box length: %12.6f", length);
 
