@@ -7,7 +7,7 @@
 int main(void) {
   LennardJonesPotential *ljp = new_LennardJonesPotential(3.40, 0.997);
   MD_BoxParameters *mdb = new_MD_BoxParameters(10, 10, 10, 2.0 * ljp->sigma, 2.0);
-  MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 6000, 1000, 1000);
+  MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 2000, 500, 500);
   int collection_size = mdb->Nx * mdb->Ny * mdb->Nz;
   ParticleCollection *particle = new_ParticleCollection(collection_size);
   MD_Report *report = new_Report();
