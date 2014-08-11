@@ -20,10 +20,13 @@ void print_Report(MD_Report *report) {
   printf("%9.6f ", report->pe);
   printf("%9.6f ", report->ke);
   printf("%9.6f ", report->te);
+  printf("%9.6f %9.6f %9.6f ", c[10]->x, c[10]->y, c[10]->z);
   
+  /*
   for (int i = 0; i < report->collection_size; i++) {
     printf("%9.6f %9.6f ", c[i]->x, c[i]->y);
   }
+  */
 
   printf("\n");
   fflush(stdout);

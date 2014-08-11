@@ -3,15 +3,17 @@
 #include "md_iterator.h"
 #include "md_systemenergy.h"
 #include "md.h"
+#include "dbg.h"
 
 int main(void) {
   LennardJonesPotential *ljp = new_LennardJonesPotential(3.40, 0.997);
   MD_BoxParameters *mdb = new_MD_BoxParameters(10, 10, 10, 2.0 * ljp->sigma, 2.0);
-  MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 2000, 500, 500);
-  int collection_size = mdb->Nx * mdb->Ny * mdb->Nz;
-  ParticleCollection *particle = new_ParticleCollection(collection_size);
+  MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 1000, 200, 500);
   MD_Report *report = new_Report();
   double box_length;
+
+  int collection_size = mdb->Nx * mdb->Ny * mdb->Nz;
+  ParticleCollection *particle = new_ParticleCollection(collection_size);
 
   int report_interval = (mdp->iterations - mdp->equilibrium)/mdp->report_count;
 
@@ -43,6 +45,10 @@ int main(void) {
     }
   
     destroy_SystemEnergy(energy);
+  }
+
+  for (int i = 0; i < collection_size; i++) {
+    DEBUG_PRINT("%9.6f %9.6f %9.6f ", particle[i]->x, particle[i]->y, particle[i]->z);
   }
 
   destroy_Report(report);
