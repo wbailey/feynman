@@ -3,12 +3,13 @@
 #include "md_iterator.h"
 #include "md_systemenergy.h"
 #include "md.h"
+#include "md_velocity_distribution.h"
 #include "dbg.h"
 
 int main(void) {
   LennardJonesPotential *ljp = new_LennardJonesPotential(3.40, 0.997);
-  MD_BoxParameters *mdb = new_MD_BoxParameters(10, 10, 10, 2.0 * ljp->sigma, 2.0);
-  MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 1000, 200, 500);
+  MD_BoxParameters *mdb = new_MD_BoxParameters(20, 20, 20, 2.0 * ljp->sigma, 2.0);
+  MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 1200, 200, 500);
   MD_Report *report = new_Report();
   double box_length;
 
@@ -50,6 +51,8 @@ int main(void) {
   for (int i = 0; i < collection_size; i++) {
     DEBUG_PRINT("%9.6f %9.6f %9.6f ", particle[i]->x, particle[i]->y, particle[i]->z);
   }
+
+  report_Velocities(particle, collection_size, "velocity.csv");
 
   destroy_Report(report);
   destroy_MD_BoxParameters(mdb);

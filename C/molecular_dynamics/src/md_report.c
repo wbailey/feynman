@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <assert.h>
 #include "md_report.h"
 
@@ -14,17 +15,16 @@ void destroy_Report(MD_Report *report) {
 }
 
 void print_Report(MD_Report *report) {
-  ParticleCollection *c = report->collection;
+  /* ParticleCollection *c = report->collection; */
 
   printf("%9.6f ", report->t);
   printf("%9.6f ", report->pe);
   printf("%9.6f ", report->ke);
   printf("%9.6f ", report->te);
-  printf("%9.6f %9.6f %9.6f ", c[10]->x, c[10]->y, c[10]->z);
   
   /*
   for (int i = 0; i < report->collection_size; i++) {
-    printf("%9.6f %9.6f ", c[i]->x, c[i]->y);
+    printf("%9.6f,", sqrt(c[i]->vx * c[i]->vx + c[i]->vy * c[i]->vy + c[i]->vz * c[i]->vz));
   }
   */
 
