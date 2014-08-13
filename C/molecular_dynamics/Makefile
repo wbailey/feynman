@@ -5,6 +5,7 @@ INCLUDE = -I "include" -I "src"
 SRC = src
 TEST = test
 DATA = ./data.csv
+SETUP = ./setup.csv
 
 .PHONY: clean $(SRC) $(TEST)
 .SILENT: clean
@@ -15,7 +16,7 @@ build: $(TARGET)
 	@echo Simulation runner has been generated
 
 run:
-	$(PWD)/$(TARGET) > $(DATA)
+	$(PWD)/$(TARGET) > $(DATA) 2> $(SETUP)
 
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) $(INCLUDE) -o $(TARGET) $(wildcard $(SRC)/*.o) $(TARGET).c

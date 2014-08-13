@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3
 import sys
+from pylab import plot,show
 
 velocities = sys.stdin.readlines()
 
@@ -23,5 +24,14 @@ for lines in velocities:
   else:
     bins[index] = 1
 
+x = []
+y = []
+
+print(bins)
+
 for key, value in bins.items():
-  print("%12.6f %12.6f" % (key * bin_size, bin_count * value/len(velocities)))
+  x.append(key * bin_size)
+  y.append(bin_count * value/len(velocities))
+
+plot(x,y)
+show()
