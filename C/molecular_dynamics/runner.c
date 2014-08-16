@@ -8,7 +8,7 @@
 
 int main(void) {
   LennardJonesPotential *ljp = new_LennardJonesPotential(3.40, 0.997);
-  MD_BoxParameters *mdb = new_MD_BoxParameters(20, 20, 20, 2.0 * ljp->sigma, 2.0);
+  MD_BoxParameters *mdb = new_MD_BoxParameters(5, 5, 5, 2.0 * ljp->sigma, 2.0);
   MD_RunParameters *mdp = new_MD_RunParameters(0.0, 0.01, 1200, 200, 500);
   MD_Report *report = new_Report();
   double box_length;
@@ -29,11 +29,9 @@ int main(void) {
     verlet_IteratePosition(particle, collection_size, mdp->dt, box_length, apply_Periodic);
     verlet_IterateVelocity(particle, collection_size, mdp->dt);
 
-    calculate_Forces(ljp, particle, collection_size, box_length);
+    MD_SystemEnergy *energy = calculate_Forces(ljp, particle, collection_size, box_length);
 
     verlet_IterateVelocity(particle, collection_size, mdp->dt);
-
-    MD_SystemEnergy *energy = calculate_SystemEnergy(ljp, particle, collection_size, box_length);
 
     mdp->t += mdp->dt;
 
@@ -48,6 +46,7 @@ int main(void) {
     destroy_SystemEnergy(energy);
   }
 
+  // Final positions
   for (int i = 0; i < collection_size; i++) {
     DEBUG_PRINT("%9.6f %9.6f %9.6f ", particle[i]->x, particle[i]->y, particle[i]->z);
   }

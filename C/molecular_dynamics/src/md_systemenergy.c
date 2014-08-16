@@ -20,35 +20,15 @@ void destroy_SystemEnergy(MD_SystemEnergy *energy) {
   free(energy);
 }
 
-MD_SystemEnergy * calculate_SystemEnergy(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
-  double pe, ke, r;
-  MD_Separation *sep;
-  MD_SystemEnergy *system = new_SystemEnergy();
-  
-  pe = ke = 0.0;
+double calculate_KineticEnergy(Particle *p) {
+  double ke = 0.0;
 
-  for (int i = 0; i < collection_size; i++) {
-    ke += 
-        particle[i]->vx * particle[i]->vx + 
-        particle[i]->vy * particle[i]->vy +
-        particle[i]->vz * particle[i]->vz;
-    if (i < collection_size - 1) {
-      for (int j = i + 1; j < collection_size; j++) {
-        sep = new_MD_Separation(particle[i], particle[j], length);
-
-        r = calculate_SeparationMagnitude(sep);
-        pe += LennardJones_PotentialEnergy(ljp, r);
-
-        destroy_MD_Separation(sep);
-      }
-    }
-  }
+  ke += 
+    p->vx * p->vx + 
+    p->vy * p->vy +
+    p->vz * p->vz;
 
   ke *= 0.5;
 
-  system->pe = pe;
-  system->ke = ke;
-  system->te = pe + ke;
-
-  return system;
+  return ke;
 }

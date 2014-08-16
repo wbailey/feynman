@@ -3,6 +3,7 @@
 
 #include "particle.h"
 #include "lennard_jones.h"
+#include "md_systemenergy.h"
 
 typedef struct MD_BoxParameters {
   int Nx;
@@ -28,6 +29,6 @@ void destroy_MD_BoxParameters(MD_BoxParameters *);
 
 void apply_Periodic(Particle *, double);
 double initialize_Collection(ParticleCollection *, MD_BoxParameters *);
-void calculate_Forces(LennardJonesPotential *, ParticleCollection *, int, double);
+MD_SystemEnergy * calculate_Forces(LennardJonesPotential *, ParticleCollection *, int, double);
 
 #endif

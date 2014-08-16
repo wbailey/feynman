@@ -12,6 +12,6 @@ typedef struct MD_SystemEnergy {
 
 MD_SystemEnergy * new_SystemEnergy();
 void destroy_SystemEnergy(MD_SystemEnergy *);
-MD_SystemEnergy * calculate_SystemEnergy(LennardJonesPotential *, ParticleCollection *, int, double);
+double calculate_KineticEnergy(Particle *p);
 
 #endif

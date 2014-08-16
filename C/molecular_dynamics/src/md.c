@@ -5,6 +5,7 @@
 #include "md_math.h"
 #include "md_separation.h"
 #include "md_accel.h"
+#include "md_systemenergy.h"
 #include "lennard_jones.h"
 #include "dbg.h"
 
@@ -62,9 +63,12 @@ void apply_Periodic(Particle *particle, double length) {
   }
 }
 
-void calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
+MD_SystemEnergy * calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, int collection_size, double length) {
   MD_Separation *sep;
   MD_Accel *accel;
+  MD_SystemEnergy *system = new_SystemEnergy();
+  double r, ke, pe;
+  int m;
 
   for (int i = 0; i < collection_size; i++) {
     particle[i]->ax = 0.0;
@@ -72,7 +76,11 @@ void calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, 
     particle[i]->az = 0.0;
   }
 
-  for (int m = 0; m < collection_size - 1; m++) {
+  ke = pe = 0.0;
+
+  for (m = 0; m < collection_size - 1; m++) {
+    ke += calculate_KineticEnergy(particle[m]);
+
     for (int n = m + 1; n < collection_size; n++) {
       sep = new_MD_Separation(particle[m], particle[n], length);
       accel = new_MD_Accel(ljp, sep); // calculates (dx/r)*force
@@ -85,16 +93,27 @@ void calculate_Forces(LennardJonesPotential *ljp, ParticleCollection *particle, 
       particle[n]->ay -= accel->ay;
       particle[n]->az -= accel->az;
 
+      r = calculate_SeparationMagnitude(sep);
+      pe += LennardJones_PotentialEnergy(ljp, r);
+
       destroy_MD_Separation(sep);
       destroy_MD_Accel(accel);
     }
   }
+
+  // Account for the energy of the last particle
+  ke += calculate_KineticEnergy(particle[collection_size]);
+
+  system->pe = pe;
+  system->ke = ke;
+  system->te = pe + ke;
+
+  return system;
 }
 
 double initialize_Collection(ParticleCollection *p, MD_BoxParameters *mdb) {
-  double x, y, z;
-  double length;
   int collection_size = mdb->Nx * mdb->Ny * mdb->Nz;
+  double x, y, z;
 
   x = y = z = mdb->spacing;
 
@@ -152,9 +171,7 @@ double initialize_Collection(ParticleCollection *p, MD_BoxParameters *mdb) {
     DEBUG_PRINT("%12.6f %12.6f %12.6f", p[i]->vx, p[i]->vy, p[i]->vz);
   }
 
-  length = x;
+  DEBUG_PRINT("box length: %12.6f", x);
 
-  DEBUG_PRINT("box length: %12.6f", length);
-
-  return length;
+  return x;
 }
