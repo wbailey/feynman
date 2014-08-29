@@ -4,6 +4,7 @@
 #include "lennard_jones.h"
 #include "md_math.h"
 #include "md_separation.h"
+#include "md_accel.h"
 #include "md.h"
 
 char *test_new_LennardJonesPotential() {
@@ -307,6 +308,50 @@ char * test_calculate_SeparationMagnitude() {
 
 }
 
+char * test_calculate_Acceleration() {
+  double box_length = 100.0;
+  LennardJonesPotential *ljp = new_LennardJonesPotential(2.0, 2.0);
+  Particle *p1 = new_Particle();
+  Particle *p2 = new_Particle();
+
+  p1->x = p1->y = p1->z = ljp->sigma;
+  p2->x = p2->y = p2->z = 2.0 * ljp->sigma;
+
+  MD_Separation *sep = new_MD_Separation(p1, p2, box_length);
+
+  DEBUG_PRINT("sep->dx: %12.6f", sep->dx);
+  DEBUG_PRINT("sep->dy: %12.6f", sep->dy);
+  DEBUG_PRINT("sep->dz: %12.6f", sep->dz);
+
+  MD_Accel *accel = new_MD_Accel(ljp, sep);
+
+  double r = calculate_SeparationMagnitude(sep);
+
+  DEBUG_PRINT("magnitude of separation: %12.6f", r);
+
+  double force = LennardJones_Force(ljp, r);
+
+  DEBUG_PRINT("magnitude of force: %12.6f", force);
+
+  DEBUG_PRINT("calculated of accel->ax: %12.6f", accel->ax);
+  DEBUG_PRINT("calculated of accel->ay: %12.6f", accel->ay);
+  DEBUG_PRINT("calculated of accel->az: %12.6f", accel->az);
+
+  double ax = -(sep->dx/r)*force;
+  double ay = -(sep->dy/r)*force;
+  double az = -(sep->dz/r)*force;
+
+  DEBUG_PRINT("expected x component of acceleration: %12.6f", ax);
+  DEBUG_PRINT("expected y component of acceleration: %12.6f", ay);
+  DEBUG_PRINT("expected z component of acceleration: %12.6f", az);
+
+  mu_assert(accel->ax == ax, "x component of acceleration mismatch");
+  mu_assert(accel->ay == ay, "y component of acceleration mismatch");
+  mu_assert(accel->az == az, "z component of acceleration mismatch");
+
+  return NULL;
+}
+
 char *all_tests() {
     mu_suite_start();
 
@@ -323,6 +368,7 @@ char *all_tests() {
     mu_run_test(test_new_SystemEnergy);
     mu_run_test(test_calculate_KineticEnergy);
     mu_run_test(test_calculate_SeparationMagnitude);
+    mu_run_test(test_calculate_Acceleration);
 
     return NULL;
 }
