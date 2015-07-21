@@ -1,3 +1,4 @@
 ./md
 **/*.o
 src/simulation.c
+doc/**/*

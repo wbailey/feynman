@@ -1,9 +1,0 @@
-<map id="include/dbg.h" name="include/dbg.h">
-<area shape="rect" id="node2" href="$runner_8c.html" title="runner.c" alt="" coords="5,79,75,104"/>
-<area shape="rect" id="node3" href="$src_2md_8c.html" title="src/md.c" alt="" coords="99,79,171,104"/>
-<area shape="rect" id="node4" href="$md__separation_8c.html" title="src/md_separation.c" alt="" coords="195,79,336,104"/>
-<area shape="rect" id="node5" href="$md__systemenergy_8c.html" title="src/md_systemenergy.c" alt="" coords="360,79,521,104"/>
-<area shape="rect" id="node6" href="$particle_8c.html" title="src/particle.c" alt="" coords="544,79,640,104"/>
-<area shape="rect" id="node7" href="$minunit_8h.html" title="test/minunit.h" alt="" coords="664,79,765,104"/>
-<area shape="rect" id="node8" href="$test__runner_8c.html" title="test/test_runner.c" alt="" coords="653,152,777,177"/>
-</map>
