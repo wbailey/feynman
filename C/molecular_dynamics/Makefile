@@ -33,7 +33,25 @@ clean:
 	- rm $(TARGET)
 	@echo All temporary files have been removed
 
-tools: ck_brew ck_valgrind
+docs:
+	doxygen
+	open doc/html/index.html
+
+tools: ck_brew ck_valgrind ck_graphviz ck_doxygen
+
+ck_graphviz:
+ifeq (, $(shell which dot))
+	-brew install graphviz
+else
+	@echo "== Graphviz Installed =="
+endif
+
+ck_doxygen:
+ifeq (, $(shell which doxygen))
+	-brew install doxygen
+else
+	@echo "== Doxygen Installed =="
+endif
 
 ck_brew:
 ifeq (, $(shell which brew))
@@ -44,7 +62,7 @@ endif
 
 ck_valgrind:
 ifeq (, $(shell which valgrind))
-	brew install --HEAD valgrind
+	-brew install --HEAD valgrind
 else
 	@echo "== Valgrind Installed =="
 endif

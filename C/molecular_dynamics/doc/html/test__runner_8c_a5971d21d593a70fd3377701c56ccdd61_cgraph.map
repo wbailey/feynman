@@ -1,0 +1,6 @@
+<map id="test_calculate_SeparationMagnitude" name="test_calculate_SeparationMagnitude">
+<area shape="rect" id="node2" href="$particle_8c.html#a14d9b7905cbea5f6603e2c425f96db91" title="new_Particle" alt="" coords="283,5,381,31"/>
+<area shape="rect" id="node3" href="$md__separation_8c.html#a2ab2286c48b51158695add63029c7dd3" title="new_MD_Separation" alt="" coords="259,55,405,80"/>
+<area shape="rect" id="node5" href="$md__separation_8c.html#a26fc436dcb7a9fa1a405b9ae9f789be7" title="calculate_SeparationMagnitude" alt="" coords="228,104,436,129"/>
+<area shape="rect" id="node4" href="$md__math_8c.html#aa1bcea05acadfa82a44fa34f14291995" title="math_Sign" alt="" coords="484,55,569,80"/>
+</map>

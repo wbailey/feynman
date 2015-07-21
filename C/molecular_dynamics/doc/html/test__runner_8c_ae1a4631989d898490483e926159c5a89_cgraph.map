@@ -1,0 +1,6 @@
+<map id="test_collection_intialization" name="test_collection_intialization">
+<area shape="rect" id="node2" href="$particle_8c.html#a2d1616bbff817964a5acd4d499bbbcb6" title="new_ParticleCollection" alt="" coords="242,5,398,31"/>
+<area shape="rect" id="node4" href="$particle_8c.html#adc7fac8feba85df131a8577180e9936e" title="destroy_ParticleCollection" alt="" coords="233,55,408,80"/>
+<area shape="rect" id="node3" href="$particle_8c.html#a14d9b7905cbea5f6603e2c425f96db91" title="new_Particle" alt="" coords="466,5,563,31"/>
+<area shape="rect" id="node5" href="$particle_8c.html#a4531c73235d5d6fd840c83df3e84559d" title="destroy_Particle" alt="" coords="456,55,573,80"/>
+</map>
