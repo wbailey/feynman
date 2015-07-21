@@ -37,7 +37,15 @@ docs:
 	doxygen
 	open doc/html/index.html
 
-tools: ck_brew ck_valgrind ck_graphviz ck_doxygen
+tools: ck_brew ck_valgrind ck_graphviz ck_doxygen ck_gnuplot
+
+ck_gnuplot:
+ifeq (, $(shell which gnuplot))
+	brew install Caskroom/cask/xquartz
+	brew install gnuplot --with-x11
+else
+	@echo "== gnuplot Installed =="
+endif
 
 ck_graphviz:
 ifeq (, $(shell which dot))
