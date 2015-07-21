@@ -102,7 +102,7 @@ MD_SystemEnergy * calculate_Forces(LennardJonesPotential *ljp, ParticleCollectio
   }
 
   // Account for the energy of the last particle
-  ke += calculate_KineticEnergy(particle[collection_size]);
+  ke += calculate_KineticEnergy(particle[collection_size - 1]);
 
   system->pe = pe;
   system->ke = ke;

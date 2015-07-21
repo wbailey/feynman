@@ -32,3 +32,19 @@ clean:
 	$(MAKE) -is -C $(TEST) clean
 	- rm $(TARGET)
 	@echo All temporary files have been removed
+
+tools: ck_brew ck_valgrind
+
+ck_brew:
+ifeq (, $(shell which brew))
+	$(error "install homebrew")
+else
+	@echo "== Homebrew Installed =="
+endif
+
+ck_valgrind:
+ifeq (, $(shell which valgrind))
+	brew install --HEAD valgrind
+else
+	@echo "== Valgrind Installed =="
+endif

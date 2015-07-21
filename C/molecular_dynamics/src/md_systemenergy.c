@@ -23,6 +23,10 @@ void destroy_SystemEnergy(MD_SystemEnergy *energy) {
 double calculate_KineticEnergy(Particle *p) {
   double ke = 0.0;
 
+  DEBUG_PRINT("vx: %12.8f", p->vx);
+  DEBUG_PRINT("vy: %12.8f", p->vy);
+  DEBUG_PRINT("vz: %12.8f", p->vz);
+
   ke += 
     p->vx * p->vx + 
     p->vy * p->vy +
