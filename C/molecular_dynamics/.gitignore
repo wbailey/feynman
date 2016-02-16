@@ -3,3 +3,4 @@
 src/simulation.c
 doc/**/*
 *.bak
+test/test_runner
